@@ -1,8 +1,65 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+#header {
+	padding:5px;
+	min-height:50px;
+}
+
+#footer {
+	min-height: 50px;
+}
+
+#contents {
+	min-height: 500px;
+}
+
+
+#questionLists {
+	list-style: none;
+}
+
+#questionLists .question {
+	min-height: 70px;
+	border-width: 1px;
+	border-color: #000;
+	border-style: double;
+	margin-bottom: 5px;
+	padding: 5px;
+}
+
+#questionLists .question p {
+	/*float: left;*/
+}
+
+#questionLists .question span.viewcount,
+#questionLists .question span.votecount,
+#questionLists .question span.ansercount {
+	/*float: right;
+		margin-left: 10px;*/
+}
+
+#questionLists .question ul.tags {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#questionLists .question ul.tags li {
+	margin: 0;
+	padding: 0;
+	float: left;
+	border-width: 1px;
+	border-color: #000;
+	border-style: double;
+	margin-right: 3px;
+	padding: 2px;
+}
+
+#questionLists .question div.author {
+}
+
+#questionLists .question div.author span {
+	margin-left: 10px;
 }

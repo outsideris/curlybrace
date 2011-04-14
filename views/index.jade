@@ -1,7 +1,22 @@
 div.container.showgrid
 	div#header.span-24.last Header
-	div#contents.span-15 Contents
-	div#sidebar.span-8.last Sidebar
-	hr
+	div#contents.span-19 Contents
+		ul#questionLists.span-18.prepend-1
+			- [1,2,3,4,5].forEach(function(q) {
+			li.question
+				p.span-14 Question #{q}
+				span.viewcount(title='읽은 수').span-1 10
+				span.votecount(title='투표 수').span-1 20
+				span.ansercount(title='답변 수').span-1.last 30
+				ul.tags.span-13.prepend-1.append-1
+					li.tag stackoverflow
+					li.tag node.js
+					li.tag outsider
+					li.tag mongoDB
+				div.author.span-3
+					a(href='/') Outsider
+					span 2일 전
+			- })
+	div#sidebar.span-4.last Sidebar
 	div#footer.span-24.bottom Footer
 	
