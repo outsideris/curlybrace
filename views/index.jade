@@ -1,5 +1,12 @@
 div.container.showgrid
-   div#header.span-24.last Header
+   div#header.span-24
+      div#main-logo.span-6.prepend-1= title
+      ul#main-menu.span-10.prepend-6
+         li: a(href='#') 인기 질문
+         li: a(href='#') 최근 질문 
+         li: a(href='#') 답변안된 질문 
+         li: a(href='#') 사용자 
+         li: a(href='#') 질문하기 
    div#contents.span-19 Contents
       ul#questionLists.span-18.prepend-1
          - [1,2,3,4,5].forEach(function(q) {

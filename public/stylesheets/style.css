@@ -7,6 +7,18 @@ body {
 	min-height:50px;
 }
 
+#main-menu {
+   list-style: none;
+}
+
+#main-menu li {
+   float: left;
+   margin-right: 5px;
+   border-width: 1px;
+   border-color: #000;
+   border-style: double;
+}
+
 #footer {
 	min-height: 50px;
 }
