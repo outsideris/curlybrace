@@ -2,9 +2,14 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+/* 헤더 */
 #header {
 	padding:5px;
 	min-height:50px;
+}
+
+#main-logo {
+   font-size: 2em;
 }
 
 #main-menu {
@@ -74,4 +79,11 @@ body {
 
 #questionLists .question div.author span {
 	margin-left: 10px;
+}
+
+/* 사이드바 */
+#postBtn {
+   display: block;
+   width: 100%;
+   height: 50px;
 }
