@@ -87,3 +87,19 @@ body {
    width: 100%;
    height: 50px;
 }
+
+#login {
+   margin-top: 5px;
+   border-width: 1px;
+   border-color: #000;
+   border-style: double;
+}
+
+#login ul {
+   list-style: none;
+}
+
+#login ul li {
+   float:left;
+   margin-right: 5px;
+}
