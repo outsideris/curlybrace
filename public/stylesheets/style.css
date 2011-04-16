@@ -3,7 +3,7 @@ body {
 }
 
 /* 헤더 */
-#header {
+header {
 	padding:5px;
 	min-height:50px;
 }
@@ -12,11 +12,11 @@ body {
    font-size: 2em;
 }
 
-#main-menu {
+nav ul {
    list-style: none;
 }
 
-#main-menu li {
+nav ul li {
    float: left;
    margin-right: 5px;
    border-width: 1px;
@@ -25,7 +25,7 @@ body {
 }
 
 /* 푸터 */
-#footer {
+footer {
 	min-height: 50px;
 }
 
@@ -79,7 +79,7 @@ body {
 #questionLists .question div.author {
 }
 
-#questionLists .question div.author span {
+#questionLists .question div.author time {
 	margin-left: 10px;
 }
 

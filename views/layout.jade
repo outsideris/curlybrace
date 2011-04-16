@@ -1,4 +1,4 @@
-!!!
+!!!5
 html
    head
       title= title
@@ -10,16 +10,17 @@ html
       link(rel='stylesheet', href='/stylesheets/style.css')
       body
          div.container.showgrid
-            div#header.span-24
+            header.span-24
                div#main-logo.span-6
                   a(href='/')= title
-               ul#main-menu.span-10.prepend-8.last
-                  li: a(href='#') 인기 질문
-                  li: a(href='#') 최근 질문 
-                  li: a(href='#') 답변안된 질문 
-                  li: a(href='#') 사용자 
+               nav.span-10.prepend-8.last
+                  ul#main-menu
+                     li: a(href='#') 인기 질문
+                     li: a(href='#') 최근 질문 
+                     li: a(href='#') 답변안된 질문 
+                     li: a(href='#') 사용자 
             div#contents.span-18!= body
-            div#sidebar.span-4.prepend-1.last Sidebar
+            aside.span-4.prepend-1.last Sidebar
                form#search
                   input(type='text')
                   input(type='submit', value='검색')
@@ -42,6 +43,6 @@ html
                      li 질문...
                      li 질문...
                      li 질문...
-            div#footer.span-24.bottom 
+            footer.span-24.bottom 
                &copy; 2011 
                a(href='http://sideeffect.kr/', target='_blank') Side Effect
