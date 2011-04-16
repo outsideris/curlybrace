@@ -24,10 +24,12 @@ body {
    border-style: double;
 }
 
+/* 푸터 */
 #footer {
 	min-height: 50px;
 }
 
+/* 컨텐츠 */
 #contents {
 	min-height: 500px;
 }
