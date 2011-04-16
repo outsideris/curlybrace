@@ -27,9 +27,14 @@ app.configure('production', function(){
 });
 
 // Routes
-
 app.get('/', function(req, res){
   res.render('index', {
+    title: '{Curlybrace}'
+  });
+});
+
+app.get('/questions/*', function(req, res){
+  res.render('questions', {
     title: '{Curlybrace}'
   });
 });

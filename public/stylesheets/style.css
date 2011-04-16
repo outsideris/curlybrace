@@ -12,11 +12,11 @@ header {
    font-size: 2em;
 }
 
-nav ul {
+header nav ul {
    list-style: none;
 }
 
-nav ul li {
+header nav ul li {
    float: left;
    margin-right: 5px;
    border-width: 1px;
@@ -81,6 +81,71 @@ footer {
 
 #questionLists .question div.author time {
 	margin-left: 10px;
+}
+
+/* 글 읽기 */
+article ul.tags {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+}
+
+article ul.tags li {
+   margin: 0;
+   padding: 0;
+   float: left;
+   border-width: 1px;
+   border-color: #000;
+   border-style: double;
+   margin-right: 3px;
+   padding: 2px;
+}
+
+article span.votecount div {
+   display: block;
+}
+
+article nav {
+   clear: both;
+}
+
+article nav ul {
+   list-style: none;
+}
+
+article nav ul li {
+   float: left;
+   margin-right: 5px;
+   border-width: 1px;
+   border-color: #000;
+   border-style: double;
+}
+
+article div.author {
+   clear: both;
+}
+
+article div.author time {
+   margin-left: 10px;
+}
+
+article div.comments-list {
+   margin-top: 10px;
+}
+
+article div.comment {
+   margin-top: 10px;
+}
+
+article div.answers-list {
+   margin-top: 20px;
+}
+
+article div.answer {
+   margin-bottom: 10px;
+   border-width: 1px;
+   border-color: #000;
+   border-style: double;
 }
 
 /* 사이드바 */
