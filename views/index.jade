@@ -1,51 +1,16 @@
-div.container.showgrid
-   div#header.span-24
-      div#main-logo.span-6= title
-      ul#main-menu.span-10.prepend-8.last
-         li: a(href='#') 인기 질문
-         li: a(href='#') 최근 질문 
-         li: a(href='#') 답변안된 질문 
-         li: a(href='#') 사용자 
-   div#contents.span-18 Contents
-      ul#questionLists.span-17.prepend-1
-         - [1,2,3,4,5].forEach(function(q) {
-            li.question
-               p.span-13 Question #{q}
-               span.viewcount(title='읽은 수').span-1 10
-               span.votecount(title='투표 수').span-1 20
-               span.ansercount(title='답변 수').span-1.last 30
-               ul.tags.span-12.prepend-1.append-1
-                  li.tag stackoverflow
-                  li.tag node.js
-                  li.tag outsider
-                  li.tag mongoDB
-               div.author.span-3
-                  a(href='/') Outsider
-                  span 2일 전
-         - })
-   div#sidebar.span-4.prepend-1.last Sidebar
-      form#search
-         input(type='text')
-         input(type='submit', value='검색')
-      button#postBtn  질문하기 
-      div#login
-         ul
-            li Tw
-            li Fb
-            li m2
-            li goo
-       div#recently-questions
-         최근 질문
-         ul
-            li 질문...
-            li 질문...
-            li 질문...
-       div#recently-answers
-         최근 답변된 질문
-         ul
-            li 질문...
-            li 질문...
-            li 질문...
-   div#footer.span-24.bottom 
-      &copy; 2011 
-      a(href='http://sideeffect.kr/', target='_blank') Side Effect
+ul#questionLists.span-17.prepend-1
+   - [1,2,3,4,5].forEach(function(q) {
+      li.question
+         p.span-13 Question #{q}
+         span.viewcount(title='읽은 수').span-1 10
+         span.votecount(title='투표 수').span-1 20
+         span.ansercount(title='답변 수').span-1.last 30
+         ul.tags.span-12.prepend-1.append-1
+            li.tag stackoverflow
+            li.tag node.js
+            li.tag outsider
+            li.tag mongoDB
+         div.author.span-3
+            a(href='/') Outsider
+            span 2일 전
+   - })

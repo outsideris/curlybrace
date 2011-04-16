@@ -8,4 +8,39 @@ html
       /if IE
          link(rel='stylesheet', href='/stylesheets/blueprint/ie.css', media='screen, projection')
       link(rel='stylesheet', href='/stylesheets/style.css')
-      body!= body
+      body
+         div.container.showgrid
+            div#header.span-24
+               div#main-logo.span-6= title
+               ul#main-menu.span-10.prepend-8.last
+                  li: a(href='#') 인기 질문
+                  li: a(href='#') 최근 질문 
+                  li: a(href='#') 답변안된 질문 
+                  li: a(href='#') 사용자 
+            div#contents.span-18!= body
+            div#sidebar.span-4.prepend-1.last Sidebar
+               form#search
+                  input(type='text')
+                  input(type='submit', value='검색')
+               button#postBtn  질문하기 
+               div#login
+                  ul
+                     li Tw
+                     li Fb
+                     li m2
+                     li goo
+                div#recently-questions
+                  최근 질문
+                  ul
+                     li 질문...
+                     li 질문...
+                     li 질문...
+                div#recently-answers
+                  최근 답변된 질문
+                  ul
+                     li 질문...
+                     li 질문...
+                     li 질문...
+            div#footer.span-24.bottom 
+               &copy; 2011 
+               a(href='http://sideeffect.kr/', target='_blank') Side Effect
