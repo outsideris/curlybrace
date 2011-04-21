@@ -3,6 +3,8 @@ temp-boxing()
    border-color #000
    border-style double
    
+HOVER_COLOR = #664444
+   
 vendor(prop, args)
    -webkit-{prop} args
    -moz-{prop} args
@@ -38,7 +40,7 @@ header a
 
 header a:focus,
 header a:hover
-   color #664444
+   color HOVER_COLOR
 
 #main-logo
    color:#424242
@@ -63,11 +65,25 @@ header a:hover
 
 header nav ul
    list-style none
+   margin-top 15px
 
 header nav ul li
    float left
-   margin-right 5px
-   temp-boxing()
+   margin-right 40px
+   color:#424242
+   font normal 1.2em BebasNeueRegular, Arial, sans-serif
+   font-weight bold
+   text-shadow 0 1px 0 #FFF
+
+header nav ul li a:focus,
+header nav ul li a:hover
+   color HOVER_COLOR
+   border-bottom-style solid
+   border-bottom-color HOVER_COLOR
+   border-bottom-width 3px
+
+header nav ul li.nomargin
+   margin-right 0
 
 // 푸터
 footer
