@@ -2,8 +2,12 @@ temp-boxing()
    border-width 1px
    border-color #000
    border-style double
-   
-HOVER_COLOR = #664444
+
+MAIN_COLOR = #424242   
+REDTONE_COLOR = #381413
+YELLOWTONE_COLOR = #8c8c3e
+BROWNTONE_COLOR = #404032
+BULETONE_COLOR = #193e57
    
 vendor(prop, args)
    -webkit-{prop} args
@@ -36,14 +40,14 @@ header
    
 header a
    text-decoration none
-   color #424242
+   color MAIN_COLOR
 
 header a:focus,
 header a:hover
-   color HOVER_COLOR
+   color REDTONE_COLOR
 
 #main-logo
-   color:#424242
+   color:MAIN_COLOR
    font normal 2.8em BebasNeueRegular, Arial, sans-serif
    letter-spacing 0.04em
    padding 7px 0 0 5px
@@ -70,16 +74,16 @@ header nav ul
 header nav ul li
    float left
    margin-right 40px
-   color:#424242
+   color:MAIN_COLOR
    font normal 1.2em BebasNeueRegular, Arial, sans-serif
    font-weight bold
    text-shadow 0 1px 0 #FFF
 
 header nav ul li a:focus,
 header nav ul li a:hover
-   color HOVER_COLOR
+   color REDTONE_COLOR
    border-bottom-style solid
-   border-bottom-color HOVER_COLOR
+   border-bottom-color BULETONE_COLOR
    border-bottom-width 3px
 
 header nav ul li.nomargin
