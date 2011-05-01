@@ -8,6 +8,7 @@ REDTONE_COLOR = #be2a2a
 PINKTONE_COLOR = #a9646c
 LIGHTBLUETONE_COLOR = #00678f
 BULETONE_COLOR = #003761
+WHITE_COLOR = #FFF
    
 vendor(prop, args)
    -webkit-{prop} args
@@ -30,7 +31,7 @@ transform()
 
 body
    font 14px "Lucida Grande", Helvetica, Arial, sans-serif
-   // background url('/images/common/tophead.jpg') top repeat-x
+   background-color #efeeee
    
 a
    text-decoration none
@@ -39,6 +40,9 @@ a
 a:focus,
 a:hover
    color REDTONE_COLOR
+   
+.clear
+   clear both
 
 // 헤더
 header
@@ -54,7 +58,7 @@ header>div
    padding 5px 10px 0 20px
    
 header a
-   color #FFF
+   color WHITE_COLOR
 
 #main-logo
    font normal 1.8em BebasNeueRegular, Arial, sans-serif
@@ -65,14 +69,14 @@ header a
    
 #main-logo a:focus,
 #main-logo a:hover
-   color #FFF
+   color WHITE_COLOR
 
 #betatag
    font-size 0.4em
    font-style normal
    padding 2px 3px 0 2px
    text-decoration none
-   color #FFF
+   color WHITE_COLOR
    text-shadow none
    background-color #e12e01
    top -8px
@@ -93,14 +97,14 @@ header nav ul li
    margin-right 20px
    font normal 1em BebasNeueRegular, Arial, sans-serif
    font-weight bold
-   //text-shadow 0 1px 0 #FFF
+   //text-shadow 0 1px 0 WHITE_COLOR
 
 header nav ul li a
    color: #CCC
    
 header nav ul li a:focus,
 header nav ul li a:hover
-   color #FFF
+   color WHITE_COLOR
    border-bottom-style solid
    border-bottom-color LIGHTBLUETONE_COLOR
    border-bottom-width 3px
@@ -121,6 +125,7 @@ footer
 
 // 컨텐츠
 #contents
+   margin-top 10px
    min-height 500px
 
 #questionLists
@@ -128,29 +133,64 @@ footer
 
 #questionLists .question
    min-height 70px
-   margin-bottom 5px
-   padding 5px
-   temp-boxing()
+   margin-bottom 15px
+   border 1px solid #CCC
+   background-color #FFF
 
+#questionLists .question h3
+   background-color BULETONE_COLOR
+   padding 10px
+   font-size 1.2em
+   margin-bottom 10px
+
+#questionLists .question h3
+   color WHITE_COLOR
+
+#questionLists .question h3 .infomation
+   float right
+   
 #questionLists .question span.viewcount,
 #questionLists .question span.votecount,
 #questionLists .question span.ansercount
+   border-radius 30px
+   background-color LIGHTBLUETONE_COLOR
+   text-align center
+   width 30px
+   height 30px
+   vertical-align middle
+   line-height 30px
+   font-size 0.6em
+   color WHITE_COLOR
+   position relative
+   top -20px
+
+#questionLists .question div.question-body
+   margin 0 10px
+   min-height 40px
+   
+#questionLists .question div.question-body div.author
+   border 1px solid #CCC
+   padding 5px
+   float right
 
 #questionLists .question ul.tags
    list-style none
-   margin 0
+   margin 10px 0 10px 5px
    padding 0
+   font-size 0.8em
 
 #questionLists .question ul.tags li
    margin 0
    padding 0
    float left
    margin-right 3px
-   padding 2px
-   temp-boxing()
+   padding 2px 4px
+   border 1px solid #CCC
+   border-radius 7px
 
-#questionLists .question div.author time
-   margin-left 10px
+#questionLists .question time
+   margin 0 20px 5px 5px
+   float right
 
 // 글 읽기
 article ul.tags
