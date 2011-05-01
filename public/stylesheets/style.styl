@@ -30,7 +30,7 @@ transform()
 
 body
    font 14px "Lucida Grande", Helvetica, Arial, sans-serif
-   background url('/images/common/tophead.jpg') top repeat-x
+   // background url('/images/common/tophead.jpg') top repeat-x
    
 a
    text-decoration none
@@ -42,54 +42,74 @@ a:hover
 
 // 헤더
 header
-   background url('/images/common/tophead.jpg') top repeat-x
-   border-bottom 1px solid #CCC
-   height 57px
+   background-color DARKGREY_COLOR
+   border-bottom 3px solid #CCC
+   height 35px
+   width 100%
+   
+   
+header>div
+   margin 0 auto
+   width 950px
+   padding 5px 10px 0 20px
    
 header a
-   color DARKGREY_COLOR
+   color #FFF
 
 #main-logo
-   color:DARKGREY_COLOR
-   font normal 2.8em BebasNeueRegular, Arial, sans-serif
+   font normal 1.8em BebasNeueRegular, Arial, sans-serif
    letter-spacing 0.04em
    padding 7px 0 0 5px
-   text-shadow 0 1px 0 #FFF
+   text-shadow 0 2px 1px #707070
+   display inline
+   
+#main-logo a:focus,
+#main-logo a:hover
+   color #FFF
 
 #betatag
    font-size 0.4em
    font-style normal
-   padding 5px 3px 0 5px
+   padding 2px 3px 0 2px
    text-decoration none
    color #FFF
    text-shadow none
    background-color #e12e01
-   top -15px
-   left -3px
+   top -8px
+   left 0
    position relative
    border-radius 7px
    transform rotate(30deg)
+   
+header nav
+   float right
 
 header nav ul
    list-style none
-   margin-top 15px
+   margin-top 5px
 
 header nav ul li
    float left
-   margin-right 40px
-   color:DARKGREY_COLOR
-   font normal 1.2em BebasNeueRegular, Arial, sans-serif
+   margin-right 20px
+   font normal 1em BebasNeueRegular, Arial, sans-serif
    font-weight bold
-   text-shadow 0 1px 0 #FFF
+   //text-shadow 0 1px 0 #FFF
 
+header nav ul li a
+   color: #CCC
+   
 header nav ul li a:focus,
 header nav ul li a:hover
+   color #FFF
    border-bottom-style solid
    border-bottom-color LIGHTBLUETONE_COLOR
    border-bottom-width 3px
 
 header nav ul li.nomargin
-   margin-right 0
+
+#search
+   float:right
+   margin-right 15px
 
 // 푸터
 footer
