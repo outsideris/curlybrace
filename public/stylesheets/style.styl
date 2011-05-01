@@ -36,10 +36,9 @@ body
 a
    text-decoration none
    color LIGHTBLUETONE_COLOR
-   
-a:focus,
-a:hover
-   color REDTONE_COLOR
+   &:focus
+   &:hover
+      color REDTONE_COLOR
    
 .clear
    clear both
@@ -51,7 +50,6 @@ header
    height 35px
    width 100%
    
-   
 header>div
    margin 0 auto
    width 950px
@@ -61,7 +59,7 @@ header a
    color WHITE_COLOR
 
 #main-logo
-   font normal 1.8em BebasNeueRegular, Arial, sans-serif
+   font normal 1.8em 'BebasNeueRegular', Arial, sans-serif
    letter-spacing 0.04em
    padding 7px 0 0 5px
    text-shadow 0 2px 1px #707070
@@ -101,16 +99,13 @@ header nav ul li
 
 header nav ul li a
    color: #CCC
+   &:focus
+   &:hover
+      color WHITE_COLOR
+      border-bottom-style solid
+      border-bottom-color LIGHTBLUETONE_COLOR
+      border-bottom-width 3px
    
-header nav ul li a:focus,
-header nav ul li a:hover
-   color WHITE_COLOR
-   border-bottom-style solid
-   border-bottom-color LIGHTBLUETONE_COLOR
-   border-bottom-width 3px
-
-header nav ul li.nomargin
-
 #search
    float:right
    margin-right 15px
