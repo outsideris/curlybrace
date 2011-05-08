@@ -26,14 +26,23 @@ html
                      li.nomargin: a(href='#') 사용자
          div.container
             div#contents.span-18!= body
-            aside.span-4.prepend-1.last Sidebar
-               button#postBtn  질문하기 
+            aside.span-4.prepend-1.last
+               a#postBtn(href='/')  질문하기 
                div#login
+                  h4  로그인 
                   ul
-                     li Tw
-                     li Fb
-                     li m2
-                     li goo
+                     li
+                        a(href='#')
+                          img(src='/images/google.png')
+                     li 
+                        a(href='#')
+                          img(src='/images/twitter.png')
+                     li 
+                        a(href='#')
+                          img(src='/images/facebook.png')
+                     li 
+                        a(href='#')
+                          img(src='/images/me2day.gif')
                 div#recently-questions
                   최근 질문
                   ul
