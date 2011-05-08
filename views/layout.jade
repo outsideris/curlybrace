@@ -26,9 +26,9 @@ html
                      li.nomargin: a(href='#') 사용자
          div.container
             div#contents.span-18!= body
-            aside.span-4.prepend-1.last
+            aside.span-5.prepend-1.last
                a#postBtn(href='/')  질문하기 
-               div#login
+               div#login.labelbox
                   h4  로그인 
                   ul
                      li
@@ -43,18 +43,24 @@ html
                      li 
                         a(href='#')
                           img(src='/images/me2day.gif')
-                div#recently-questions
-                  최근 질문
+                div#recently-questions.labelbox
+                  h4 최근 질문
                   ul
-                     li 질문...
-                     li 질문...
-                     li 질문...
-                div#recently-answers
-                  최근 답변된 질문
+                     li 
+                        a(href='#')  질문...
+                     li 
+                        a(href='#')  질문...
+                     li 
+                        a(href='#')  질문...
+                div#recently-answers.labelbox
+                  h4 최근 답변된 질문
                   ul
-                     li 질문...
-                     li 질문...
-                     li 질문...
+                     li 
+                        a(href='#') 질문...
+                     li 
+                        a(href='#')  질문...
+                     li 
+                        a(href='#')  질문...
             footer.span-24 
                | Copyright &copy; 2011 
                a(href='http://sideeffect.kr/', target='_blank') Side Effect Studio 
