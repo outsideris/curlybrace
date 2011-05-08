@@ -3,7 +3,9 @@ Code name : Curlybrace
 
 ## Requirements
 - node.js
-- mongodb
+- express
+- jade
+- stylus
 
 ## Description
 Not Yet....
