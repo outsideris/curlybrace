@@ -11,9 +11,6 @@ html
       body
          header
             div
-               h1#main-logo
-                  a(href='/')= title
-                  em#betatag alpha
                div#search
                   form
                      input(type='text')
@@ -24,6 +21,9 @@ html
                      li: a(href='#') 최근 질문 
                      li: a(href='#') 답변안된 질문 
                      li.nomargin: a(href='#') 사용자
+               h1#main-logo
+                  a(href='/')= title
+                  em#betatag alpha
          div.container
             div#contents.span-18!= body
             aside.span-5.prepend-1.last
