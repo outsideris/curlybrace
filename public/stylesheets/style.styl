@@ -138,8 +138,6 @@ footer
    padding 10px
    font-size 1.2em
    margin-bottom 10px
-
-#questionLists .question h3
    color WHITE_COLOR
 
 #questionLists .question h3 .infomation
@@ -195,6 +193,33 @@ footer
    float right
 
 // 글 읽기
+article
+   padding 0
+   margin 0 0 15px 0
+   
+article h3
+   background-color BULETONE_COLOR
+   padding 10px
+   font-size 1.2em
+   margin-bottom 10px
+   color WHITE_COLOR
+   
+article .question-box
+   border 1px solid #CCC
+   background-color #FFF
+   
+article .question-box .question-text
+   padding 0 10px 10px 10px
+   
+article .question-box div.author
+   float right
+   border-left 1px solid #CCC
+   padding 5px
+   margin-left 7px
+   
+article div.author time
+   //margin-left 10px
+
 article ul.tags
    list-style none
    margin 0
@@ -221,12 +246,6 @@ article nav ul li
    float left
    margin-right 5px
    temp-boxing()
-   
-article div.author
-   clear both
-
-article div.author time
-   margin-left 10px
 
 article div.comments-list
    margin-top 10px
