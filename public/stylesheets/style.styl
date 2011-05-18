@@ -223,16 +223,22 @@ article div.author time
 article span.votecount div
    display block
 
-article nav
+article div.submenu
    clear both
-
-article nav ul
+   
+article div.submenu ul
    list-style none
 
-article nav ul li
-   float left
-   margin-right 5px
-   temp-boxing()
+article div.submenu ul li
+   float right
+   margin-left 8px
+   margin-bottom 3px
+   font-size 0.8em
+   & a 
+      color #CCC
+   & a:hover
+   & a:focus
+      color DARKGREY_COLOR
 
 article div.comments-list
    margin-top 10px
