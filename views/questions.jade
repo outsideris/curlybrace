@@ -1,9 +1,9 @@
 article 
    div.question-vote.span-3.last
-      span.votecount(title='투표 수').span-2.prepend-1.last 20
-         div
-            input(type='button', value='Up')
-            input(type='button', value='Down')
+      div.span-2.prepend-1.last
+         input(type='button', value='좋아요!', class='voting')
+         span.votecount 20
+         input(type='button', value='나빠요!', class='voting')
    div.question-box.span-15.last
       h3 질문 제목
       div.author.span-3.last
