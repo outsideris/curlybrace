@@ -33,19 +33,22 @@ app.configure('production', function(){
 // Routes
 app.get('/', function(req, res){
   res.render('index', {
-    title: constant.siteName
+    title: constant.siteName,
+    siteName: constant.siteName
   });
 });
 
 app.get('/question/*', function(req, res){
   res.render('question', {
-    title: constant.siteName + ' :: ' + '질문제목'
+    title: constant.siteName + ' :: ' + '질문제목',
+    siteName: constant.siteName
   });
 });
 
 app.get('/question/form', function(req, res){
   res.render('question-form', {
-    title: constant.siteName + ' :: ' + '질문하기'
+    title: constant.siteName + ' :: ' + '질문하기',
+    siteName: constant.siteName
   });
 });
 
