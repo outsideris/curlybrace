@@ -4,8 +4,11 @@
  */
 
 var express = require('express');
-
 var app = module.exports = express.createServer();
+
+var constant = {
+   siteName: '{Curlybrace}'
+}
 
 // Configuration
 
@@ -30,19 +33,19 @@ app.configure('production', function(){
 // Routes
 app.get('/', function(req, res){
   res.render('index', {
-    title: '{Curlybrace}'
+    title: constant.siteName
   });
 });
 
 app.get('/question/*', function(req, res){
   res.render('question', {
-    title: '{Curlybrace}'
+    title: constant.siteName + ' :: ' + '질문제목'
   });
 });
 
 app.get('/question/form', function(req, res){
   res.render('question-form', {
-    title: '{Curlybrace}'
+    title: constant.siteName + ' :: ' + '질문하기'
   });
 });
 
