@@ -40,6 +40,12 @@ app.get('/question/*', function(req, res){
   });
 });
 
+app.get('/question/form', function(req, res){
+  res.render('question-form', {
+    title: '{Curlybrace}'
+  });
+});
+
 // Only listen on $ node app.js
 
 if (!module.parent) {
