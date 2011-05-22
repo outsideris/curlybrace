@@ -38,16 +38,16 @@ app.get('/', function(req, res){
   });
 });
 
-app.get('/question/*', function(req, res){
-  res.render('question', {
-    title: constant.siteName + ' :: ' + '질문제목',
+app.get('/question/form', function(req, res){
+  res.render('question-form', {
+    title: constant.siteName + ' :: ' + '질문하기',
     siteName: constant.siteName
   });
 });
 
-app.get('/question/form', function(req, res){
-  res.render('question-form', {
-    title: constant.siteName + ' :: ' + '질문하기',
+app.get('/question/*', function(req, res){
+  res.render('question', {
+    title: constant.siteName + ' :: ' + '질문제목',
     siteName: constant.siteName
   });
 });
