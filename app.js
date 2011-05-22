@@ -34,8 +34,8 @@ app.get('/', function(req, res){
   });
 });
 
-app.get('/questions/*', function(req, res){
-  res.render('questions', {
+app.get('/question/*', function(req, res){
+  res.render('question', {
     title: '{Curlybrace}'
   });
 });
