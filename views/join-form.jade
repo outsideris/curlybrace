@@ -1,15 +1,13 @@
-article.span-17.prepend-1.last.question-form
+section.span-17.prepend-1.last.join-form
    - if (everyauth.loggedIn)
-      계정이 존재하지 않습니다. 가입하시겠습니까?
+      계정이 존재하지 않습니다. 아래 정보로 가입하시겠습니까?
       form
       - if (everyauth.twitter)
-         input(type='text', name='title', id='title', value='' + everyauth.twitter.user.name).span-17.last
-         textarea.span-17.last
-         | 태그 
-         input(type='text', name='tags', id='tags').span-17.last
-         input(type='submit', value='질문하기').span-17.last.submit-btn
-         p= JSON.stringify(everyauth.twitter.user)
+         label(for='nickname').span-2 Nickname: 
+         input(type='text', name='nickname', id='nickname', value='' + everyauth.twitter.user.name).span-15.last
+         label(for='email').span-2 e-mail: 
+         input(type='text', name='email', id='email', value='').span-15.last
+         input(type='submit', value='가입하기').span-17.last.submit-btn
      - else
          p 인증 실패 
-         p= JSON.stringify(everyauth)
   

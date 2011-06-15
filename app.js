@@ -15,6 +15,7 @@ var constant = {
 
 app.configure(function(){
   app.use(express.bodyParser());
+  app.use(require('stylus').middleware({ src: __dirname + '/public' }));
   app.use(express.static(__dirname + '/public'));
   app.use(express.cookieParser());
   app.use(express.session({ secret: 'htuayreve'}));
@@ -23,7 +24,6 @@ app.configure(function(){
   app.set('view engine', 'jade');
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(require('stylus').middleware({ src: __dirname + '/public' }));
 });
 
 app.configure('development', function(){
