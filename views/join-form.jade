@@ -8,6 +8,14 @@ section.span-17.prepend-1.last.join-form
          label(for='email').span-2 e-mail: 
          input(type='text', name='email', id='email', value='').span-15.last
          input(type='submit', value='가입하기').span-17.last.submit-btn
+         //p= JSON.stringify(everyauth.twitter.user)
+      - else if (everyauth.facebook)
+         label(for='nickname').span-2 Nickname: 
+         input(type='text', name='nickname', id='nickname', value='' + everyauth.facebook.user.name).span-15.last
+         label(for='email').span-2 e-mail: 
+         input(type='text', name='email', id='email', value='').span-15.last
+         input(type='submit', value='가입하기').span-17.last.submit-btn
+         //p= JSON.stringify(everyauth.facebook.user)
      - else
          p 인증 실패 
   
