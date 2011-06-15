@@ -5,7 +5,7 @@
 
 var express = require('express')
   , everyauth = require('./utils/everyauth')
-var app = module.exports = express.createServer();
+  , app = module.exports = express.createServer();
 
 var constant = {
    siteName: '{Curlybrace}'
@@ -14,16 +14,16 @@ var constant = {
 // Configuration
 
 app.configure(function(){
+  app.use(express.bodyParser());
+  app.use(express.static(__dirname + '/public'));
+  app.use(express.cookieParser());
+  app.use(express.session({ secret: 'htuayreve'}));
+  app.use(everyauth.middleware());
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
-  app.use(express.cookieParser());
-  app.use(express.session({ secret: 'keyboard cat'}));
-  app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(require('stylus').middleware({ src: __dirname + '/public' }));
   app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
-  app.use(everyauth.middleware());
+  app.use(require('stylus').middleware({ src: __dirname + '/public' }));
 });
 
 app.configure('development', function(){
@@ -52,6 +52,13 @@ app.get('/question/form', function(req, res){
 app.get('/question/*', function(req, res){
   res.render('question', {
     title: constant.siteName + ' :: ' + '질문제목',
+    siteName: constant.siteName
+  });
+});
+
+app.get('/join', function(req, res){
+  res.render('join-form', {
+    title: constant.siteName + ' :: ' + '가입',
     siteName: constant.siteName
   });
 });
