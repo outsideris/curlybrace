@@ -1,5 +1,6 @@
 var everyauth = module.exports = require('everyauth')
-  , conf = require('../conf/authconf');
+  , conf = require('../conf/authconf')
+  , http = require('http');
 
 everyauth.debug = true;
 
@@ -46,4 +47,22 @@ everyauth
     })
      .redirectPath('/join');
   
-// everyauth.me2day
+everyauth.me2day = function(callback) {
+  var options = {
+     host: 'me2day.net'
+   , port: 80
+   , path: '/api/get_auth_url.json?akey=' + conf.me2day.key
+  };
+  http.get(options, function(res) {
+      var body = '';
+      res.on('data', function(data) {
+        body += data; 
+      });
+      res.on('end', function() {
+        body = JSON.parse(body);
+        callback(null, body.url, body.token);
+      });
+    }).on('error', function(e) {
+      callback(e);
+    });
+};

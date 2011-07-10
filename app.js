@@ -57,11 +57,31 @@ app.get('/question/*', function(req, res){
 });
 
 app.get('/join', function(req, res){
+  if(req.session.auth.me2day) {
+    var q = req.query;
+    var me2day = req.session.auth.me2day;
+    if(me2day.token === q.token && !!q.result) {
+      req.session.auth.loggedIn = true;
+      me2day.user = {};
+      me2day.user.id = q.user_id;
+      me2day.user.key = q.user_key;
+    }
+  }
   res.render('join-form', {
     title: constant.siteName + ' :: ' + '가입',
     siteName: constant.siteName
   });
 });
+
+app.get('/auth/me2day', function(req, res) {
+  everyauth.me2day(function(err, redirectUrl, token) {
+    sess = req.session;
+    sess.auth = {};
+    sess.auth.me2day = {};
+    sess.auth.me2day.token = token;
+    res.redirect(redirectUrl, 303); 
+  });
+})
 
 // Only listen on $ node app.js
 
