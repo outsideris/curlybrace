@@ -1,0 +1,20 @@
+{
+  "name": "curlybrace"
+, "description": "Stackoverflow Homage"
+, "version": "0.0.2"
+, "author" : "Outsider <outsideris@gmail.com> (http://sideeffect.kr) (http://blog.outsider.ne.kr)"
+, "repository": {
+    "type": "git"
+  , "url": "git://github.com/outsideris/curlybrace.git"
+  }
+, "private": true
+, "dependencies": {
+    "express": "2.4.2"
+  , "jade": ">= 0.0.1"
+  , "stylus": ">= 0.0.1"
+  , "everyauth": "0.2.15"
+  }
+, "scripts": {
+  , "start": "node app.js"
+  }
+}
