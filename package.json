@@ -13,6 +13,7 @@
   , "jade": ">= 0.0.1"
   , "stylus": ">= 0.0.1"
   , "everyauth": "0.2.15"
+  , "mongolian": ">= 0.1.10"
   }
 , "scripts": {
   , "start": "node app.js"
