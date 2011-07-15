@@ -1,5 +1,6 @@
 var everyauth = module.exports = require('everyauth')
   , conf = require('../conf/authconf')
+  , CONST = reuqire('../onf/constant')
   , http = require('http');
 
 everyauth.debug = true;
@@ -11,7 +12,7 @@ var usersByMe2dayId = {};
 
 everyauth
   .facebook
-    .myHostname('http://curlybrace.com:3000')
+    .myHostname(CONST.HOST)
     .appId(conf.facebook.appId)
     .appSecret(conf.facebook.appSecret)
     .findOrCreateUser( function (session, accessToken, accessTokenExtra, fbUserMetadata) {
@@ -22,7 +23,7 @@ everyauth
 
 everyauth
   .twitter
-    .myHostname('http://curlybrace.com:3000')
+    .myHostname(CONST.HOST)
     .consumerKey(conf.twitter.consumerKey)
     .consumerSecret(conf.twitter.consumerSecret)
     .findOrCreateUser( function (sess, accessToken, accessSecret, twitUser) {
@@ -34,7 +35,7 @@ everyauth
 
 everyauth
   .google
-    .myHostname('http://curlybrace.com:3000')
+    .myHostname(CONST.HOST)
     .appId(conf.google.clientId)
     .appSecret(conf.google.clientSecret)
     .scope('https://www.google.com/m8/feeds/')

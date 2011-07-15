@@ -5,10 +5,11 @@
 
 var express = require('express')
   , everyauth = require('./utils/everyauth')
+  , CONST = require('./conf/constant')
   , app = module.exports = express.createServer();
 
 var constant = {
-   siteName: '{Curlybrace}'
+   siteName: CONST.SITENAME
 }
 
 // Configuration
