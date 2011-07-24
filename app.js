@@ -4,8 +4,9 @@
  */
 
 var express = require('express')
-  , everyauth = require('./utils/everyauth')
+  , everyauth = require('./libs/everyauth')
   , CONST = require('./conf/constant')
+  , authmanager = require('./libs/authmanager')
   , app = module.exports = express.createServer();
 
 var constant = {
@@ -71,6 +72,12 @@ app.get('/join', function(req, res){
   res.render('join-form', {
     title: constant.siteName + ' :: ' + '가입',
     siteName: constant.siteName
+  });
+});
+
+app.post('/join', function(req, res) {
+  authmanager.addNewAcount(req.session.auth, req.body.nickname, function() {
+    res.redirect('/', 302); 
   });
 });
 

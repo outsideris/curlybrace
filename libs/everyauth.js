@@ -1,6 +1,6 @@
 var everyauth = module.exports = require('everyauth')
   , conf = require('../conf/authconf')
-  , CONST = reuqire('../onf/constant')
+  , CONST = require('../conf/constant')
   , http = require('http');
 
 everyauth.debug = true;

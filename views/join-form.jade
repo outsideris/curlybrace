@@ -1,28 +1,14 @@
 section.span-17.prepend-1.last.join-form
    - if (everyauth.loggedIn)
-      계정이 존재하지 않습니다. 아래 정보로 가입하시겠습니까?
+      계정이 존재하지 않습니다. 이 인증정보로 새로 가입하시겠습니까?
+      form(action='/join', method='POST')
+        label(for='nickname').span-5 다음 닉네임을 사용합니다 : 
+        - if (everyauth.twitter)
+          input(type='text', name='nickname', id='nickname', value='' + everyauth.twitter.user.name).span-12.last
+        - else if (everyauth.facebook)
+          input(type='text', name='nickname', id='nickname', value='' + everyauth.twitter.user.name).span-12.last
+        - else if (everyauth.me2day)
+          input(type='text', name='nickname', id='nickname', value='' + everyauth.twitter.user.name).span-12.last
+        input(type='submit', value='예, 가입하겠습니다.').span-17.last.submit-btn
       form
-      - if (everyauth.twitter)
-         label(for='nickname').span-2 Nickname: 
-         input(type='text', name='nickname', id='nickname', value='' + everyauth.twitter.user.name).span-15.last
-         label(for='email').span-2 e-mail: 
-         input(type='text', name='email', id='email', value='').span-15.last
-         input(type='submit', value='가입하기').span-17.last.submit-btn
-         //p= JSON.stringify(everyauth.twitter.user)
-      - else if (everyauth.facebook)
-         label(for='nickname').span-2 Nickname: 
-         input(type='text', name='nickname', id='nickname', value='' + everyauth.facebook.user.name).span-15.last
-         label(for='email').span-2 e-mail: 
-         input(type='text', name='email', id='email', value='').span-15.last
-         input(type='submit', value='가입하기').span-17.last.submit-btn
-         //p= JSON.stringify(everyauth.facebook.user)
-      - else if (everyauth.me2day)
-         label(for='nickname').span-2 Nickname: 
-         input(type='text', name='nickname', id='nickname', value='' + everyauth.me2day.user.id).span-15.last
-         label(for='email').span-2 e-mail: 
-         input(type='text', name='email', id='email', value='').span-15.last
-         input(type='submit', value='가입하기').span-17.last.submit-btn
-         //p= JSON.stringify(everyauth.facebook.user)
-     - else
-         p 인증 실패 
-  
+        input(type='submit', value='아니오, 기존에 사용하던 계정이 있습니다.').span-17.last.submit-btn

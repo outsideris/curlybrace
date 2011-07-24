@@ -6,6 +6,7 @@
  */
 
 var app = require('../app')
+  , CONST = require('../conf/constant')
   , assert = require('assert');
 
 
@@ -15,7 +16,7 @@ module.exports = {
       { url: '/' },
       { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' }},
       function(res){
-        assert.includes(res.body, '{Curlybrace}');
+        assert.includes(res.body, CONST.SITENAME);
       });
   }
 };
