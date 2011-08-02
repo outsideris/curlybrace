@@ -27,8 +27,9 @@ everyauth
     .consumerKey(conf.twitter.consumerKey)
     .consumerSecret(conf.twitter.consumerSecret)
     .findOrCreateUser( function (sess, accessToken, accessSecret, twitUser) {
-      console.log('findOrCreateUser');
+      var promise = this.Promise();
       return twitUser;
+      //return promise;
       // return usersByTwitId[twitUser.id] || (usersByTwitId[twitUser.id] = twitUser);
     })
     .redirectPath('/join');
