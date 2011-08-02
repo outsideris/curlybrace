@@ -22,8 +22,7 @@ var authManager = module.exports = {
           nickname:nickname
         , defaultAcount: 'twitter'
         , twitter: {
-            origin: 'twitter'
-          , id: info.user.id
+            id: info.user.id
           , accessToken: info.accessToken
           , accessTokenSecret: info.accessTokenSecret
           , screenName: info.user.screen_name

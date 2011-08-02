@@ -51,7 +51,6 @@ var fixture = module.exports = {
     "nickname" : "testname", 
     "defaultAcount" : "twitter", 
     "twitter" : { 
-      "origin" : "twitter", 
       "id" : 7932892, 
       "accessToken" : 
       "7932892-X2tA5uXoUf24PgSFu4Cu7paTocI31VeNHXn77Z3w78", 
