@@ -6,7 +6,7 @@ var vows = require('vows')
   , Mongolian = require('mongolian');
 
 vows.describe('auth manager').addBatch({
-  'with mongodb': {
+  'with users collection in mongodb': {
     topic: function() {
       var mongo = {};
       mongo.server = new Mongolian(CONST.MONGODB_HOST + ':' + CONST.MONGODB_POST);
@@ -21,6 +21,15 @@ vows.describe('auth manager').addBatch({
       },
       'should new account be inserted': function(err, result) {
         assert.isTrue(result);
+      }
+    }
+  , 'when user didnt loggined try to authentication': {
+      topic: function(mongo) {
+        fixture.twitter.loggedIn = false;
+        authmanager.addNewAcount(fixture.twitter, 'testname', this.callback);
+      },
+      'should new account be not inserted': function(err, result) {
+        assert.isFalse(result);
       }
     }
   , 'when twitter account is inserted': {

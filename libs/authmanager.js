@@ -40,9 +40,9 @@ var authManager = module.exports = {
     }
   }
 , findAcountByid: function(id, type, callback) {
-   // console.log('findAcountByid' + id + '/' + type + '/' + callback);
-    var key = type + '.id';
-    this.users.findOne({'twitter.id':id}, function(err, user) {
+    var criteria = {};
+    criteria[type + '.id'] = id;
+    this.users.findOne(criteria, function(err, user) {
       callback(err, user);
     });
   }
