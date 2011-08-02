@@ -29,6 +29,7 @@ var authManager = module.exports = {
           , name: info.user.name
           , profileImage: info.user.profile_image_url_https
           , link: 'http://twitter.com/' + info.user.screen_name
+          , regdate: new Date()
           }
         };
       }
@@ -42,7 +43,7 @@ var authManager = module.exports = {
    // console.log('findAcountByid' + id + '/' + type + '/' + callback);
     var key = type + '.id';
     this.users.findOne({'twitter.id':id}, function(err, user) {
-      callback(null, user);
+      callback(err, user);
     });
   }
 }.init();
