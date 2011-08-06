@@ -12,7 +12,7 @@ vows.describe('auth manager').addBatch({
       mongo.server = new Mongolian(CONST.MONGODB_HOST + ':' + CONST.MONGODB_POST);
       mongo.db = mongo.server.db(CONST.MONGODB_DB);
       mongo.users = mongo.db.collection(CONST.MONGODB_COLLECTION);
-      //mongo.users.remove();
+      mongo.users.remove({});
       return mongo;
     }
   , 'when twitter authentication is progress': {
