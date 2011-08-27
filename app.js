@@ -59,6 +59,8 @@ app.get('/question/*', function(req, res){
 });
 
 app.get('/join', function(req, res){
+  console.log(req.session.auth);
+  console.log(everyauth.Promise());
   if(req.session.auth.me2day) {
     var q = req.query;
     var me2day = req.session.auth.me2day;

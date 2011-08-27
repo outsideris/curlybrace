@@ -1,6 +1,8 @@
 var everyauth = module.exports = require('everyauth')
   , conf = require('../conf/authconf')
   , CONST = require('../conf/constant')
+  , authmanager = require('./authmanager')
+  , Promise = everyauth.Promise
   , http = require('http');
 
 everyauth.debug = true;
@@ -28,9 +30,18 @@ everyauth
     .consumerSecret(conf.twitter.consumerSecret)
     .findOrCreateUser( function (sess, accessToken, accessSecret, twitUser) {
       var promise = this.Promise();
-      return twitUser;
-      //return promise;
-      // return usersByTwitId[twitUser.id] || (usersByTwitId[twitUser.id] = twitUser);
+      authmanager.findAcountByid(twitUser.id, 'twitter', function (err, user) {
+        if (err) return promise.fail(err);
+        //user ? promise.fulfill(user) : promise.fulfill({});
+        if (user) {
+          console.log('user');
+          promise.fulfill(user);
+        } else {
+          console.log('none');
+          promise.fulfill({})
+        }
+      });
+      return promise;
     })
     .redirectPath('/join');
 
