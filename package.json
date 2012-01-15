@@ -9,12 +9,11 @@
   }
 , "private": true
 , "dependencies": {
-    "express": "2.4.2"
+    "express": "~2.5.0"
   , "jade": ">= 0.0.1"
   , "stylus": ">= 0.0.1"
-  , "everyauth": "0.2.15"
+  , "everyauth": "~0.2.0"
   , "mongolian": ">= 0.1.10"
-  , "vows": ">=0.5.9"
   }
 , "scripts": {
   , "start": "node app.js"
