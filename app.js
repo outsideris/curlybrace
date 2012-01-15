@@ -4,28 +4,23 @@
  */
 
 var express = require('express')
-  , everyauth = require('./libs/everyauth')
-  , CONST = require('./conf/constant')
-  , authmanager = require('./libs/authmanager')
-  , app = module.exports = express.createServer();
+  , everyauth = require('./libs/everyauth');
 
-var constant = {
-   siteName: CONST.SITENAME
-}
+var app = module.exports = express.createServer();
 
 // Configuration
 
-app.configure(function(){
+app.configure(function() {
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
   app.use(express.bodyParser());
-  app.use(require('stylus').middleware({ src: __dirname + '/public' }));
-  app.use(express.static(__dirname + '/public'));
   app.use(express.cookieParser());
   app.use(express.session({ secret: 'htuayreve'}));
   app.use(everyauth.middleware());
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
   app.use(express.methodOverride());
   app.use(app.router);
+  app.use(require('stylus').middleware({ src: __dirname + '/public' }));
+  app.use(express.static(__dirname + '/public'));
 });
 
 app.configure('development', function(){
@@ -37,66 +32,24 @@ app.configure('production', function(){
 });
 
 // Routes
-app.get('/', function(req, res){
-  res.render('index', {
-    title: constant.siteName,
-    siteName: constant.siteName
-  });
-});
+var routeQnA = require('./routes/qna')
+  , routeMember = require('./routes/member');
 
-app.get('/question/form', function(req, res){
-  res.render('question-form', {
-    title: constant.siteName + ' :: ' + '질문하기',
-    siteName: constant.siteName
-  });
-});
+// 질문&답변 관련
+app.get('/', routeQnA.index);
 
-app.get('/question/*', function(req, res){
-  res.render('question', {
-    title: constant.siteName + ' :: ' + '질문제목',
-    siteName: constant.siteName
-  });
-});
+app.get('/question/form', routeQnA.questionForm);
 
-app.get('/join', function(req, res){
-  console.log(req.session.auth);
-  console.log(everyauth.Promise());
-  if(req.session.auth.me2day) {
-    var q = req.query;
-    var me2day = req.session.auth.me2day;
-    if(me2day.token === q.token && !!q.result) {
-      req.session.auth.loggedIn = true;
-      me2day.user = {};
-      me2day.user.id = q.user_id;
-      me2day.user.key = q.user_key;
-    }
-  }
-  res.render('join-form', {
-    title: constant.siteName + ' :: ' + '가입',
-    siteName: constant.siteName
-  });
-});
+app.get('/question/:id', routeQnA.questionView);
 
-app.post('/join', function(req, res) {
-  authmanager.addNewAcount(req.session.auth, req.body.nickname, function() {
-    res.redirect('/', 302); 
-  });
-});
+// 회원관련
+app.get('/join', routeMember.joinForm);
 
-app.get('/auth/me2day', function(req, res) {
-  everyauth.me2day(function(err, redirectUrl, token) {
-    sess = req.session;
-    sess.auth = {};
-    sess.auth.me2day = {};
-    sess.auth.me2day.token = token;
-    res.redirect(redirectUrl, 303); 
-  });
-})
+app.post('/join', routeMember.processJoin);
 
-// Only listen on $ node app.js
+app.get('/auth/me2day', routeMember.requestMe2dayAuth);
 
-if (!module.parent) {
-  everyauth.helpExpress(app);
-  app.listen(3000);
-  console.log("Express server listening on port %d", app.address().port);
-}
+// Binding Server
+everyauth.helpExpress(app);
+app.listen(3000);
+console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
