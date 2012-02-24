@@ -4,7 +4,19 @@
  */
 
 var express = require('express')
-  , everyauth = require('./libs/everyauth');
+  , everyauth = require('./libs/everyauth')
+  , clog = require('clog');
+
+// configure clog
+clog.configure({
+  'log level': {
+    'log': true,
+    'info': true,
+    'warn': true,
+    'error': true,
+    'debug': true
+  }
+});
 
 var app = module.exports = express.createServer();
 
