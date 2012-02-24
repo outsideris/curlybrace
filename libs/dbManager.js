@@ -7,7 +7,7 @@ var dbManager = module.exports = {
   , init: function() {
       this.db = new Mongolian(CONST.MONGODB_HOST + ':' + CONST.MONGODB_PORT, {
         log: {
-          debug: function(message){ console.log(message) }
+            debug: function(message){ console.log(message) }
           , info:  function(message){ console.log(message) }
           , warn:  function(message){ console.log(message) }
           , error: function(message){ console.log(message) }
@@ -20,6 +20,6 @@ var dbManager = module.exports = {
       this.users = this.db.collection(collectionName);
     }
   , getUsers: function() {
-    return this.users;
-  }
+      return this.users;
+    }
 }.init();
