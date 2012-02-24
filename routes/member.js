@@ -1,6 +1,6 @@
 var CONST = require('../conf/constant')
   , everyauth = require('../libs/everyauth')
-  , authmanager = require('../libs/authmanager');
+  , authmanager = require('../libs/authManager');
 
 exports.joinForm = function(req, res){
 //  console.log(req.session.auth);
