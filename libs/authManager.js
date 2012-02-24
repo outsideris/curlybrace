@@ -2,17 +2,17 @@ var CONST = require('../conf/constant')
   , users = require('./dbManager').users;
 
 var authManager = module.exports = {
-  addNewAcount: function(userInfo, authOrigin, callback) {
-    var user = {};
-    if (authOrigin === 'facebook') {
-      user = {
-        nickname: userInfo.name
-        , defaultAcount: authOrigin
-        , facebook: userInfo
-        , regDate: new Date()
-      };
-    }
-    users.insert(user, callback);
+    addNewAcount: function(userInfo, authOrigin, callback) {
+      var user = {};
+      if (authOrigin === 'facebook') {
+        user = {
+          nickname: userInfo.name
+          , defaultAcount: authOrigin
+          , facebook: userInfo
+          , regDate: new Date()
+        };
+      }
+      users.insert(user, callback);
 //      if (data.loggedIn) {
 //        if (data.twitter) {
 //          var info = data.twitter;
@@ -36,12 +36,12 @@ var authManager = module.exports = {
 //      } else {
 //        callback(null, false);
 //      }
-  }
+    }
   , findAcountById: function(id, authOrigin, callback) {
-    var criteria = {};
-    criteria[authOrigin + '.id'] = id;
-    users.findOne(criteria, function(err, user) {
-      callback(err, user);
-    });
-  }
+      var criteria = {};
+      criteria[authOrigin + '.id'] = id;
+      users.findOne(criteria, function(err, user) {
+        callback(err, user);
+      });
+    }
 };
