@@ -26,7 +26,6 @@ everyauth.facebook
     var promise = this.Promise();
     authManager.findAcountBy(fbUserMetadata.id, AuthOriginEnum.facebook, function(err, user) {
       if (err) return promise.fail(err);
-      clog.debug(user);
       if (user) {
         promise.fulfill(user);
       } else {
@@ -42,22 +41,25 @@ everyauth.facebook
 everyauth.twitter
   .consumerKey(conf.twitter.consumerKey)
   .consumerSecret(conf.twitter.consumerSecret)
-  .findOrCreateUser( function (sess, accessToken, accessSecret, twitUser) {
+  .findOrCreateUser( function (session, accessToken, accessTokenSecret, twitterUserMetadata) {
+    clog.debug('session: ' + util.inspect(session));
+    clog.debug('accessToken: ' + util.inspect(accessToken));
+    clog.debug('accessTokenSecret: ' + util.inspect(accessTokenSecret));
+    clog.debug('twitterUserMetadata: ' + util.inspect(twitterUserMetadata));
     var promise = this.Promise();
-    authmanager.findAcountByid(twitUser.id, 'twitter', function (err, user) {
+    authManager.findAcountBy(twitterUserMetadata.id, AuthOriginEnum.twitter, function (err, user) {
       if (err) return promise.fail(err);
-      //user ? promise.fulfill(user) : promise.fulfill({});
       if (user) {
-        clog.info('user');
         promise.fulfill(user);
       } else {
-        clog.info('none');
-        promise.fulfill({})
+        authManager.addNewAcount(twitterUserMetadata, AuthOriginEnum.twitter, function(err, insertedUser) {
+          promise.fulfill(insertedUser);
+        });
       }
     });
     return promise;
   })
-  .redirectPath('/join');
+  .redirectPath('/');
 
 everyauth
   .google
