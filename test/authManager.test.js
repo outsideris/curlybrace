@@ -1,5 +1,7 @@
 var should = require('should')
+  , AuthOriginEnum = require('../conf/enums').AuthOriginEnum
   , dbManager = require('../libs/dbManager')
+  , clog = require('clog')
   , CONST = require('../conf/constant');
 
 var fixture = {
@@ -20,8 +22,10 @@ var fixture = {
 
 describe('authManager', function() {
   var authManager;
+  var users;
   before(function() {
     dbManager.setUsers(CONST.MONGODB_COLLECTION_USERS + '_test');
+    users = dbManager.users;
     authManager = require('../libs/authManager')
   });
   beforeEach(function() {
@@ -29,10 +33,16 @@ describe('authManager', function() {
   });
   describe('사용자 추가', function() {
     it('페이스북 사용자 추가', function(done) {
-      authManager.addNewAcount(fixture.facebookInfo, 'facebook', function(err, value) {
-        console.log('error: ' + err);
-        console.log(value);
-        done();
+      authManager.addNewAcount(fixture.facebookInfo, AuthOriginEnum.facebook, function(err, value) {
+        var criteria = {};
+        criteria['authInfo.' + AuthOriginEnum.facebook + '.id'] = fixture.facebookInfo.id;
+        users.findOne(criteria, function(err, user) {
+          should.exist(user);
+          user.should.have.property('authInfo')
+                     .have.property(AuthOriginEnum.facebook)
+                     .have.property('name', fixture.facebookInfo.name);
+          done();
+        });
       });
     });
   });
