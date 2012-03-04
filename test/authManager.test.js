@@ -31,9 +31,12 @@ describe('authManager', function() {
   beforeEach(function() {
     dbManager.getUsers().remove();
   });
+  afterEach(function() {
+    dbManager.getUsers().remove();
+  });
   describe('사용자 추가', function() {
     it('페이스북 사용자 추가', function(done) {
-      authManager.addNewAcount(fixture.facebookInfo, AuthOriginEnum.facebook, function(err, value) {
+      authManager.addNewAcount(fixture.facebookInfo, AuthOriginEnum.facebook, function(err, user) {
         var criteria = {};
         criteria['authInfo.' + AuthOriginEnum.facebook + '.id'] = fixture.facebookInfo.id;
         users.findOne(criteria, function(err, user) {
@@ -43,6 +46,22 @@ describe('authManager', function() {
                      .have.property('name', fixture.facebookInfo.name);
           done();
         });
+      });
+    });
+    it('페이스북 사용자 찾기', function(done) {
+      var fixtureUser = {
+          nickname: fixture.facebookInfo.name
+        , defaultAcountType: AuthOriginEnum.facebook
+        , authInfo: {}
+        , regDate: new Date()
+      };
+      fixtureUser['authInfo'][AuthOriginEnum.facebook] = fixture.facebookInfo;
+      users.insert(fixtureUser);
+      authManager.findAcountBy(fixture.facebookInfo.id, AuthOriginEnum.facebook, function(err, user) {
+        user.should.have.property('authInfo')
+                   .have.property(AuthOriginEnum.facebook)
+                   .have.property('name', fixture.facebookInfo.name);
+        done();
       });
     });
   });

@@ -14,11 +14,9 @@ var authManager = module.exports = {
 
       users.insert(user, callback);
     }
-  , findAcountById: function(id, authOrigin, callback) {
+  , findAcountBy: function(id, authOrigin, callback) {
       var criteria = {};
-      criteria[authOrigin + '.id'] = id;
-      users.findOne(criteria, function(err, user) {
-        callback(err, user);
-      });
+      criteria['authInfo.' + authOrigin + '.id'] = id;
+      users.findOne(criteria, callback);
     }
 };
