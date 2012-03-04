@@ -7,6 +7,7 @@ var express = require('express')
   , everyauth = require('./libs/everyauth')
   , clog = require('clog');
 
+global.clog = clog;
 // configure clog
 clog.configure({
   'log level': {

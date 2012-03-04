@@ -1,7 +1,6 @@
 var should = require('should')
   , AuthOriginEnum = require('../conf/enums').AuthOriginEnum
   , dbManager = require('../libs/dbManager')
-  , clog = require('clog')
   , CONST = require('../conf/constant');
 
 var fixture = {
