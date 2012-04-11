@@ -61,20 +61,29 @@ everyauth.twitter
   })
   .redirectPath('/');
 
-everyauth
-  .google
-  .myHostname(CONST.HOST)
+everyauth.google
   .appId(conf.google.clientId)
   .appSecret(conf.google.clientSecret)
   .scope('https://www.google.com/m8/feeds/')
-  .findOrCreateUser( function (sess, accessToken, extra, googleUser) {
-    console.log('google find');
-    googleUser.refreshToken = extra.refresh_token;
-    googleUser.expiresIn = extra.expires_in;
-    return googleUser;
-    //return usersByGoogleId[googleUser.id] || (usersByGoogleId[googleUser.id] = googleUser);
+  .findOrCreateUser( function (session, accessToken, accessTokenExtra, googleUserMetaData) {
+    clog.debug('session: ' + util.inspect(session));
+    clog.debug('accessToken: ' + util.inspect(accessToken));
+    clog.debug('accessTokenExtra: ' + util.inspect(accessTokenExtra));
+    clog.debug('googleUserMetaData: ' + util.inspect(googleUserMetaData));
+    var promise = this.Promise();
+    authManager.findAcountBy(googleUserMetaData.id, AuthOriginEnum.google, function (err, user) {
+      if (err) return promise.fail(err);
+      if (user) {
+        promise.fulfill(user);
+      } else {
+        authManager.addNewAcount(googleUserMetaData, AuthOriginEnum.google, function(err, insertedUser) {
+          promise.fulfill(insertedUser);
+        });
+      }
+    });
+    return promise;
   })
-  .redirectPath('/join');
+  .redirectPath('/');
 
 everyauth.me2day = function(callback) {
   var options = {
