@@ -48,13 +48,6 @@ describe('라우팅', function() {
         done();
       });
     });
-    it('미투데이 인증 요청페이지는 미투데이로 리다이렉트 된다.', function(done) {
-      http.get({path: '/auth/me2day', port: 3000}, function(res) {
-        //res.should.have.status(303);
-        //res.headers.location.should.match(/^https:\/\/accounts.google.com\/o\/oauth2\/auth/);
-        done();
-      });
-    });
   });
 });
 
