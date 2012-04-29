@@ -23,7 +23,7 @@ describe('authManager', function() {
   var authManager;
   var users;
   before(function() {
-    dbManager.setUsers(CONST.MONGODB_COLLECTION_USERS + '_test');
+    //dbManager.setUsers(CONST.MONGODB_COLLECTION_USERS + '_test');
     users = dbManager.users;
     authManager = require('../libs/authManager')
   });
