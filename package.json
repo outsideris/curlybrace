@@ -14,9 +14,11 @@
   , "stylus": ">= 0.0.1"
   , "everyauth": "~0.2.0"
   , "mongolian": ">= 0.1.10"
-  , "mocha": "~0.10.0"
-  , "should": "~0.5.0"
   , "clog": "~0.1"
+  }
+, "devDependencies": {
+    "should": "~0.5.0"
+  , "mockery": "~1.1.2" 
   }
 , "scripts": {
   , "start": "node app.js"
