@@ -1,12 +1,6 @@
 Code name : Curlybrace
+[![Build Status](https://secure.travis-ci.org/outsideris/curlybrace.png?branch=master)](http://travis-ci.org/outsideris/curlybrace)
 =============================
-
-## Requirements
-- node.js v0.4.8
-- express v2.3.9
-- jade v0.11.0
-- stylus v0.13.0
-- everyauth v0.2.3
 
 ## Description
 Not Yet....
