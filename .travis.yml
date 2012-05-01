@@ -4,3 +4,6 @@ node_js:
   - 0.7
 before_install:
   - npm install mocha -g
+matrix:
+  allow_failures:
+    - node_js: 0.7
