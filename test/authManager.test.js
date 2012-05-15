@@ -23,15 +23,15 @@ describe('authManager', function() {
   var authManager;
   var users;
   before(function() {
-    //dbManager.setUsers(CONST.MONGODB_COLLECTION_USERS + '_test');
+    dbManager.setUsers(CONST.MONGODB_COLLECTION_USERS + '_test');
     users = dbManager.users;
     authManager = require('../libs/authManager')
   });
   beforeEach(function() {
-    dbManager.getUsers().remove();
+    dbManager.users.remove();
   });
   afterEach(function() {
-    dbManager.getUsers().remove();
+    dbManager.users.remove();
   });
   describe('사용자 추가', function() {
     it('페이스북 사용자 추가', function(done) {

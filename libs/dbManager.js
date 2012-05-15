@@ -19,7 +19,4 @@ var dbManager = module.exports = {
   , setUsers: function(collectionName) {
       this.users = this.db.collection(collectionName);
     }
-  , getUsers: function() {
-      return this.users;
-    }
 }.init();
