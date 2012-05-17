@@ -1,6 +1,7 @@
 var should = require('should')
   , AuthOriginEnum = require('../conf/enums').AuthOriginEnum
   , dbManager = require('../libs/dbManager')
+  , authManager = require('../libs/authManager')
   , CONST = require('../conf/constant');
 
 var fixture = {
@@ -20,18 +21,14 @@ var fixture = {
 };
 
 describe('authManager', function() {
-  var authManager;
   var users;
   before(function() {
-    dbManager.setUsers(CONST.MONGODB_COLLECTION_USERS + '_test');
-    users = dbManager.users;
-    authManager = require('../libs/authManager')
+    var db = dbManager.init({'users':'user_test'});
+    users = db.users;
+    authManager.init(db);
   });
   beforeEach(function() {
-    dbManager.users.remove();
-  });
-  afterEach(function() {
-    dbManager.users.remove();
+    users.remove();
   });
   describe('사용자 추가', function() {
     it('페이스북 사용자 추가', function(done) {

@@ -4,19 +4,22 @@ var Mongolian = require('mongolian')
 var dbManager = module.exports = {
     db: null
   , users: null
-  , init: function() {
-      this.db = new Mongolian(CONST.MONGODB_HOST + ':' + CONST.MONGODB_PORT, {
+  , init: function(opt) {
+      var config = {
+          host: opt.host || CONST.MONGODB_HOST
+        , port: opt.port || CONST.MONGODB_PORT
+        , dbName: opt.dbName || CONST.MONGODB_DB
+        , users: opt.users || CONST.MONGODB_COLLECTION_USERS
+      }
+      this.db = new Mongolian(config.host + ':' + config.port, {
         log: {
             debug: function(message){ console.log(message) }
           , info:  function(message){ console.log(message) }
           , warn:  function(message){ console.log(message) }
           , error: function(message){ console.log(message) }
         }
-      }).db(CONST.MONGODB_DB);
-      this.users = this.db.collection(CONST.MONGODB_COLLECTION_USERS);
+      }).db(config.dbName);
+      this.users = this.db.collection(config.users);
       return this;
     }
-  , setUsers: function(collectionName) {
-      this.users = this.db.collection(collectionName);
-    }
-}.init();
+};

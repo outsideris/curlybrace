@@ -4,7 +4,7 @@
  */
 
 var express = require('express')
-  , everyauth = require('./libs/everyauth')
+  , everyauth = require('./libs/everyauth').init()
   , clog = require('clog');
 
 global.clog = clog;
@@ -22,7 +22,6 @@ clog.configure({
 var app = module.exports = express.createServer();
 
 // Configuration
-
 app.configure(function() {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
