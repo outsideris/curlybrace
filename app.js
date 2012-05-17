@@ -65,3 +65,8 @@ app.get('/auth/me2day', routeMember.requestMe2dayAuth);
 everyauth.helpExpress(app);
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+
+// error handling
+process.on('uncaughtException', function(err) {
+  console.log('Caught exception: ' + err.stack || err.message);
+});
