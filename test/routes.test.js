@@ -1,6 +1,6 @@
 var should = require('should')
   , http = require('http')
-  , conf = require('../conf/authconf')
+  , conf = require('../conf/authconf');
 
 describe('라우팅', function() {
   var server;
@@ -34,8 +34,8 @@ describe('라우팅', function() {
     var ea, everyauthMock, server;
 
     before(function() {
-      server = require('../app')
-      ea = require('../libs/everyauth')
+      server = require('../app');
+      ea = require('../libs/everyauth');
 
       everyauthMock = ea.init();
       everyauthMock.twitter
@@ -68,6 +68,12 @@ describe('라우팅', function() {
       delete require.cache[require.resolve('../libs/everyauth')];
       delete require.cache[require.resolve('everyauth')];
       delete require.cache[require.resolve('everyauth/lib/modules/twitter')];
+    });
+    it('로그인폼 페이지는 200 OK이어야 한다.', function(done) {
+      http.get({path: '/login', port: 3000}, function(res) {
+        res.should.have.status(200);
+        done();
+      });
     });
     it('트위터 인증 요청페이지는 트위터로 리다이렉트 된다.', function(done) {
       http.get({path: '/auth/twitter', port: 3000}, function(res) {
