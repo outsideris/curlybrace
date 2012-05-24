@@ -1,13 +1,14 @@
 ul#questionLists
-  - [1,2,3,4,5].forEach(function(q) {
+  - var questions = [1,2,3,4,5,6,7,8]
+  each c in questions
     li.question.row
       a(href='/question/123/').row
-        h3.span7 Question #{q} Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
+        h3.span7 Question #{c} Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
         div.infomation
           span.votecount(title='투표 수').span1 20
           span.answercount(title='답변 수').span1 30
       .row
-        ul.tags.span6
+        ul.unstyled.tags.span6
           li.tag
             a(href="#").btn.btn-mini
               i.icon-tag
@@ -29,4 +30,3 @@ ul#questionLists
                img(src='https://convore2.s3.amazonaws.com/userpics/3795/1297298357.jpg', alt='Avatar for tbeseda', title='tbeseda', width='20', height='20')
             a(href='/') Outsider
         time 2일 전
-  - })
