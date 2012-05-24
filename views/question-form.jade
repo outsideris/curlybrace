@@ -1,8 +1,9 @@
-article.span-17.prepend-1.last.question-form
-   form
-      input(type='text', name='title', id='title').span-17.last
-      textarea.span-17.last
-      | 태그 
-      input(type='text', name='tags', id='tags').span-17.last
-      input(type='submit', value='질문하기').span-17.last.submit-btn
-  
+article.row
+  .question-box.span9
+    .question-form
+      form
+        input(type='text', name='title', id='title', placeholder='제목').span8
+        textarea.span8
+        label(for=tags') 태그
+        input(type='text', name='tags', id='tags').span8
+        input(type='submit', value='질문하기').btn.btn-primary.pull-right.submit-btn

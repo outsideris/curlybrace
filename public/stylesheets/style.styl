@@ -1,424 +1,400 @@
 temp-boxing()
-   border-width 1px
-   border-color #000
-   border-style double
+  border-width 1px
+  border-color #000
+  border-style double
 
-DARKGREY_COLOR = #424242   
+DARKGREY_COLOR = #424242
+LIGHTGREY_COLOR = #B5B5B5
 REDTONE_COLOR = #be2a2a
 PINKTONE_COLOR = #a9646c
 LIGHTBLUETONE_COLOR = #00678f
 BULETONE_COLOR = #003761
 WHITE_COLOR = #FFF
-   
+BACKGROUND_COLOR = #1d83a4
+
 vendor(prop, args)
-   -webkit-{prop} args
-   -moz-{prop} args
-   -o-{prop} args
-   -ms-{prop} args
-   {prop} args
+  -webkit-{prop} args
+  -moz-{prop} args
+  -o-{prop} args
+  -ms-{prop} args
+  {prop} args
 
 border-radius()
-   vendor('border-radius', arguments)
+  vendor('border-radius', arguments)
 
 transform()
-   vendor('transform', arguments)
-   
-box-shadow()
-   vendor('box-shadow', arguments)
+  vendor('transform', arguments)
    
 @font-face
-   font-family 'BebasNeueRegular'
-   src url('/fonts/BebasNeue-webfont.eot')
-   src url('/fonts/BebasNeue-webfont.woff') format('woff'), url('/fonts/BebasNeue-webfont.ttf') format('truetype'), url('/fonts/BebasNeue-webfont.svg#webfontYW4lu6A6') format('svg')
-   font-weight normal
-   font-style normal
+  font-family 'BebasNeueRegular'
+  src url('/fonts/BebasNeue-webfont.eot')
+  src url('/fonts/BebasNeue-webfont.woff') format('woff'), url('/fonts/BebasNeue-webfont.ttf') format('truetype'), url('/fonts/BebasNeue-webfont.svg#webfontYW4lu6A6') format('svg')
+  font-weight normal
+  font-style normal
 
 body
-   font 14px "Lucida Grande", Helvetica, Arial, sans-serif
-   background-color #efeeee
-   
+  font 14px "Lucida Grande", Helvetica, Arial, sans-serif
+  background-color #1d83a4
+
 a
-   text-decoration none
-   color LIGHTBLUETONE_COLOR
-   &:focus
-   &:hover
-      color REDTONE_COLOR
-   
+  text-decoration none
+  color LIGHTBLUETONE_COLOR
+  &:focus
+  &:hover
+    color REDTONE_COLOR
+
 .clear
-   clear both
+  clear both
    
-.submit-btn
-   box-shadow 0 1px 3px rgba(0,0,0,0.5)
-   text-shadow 0 -1px 1px rgba(0, 0, 0, 0.25)
-   border-bottom 1px solid rgba(0,0,0,0.25)
-   border-radius 5px
-   background-color BULETONE_COLOR
-   color #fff 
-   cursor pointer
-   padding 2px 10px 2px
-   border 0 none 
-   font-size 0.75em
-   &:hover
-      background-color LIGHTBLUETONE_COLOR
-      color #fff 
-
 // 헤더
-header
-   background-color DARKGREY_COLOR
-   border-bottom 3px solid #CCC
-   height 35px
-   width 100%
-   
-header>div
-   margin 0 auto
-   width 950px
-   padding 5px 10px 0 20px
-   
-header a
-   color WHITE_COLOR
-
-#main-logo
-   font normal 1.8em 'BebasNeueRegular', Arial, sans-serif
-   letter-spacing 0.04em
-   padding 7px 0 0 5px
-   text-shadow 0 2px 1px #707070
-   display inline
-   
-#main-logo a:focus,
-#main-logo a:hover
-   color WHITE_COLOR
-
 #betatag
-   font-size 0.4em
-   font-style normal
-   padding 2px 3px 0 2px
-   text-decoration none
-   color WHITE_COLOR
-   text-shadow none
-   background-color #e12e01
-   top -8px
-   left 0
-   position relative
-   border-radius 7px
-   transform rotate(30deg)
-   
-header nav
-   float right
+  font-size 0.4em
+  font-style normal
+  padding 2px 3px 0 2px
+  text-decoration none
+  color WHITE_COLOR
+  text-shadow none
+  background-color #e12e01
+  top -8px
+  left 0
+  position relative
+  border-radius 7px
+  transform rotate(30deg)
 
-header nav ul
-   list-style none
-   margin-top 5px
-
-header nav ul li
-   float left
-   margin-right 20px
-   font normal 1em BebasNeueRegular, Arial, sans-serif
-   font-weight bold
-   //text-shadow 0 1px 0 WHITE_COLOR
-
-header nav ul li a
-   color: #CCC
-   &:focus
-   &:hover
-      color WHITE_COLOR
-      border-bottom-style solid
-      border-bottom-color LIGHTBLUETONE_COLOR
-      border-bottom-width 3px
-   
-#search
-   float:right
-   margin-right 15px
+.main-wrap
+  padding-top 50px
 
 // 푸터
 footer
-   margin-top 20px
-   padding 20px 0 20px 0
-   border-top 1px solid #CCC
-   text-align center
-   font-size 0.8em
+  margin-top 20px
+  padding 20px 0 20px 0
+  text-align center
+  font-size 0.8em
+
+footer a
+  color WHITE_COLOR
+  &:focus
+  &:hover
+    color REDTONE_COLOR
 
 // 컨텐츠
 #contents
-   margin-top 10px
-   min-height 500px
+  min-height 500px
+  background-color WHITE_COLOR
+  border-radius 5px
+  padding-top 5px
 
 #questionLists
-   list-style none
+  list-style none
 
 #questionLists .question
-   min-height 70px
-   margin-bottom 15px
-   border 1px solid #CCC
-   background-color #FFF
+  border-top 1px dotted #B1B1B1
+  min-height 50px
 
 #questionLists .question h3
-   background-color BULETONE_COLOR
-   padding 10px
-   font-size 1.2em
-   margin-bottom 10px
-   color WHITE_COLOR
+  color DARKGREY_COLOR
+  &:focus
+  &:hover
+    color REDTONE_COLOR
 
-#questionLists .question h3 .infomation
-   float right
-   
-#questionLists .question span.viewcount,
+#questionLists .question .infomation
+  margin-top 10px
+
 #questionLists .question span.votecount,
-#questionLists .question span.ansercount
-   border-radius 30px
-   background-color LIGHTBLUETONE_COLOR
-   text-align center
-   width 30px
-   height 30px
-   vertical-align middle
-   line-height 30px
-   font-size 0.6em
-   color WHITE_COLOR
-   position relative
-   top -20px
+#questionLists .question span.answercount
+  border-radius 30px
+  background-color LIGHTBLUETONE_COLOR
+  text-align center
+  width 45px
+  height 45px
+  vertical-align middle
+  line-height 45px
+  font-size 1em
+  color WHITE_COLOR
+
+#questionLists .question span.answercount
+  background-color REDTONE_COLOR
 
 #questionLists .question div.question-body
-   margin 0 10px
-   min-height 40px
+  margin 0 10px
+  min-height 40px
    
 #questionLists .question div.author
-   border-left 1px solid #CCC
-   padding 5px
-   float right
+  border-left 1px solid #CCC
+  padding 5px
+  float right
+  font-size 0.9em
+
+#questionLists .question div.author img
+  margin-right 5px
 
 ul.tags
-   list-style none
-   margin 10px 0 15px 5px
-   padding 0
-   font-size 0.8em
+  font-size 0.7em
+  margin-top 10px
+  margin-left 50px
 
 ul.tags li
-   margin 0
-   padding 0
-   float left
-   margin-right 3px
-   padding 3px 4px
-   border 1px solid #CCC
-   border-radius 7px
-   background-color LIGHTBLUETONE_COLOR
-   & a 
-      color #CCC
-   & a:hover
-   & a:focus
-      color WHITE_COLOR
+  margin 0 5px 0 0
+  float left
+  & a
+    color DARKGREY_COLOR
 
 #questionLists .question time
-   margin 0 0 5px 5px
-   float right
+  float right
+  vertical-align bottom
+  line-height 40px
+  font-size 0.8em
 
 // 글 읽기
-article
-   padding 0
-   margin 0 0 15px 0
-   
 article h3
-   background-color BULETONE_COLOR
-   padding 10px
-   font-size 1.2em
-   margin-bottom 10px
-   color WHITE_COLOR
-   
+  color DARKGREY_COLOR
+  font-size 1.2em
+  padding-left 10px
+
+article .question-vote span.votecount
+  border-radius 30px
+  background-color LIGHTBLUETONE_COLOR
+  text-align center
+  width 45px
+  height 45px
+  vertical-align middle
+  line-height 45px
+  font-size 1em
+  color WHITE_COLOR
+
+article .question-vote span.voteplus,
+article .question-vote span.voteminus
+  border-radius 30px
+  background-color BACKGROUND_COLOR
+  text-align center
+  width 30px
+  height 30px
+  vertical-align middle
+  line-height 30px
+  font-size 0.7em
+  color WHITE_COLOR
+  float left
+  position relative
+
+article .question-vote span.voteplus
+  top -15px
+  left -15px
+
+article .question-vote span.voteminus
+  top -45px
+  left 30px
+
+article .question-vote button
+  display block
+  margin-left 10px
+
 article .question-box
-   border 1px solid #CCC
-   background-color #FFF
-   
+  border-top 1px dotted #B1B1B1
+  padding-top 10px
+
+article .socialbox ul li
+  float right
+
 article .question-box .question-text
-   padding 0 10px 10px 10px
+  padding 10px 10px 10px 20px
    
-article .question-box div.author
-   float right
-   border-left 1px solid #CCC
-   padding 5px
-   margin-left 7px
-   
-article .question-box ul.tags
-   margin 10px 0 3px 5px
+article div.author
+  float right
+  border-left 1px solid #CCC
+  padding 5px
+  margin-left 7px
    
 article time
-   margin-left 10px
-   color DARKGREY_COLOR
-   font-size 0.8em
-
-article .question-vote .voting
-   background-color #2DAEBF
-   &:hover
-      background-color #009D9A
-
-article .question-vote .votecount
-   display block
-   margin 7px 0
-   text-align center
-   font-size 2em
-   font-weight bold
-   
-article span.votecount div
-   display block
+  margin-left 10px
+  color DARKGREY_COLOR
+  font-size 0.8em
 
 article div.submenu
-   clear both
-   
-article div.submenu ul
-   list-style none
+  padding-top 20px
 
 article div.submenu ul li
-   float right
-   margin-left 8px
-   margin-bottom 3px
-   font-size 0.8em
-   & a 
-      color #CCC
-   & a:hover
-   & a:focus
-      color DARKGREY_COLOR
+  float right
+  margin-right 8px
 
 article div.comments-list
-   margin-top 10px
-   font-size 0.85em
+  margin-top 10px
+  font-size 0.8em
 
 article div.comment
-   border-top 1px solid #CCC
-   padding 5px
+  border-top 1px dotted #B1B1B1
+  padding 5px
 
 article div.comment div.profile
-   float left
-   margin-right 10px
+  float left
+  margin-right 10px
    
 article div.comment b.author
-   font-size 0.9em
+  font-size 1.1em
+  margin-right 10px
 
-article div.comment span
-   display block
-   
+article div.comment span time
+  color LIGHTGREY_COLOR
+  font-size 0.8em
+
 article div.comment-write
-   border-top 1px solid #CCC
-   padding 5px
+  border-top 1px dotted #B1B1B1
+  padding 5px
+
+article div.comment-write form
+  display inline
 
 article div.comment-write textarea
-   width 91%
-   margin 0 auto
-   height 20px
-   font-size 0.9em
-   
+  width 91%
+  margin 0 auto
+
 article div.comment-write input[type='submit']
-   float right
-   margin-top 5px
+  margin-top 5px
    
 article .answer-box
-   border 1px solid #CCC
-   border-top 10px solid LIGHTBLUETONE_COLOR
-   padding-top 5px
-   background-color #FFF
-   margin-top 20px
-   
+  border-top 1px dotted #B1B1B1
+  padding-top 5px
+  margin-top 20px
+
+article .answer-box .voting-box .answer-vote span.votecount
+  border-radius 30px
+  background-color LIGHTBLUETONE_COLOR
+  text-align center
+  width 45px
+  height 45px
+  vertical-align middle
+  line-height 45px
+  font-size 1em
+  color WHITE_COLOR
+
+article .answer-box .voting-box .answer-vote span.voteplus,
+article .answer-box .voting-box .answer-vote span.voteminus
+  border-radius 30px
+  background-color BACKGROUND_COLOR
+  text-align center
+  width 30px
+  height 30px
+  vertical-align middle
+  line-height 30px
+  font-size 0.7em
+  color WHITE_COLOR
+  float left
+  position relative
+
+article .answer-box .voting-box .answer-vote span.voteplus
+  top -15px
+  left -15px
+
+article .answer-box .voting-box .answer-vote span.voteminus
+  top -45px
+  left 30px
+
+article .answer-box .voting-box .answer-vote button
+  display block
+  margin-left 10px
+
+article .answer-box .socialbox
+  padding-left 30px
+
+article .answer-box .socialbox ul li
+  float none
+  margin-bottom 5px
+
 article .answer-box .answer-text
-   padding 0 10px 10px 10px
-   
+  padding 10px 10px 10px 20px
+
 article .answer-box div.author
-   float right
-   border-left 1px solid #CCC
-   padding 5px
-   margin-left 7px
-   
-article .answer-box ul.tags
-   margin 10px 0 3px 5px
+  float right
+  border-left 1px solid #CCC
+  padding 5px
+  margin-left 7px
    
 article time
-   margin-left 10px
-   color DARKGREY_COLOR
-   font-size 0.8em
+  margin-left 10px
+  color DARKGREY_COLOR
+  font-size 0.8em
 
 article .answer-vote
-   margin-top 20px
+  margin-top 10px
 
 article .answer-vote .voting
-   background-color #2DAEBF
-   &:hover
-      background-color #009D9A
+  background-color #2DAEBF
+  &:hover
+    background-color #009D9A
 
 article .answer-vote .votecount
-   display block
-   margin 7px 0
-   text-align center
-   font-size 2em
-   font-weight bold
+  display block
+  margin 7px 0
+  text-align center
+  font-size 2em
+  font-weight bold
    
+article .answer-write-box
+  border-top 1px dotted #B1B1B1
+  margin-top 20px
+  margin-bottom 20px
+
 article .answer-write
-   border 1px solid #CCC
-   border-top 5px solid LIGHTBLUETONE_COLOR
-   padding 10px
-   background-color #FFF
-   margin-top 20px
-   margin-left 40px
-   width 640px
+  padding 10px
 
 article .answer-write textarea
-   width 98%
-   height 200px
-   margin 0 auto
-   font-size 0.9em
-   
+  width 98%
+  min-height 200px
+  margin 0 auto
+  font-size 0.9em
+
 article .answer-write .submit-btn
-   margin 10px 0 10px 0
-   float right
-   font-size 1em
-   
+  margin-top 5px
+
 // 사이드바
-aside
-   margin-top 10px
-   
+aside #postBtn
+  width 190px
+
 aside .labelbox
-   margin-top 5px
-   border 1px solid #CCC
-   float left
-   width 100%
+  margin-top 5px
+  float left
+  width 100%
    
 aside .labelbox h4
-   border 1px solid #CCC
-   background-color #CCC
-   font-size 0.9em
-   margin 0 0 10px 0
-   padding 3px
+  border-top 1px solid LIGHTGREY_COLOR
+  border-bottom 1px solid LIGHTGREY_COLOR
+  font-size 0.9em
+  margin 10px 0 10px 0
+  padding 10px 0 10px 10px
+  font-size 1.5em
+  font-wight bolder
+  color WHITE_COLOR
 
 aside .labelbox ul
-   margin 5px
-   padding-left 0.7em
+  margin 5px
+  padding-left 0.7em
 
 aside .labelbox ul li
-   list-style none
-   line-height 1.5em
-   
-#postBtn
-   display block
-   width 100%
-   font-size 1.5em
-   text-align center
-   padding 10px 0
-   
-#login ul
-   list-style none
-   padding-left 1.5em
-   
-#login ul li
-   float left
-   margin-right 10px
-   margin-bottom 10px
-   
+  list-style none
+  line-height 1.5em
+
+aside .labelbox ul li a
+  color LIGHTGREY_COLOR
+  &:focus
+  &:hover
+    color REDTONE_COLOR
+
 // 질문 작성폼
-article.question-form form input
-   height 25px
+article .question-form
+  padding 10px 10px 10px 30px
+  margin-top 10px
 
-article.question-form form textarea
-   font-size 0.9em
+article .question-form form textarea
+  min-height 300px
+  font-size 0.9em
 
-article.question-form form .submit-btn
-   font-size 1.2em
-   height 2.5em
-   
-// 가입 폼
-section.join-form .submit-btn
-   font-size 1.2em
-   height 2.5em
+// 로그인
+.login
+  padding-left 20px
+
+.login ul
+  margin-top 30px
+  text-align center
+
+.login ul li
+  margin-bottom 30px
+

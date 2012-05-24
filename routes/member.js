@@ -36,3 +36,10 @@ exports.requestMe2dayAuth = function(req, res) {
     res.redirect(redirectUrl, 303);
   });
 };
+
+exports.loginForm = function(req, res) {
+  res.render('loginForm', {
+    title: CONST.SITENAME,
+    siteName: CONST.SITENAME
+  });
+};
