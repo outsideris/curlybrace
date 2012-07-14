@@ -2,8 +2,17 @@ article.row
   .question-box.span9
     .question-form
       form
-        input(type='text', name='title', id='title', placeholder='제목').span8
-        textarea.span8
+        input(type='text', name='title', id='title', placeholder='제목')
+        ul.nav.nav-tabs#editor-tabs
+          li
+            a(href='#editor', data-toggle='tab')#editor-tab Editor
+          li
+            a(href='#preview', data-toggle='tab')#preview-tab Preview
+        .tab-content
+          .tab-pane#editor
+            textarea
+          .tab-pane#preview
+            #preview-box
         label(for=tags') 태그
-        input(type='text', name='tags', id='tags').span8
+        input(type='text', name='tags', id='tags')
         input(type='submit', value='질문하기').btn.btn-primary.pull-right.submit-btn
