@@ -1,19 +1,22 @@
-.page-header.login
-  h1 로그인
-    small 구글, 트위터, 페이스북, 깃허브, 미투데이를 통해서 로그인할 수 있습니다.
-  ul
-    li
-      a(href='/auth/google')
-        img(src='/images/signin_google.png')
-    li
-      a(href='/auth/twitter')
-        img(src='/images/signin_twitter.png')
-    li
-      a(href='/auth/facebook')
-        img(src='/images/signin_facebook.png')
-    li
-      a(href='/auth/github')
-        img(src='/images/signin_github.png')
-    li
-      a(href='/auth/me2day')
-        img(src='/images/signin_me2day.png')
+extends layout
+
+block mainContent
+  .page-header.login
+    h1 로그인
+      small 구글, 트위터, 페이스북, 깃허브, 미투데이를 통해서 로그인할 수 있습니다.
+    ul
+      li
+        a(href='/auth/google')
+          img(src='/images/signin_google.png')
+      li
+        a(href='/auth/twitter')
+          img(src='/images/signin_twitter.png')
+      li
+        a(href='/auth/facebook')
+          img(src='/images/signin_facebook.png')
+      li
+        a(href='/auth/github')
+          img(src='/images/signin_github.png')
+      li
+        a(href='/auth/me2day')
+          img(src='/images/signin_me2day.png')

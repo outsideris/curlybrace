@@ -1,124 +1,38 @@
-article.row
-  .question-box.span9
-    .row
-      h3.span7 Question 1 Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
-      .question-vote.row
-        span.votecount(title='투표 수').span1 20
-          span.voteplus(title='+ 수') +30
-          span.voteminus(title='- 수') -10
-        .span1
-          form
-            button.btn.btn-small.btn-success
-             i.icon-plus
-             | &nbsp;
-             i.icon-plus
-          form
-            button.btn.btn-small.btn-danger
-             i.icon-minus
-             | &nbsp;
-             i.icon-minus
-    .socialbox.row
-      .span9
-        ul.unstyled
-          li
-            g:plusone(size='medium').social
-          li
-            .fb-like(data-layout='button_count', data-send='false', data-width='100', data-show-faces='false').social
-          li
-            a(href='https://twitter.com/share', data-hashtags='curlybrace').twitter-share-button.social Tweet
-    .question-text
-      p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quis neque quis lacus varius dignissim et vitae neque. Integer quis pulvinar massa. Integer sed tortor in turpis lacinia vulputate. Proin mauris risus, varius sit amet tempus in, malesuada ut dolor. Sed cursus risus at sapien laoreet viverra. Quisque odio dolor, porttitor vestibulum rhoncus sit amet, auctor a tortor. Nulla interdum mi lectus. Duis dapibus tincidunt odio ut commodo. Donec at felis leo. Vestibulum a tortor vitae sem rhoncus varius sed sagittis neque. Morbi eget mi lacus, bibendum semper justo. In ac enim eros, in tempus libero.
-      p Sed a mi malesuada arcu laoreet hendrerit quis quis purus. Fusce a velit sit amet sem commodo semper. Duis vitae quam elit. In hac habitasse platea dictumst. Ut nec viverra metus. Vivamus eget eros vitae augue eleifend luctus scelerisque sit amet velit. Maecenas ac lacus ut ligula tempor consequat. Quisque venenatis lacinia sodales. Suspendisse semper turpis quis mi dapibus et posuere lacus congue. Morbi fermentum tincidunt nisl, quis aliquam lectus scelerisque quis. Quisque commodo dui id magna sagittis ut laoreet neque eleifend. Nam turpis metus, hendrerit vitae pellentesque eu, sollicitudin a tellus. Aenean at diam nisl, nec condimentum nibh.
-      p Morbi vitae odio id enim rhoncus vestibulum. Fusce dignissim turpis vel lacus vehicula eget mattis justo vestibulum. Aenean vulputate tempus volutpat. Pellentesque porttitor ultrices lectus, et pulvinar mauris mollis id. Praesent vel tellus elit, ac luctus libero. Integer elementum sagittis sollicitudin. Aliquam erat volutpat.
-    .row
-      ul.unstyled.tags.span6
-        li.tag
-          a(href="#").btn.btn-mini
-            i.icon-tag
-            |  python
-        li.tag
-          a(href="#").btn.btn-mini
-            i.icon-tag
-            |  scala
-        li.tag
-          a(href="#").btn.btn-mini
-            i.icon-tag
-            |  node.js
-        li.tag
-          a(href="#").btn.btn-mini
-            i.icon-tag
-            |  ruby
-        li.tag
-          a(href="#").btn.btn-mini
-            i.icon-tag
-            |  java
-      .author.span2
-        a(href='/')
-          img(src='https://convore2.s3.amazonaws.com/userpics/3795/1297298357.jpg', alt='Avatar for tbeseda', title='tbeseda', width='40', height='40')
-        a(href='/') Outsider
-      time 2일 전
-    .submenu.row
-      .span9
-        ul.unstyled
-          li
-            a(href='#').btn.btn-info.btn-mini
-              i.icon-share
-              |  퍼머링크: http://curlybrace.com:3000/394893
-          li
-            a(href='#').btn.btn-info.btn-mini
-              i.icon-edit
-              |  수정
-    .comments-list.row
-      .span1 &nbsp;
-      .span8
-        - var comments = [1,2,3,4,5]
-        each c in comments
-          .comment
-            .profile
-              a(href='/')
-                img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
-            span
-              b.author
-                a(href='#') Outsider
-              |  Ut porttitor iaculis sem id malesuada. Nam dolor elit, mollis ut faucibus nec, placerat eu augue. Nunc dictum iaculis velit. Aliquam nec tempor massa. Morbi ac justo lacus, et placerat purus. Aenean commodo leo vitae nibh gravida id consectetur diam vehicula.
-              time 2일 전
-        .comment.comment-write
-          .profile
-            a(href='/')
-              img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
-          form
-            textarea.input-xlarge(rows='2')
-            input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn
-  - var answers = [1,2,3]
-  each c in answers
-    .answer-box.span9
-      .voting-box.span2.pull-right
-        .answer-vote
+extends layout
+
+block mainContent
+  article.row
+    .question-box.span9
+      .row
+        h3.span7 Question 1 Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
+        .question-vote.row
           span.votecount(title='투표 수').span1 20
             span.voteplus(title='+ 수') +30
             span.voteminus(title='- 수') -10
           .span1
             form
               button.btn.btn-small.btn-success
-                i.icon-plus
-                | &nbsp;
-                i.icon-plus
+               i.icon-plus
+               | &nbsp;
+               i.icon-plus
             form
               button.btn.btn-small.btn-danger
-                i.icon-minus
-                | &nbsp;
-                i.icon-minus
-        .socialbox.row
+               i.icon-minus
+               | &nbsp;
+               i.icon-minus
+      .socialbox.row
+        .span9
           ul.unstyled
             li
               g:plusone(size='medium').social
             li
-              .fb-like(data-layout='button_count', data-send='false', data-width='200', data-show-faces='false').social
+              .fb-like(data-layout='button_count', data-send='false', data-width='100', data-show-faces='false').social
             li
               a(href='https://twitter.com/share', data-hashtags='curlybrace').twitter-share-button.social Tweet
-      .answer-text
+      .question-text
         p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quis neque quis lacus varius dignissim et vitae neque. Integer quis pulvinar massa. Integer sed tortor in turpis lacinia vulputate. Proin mauris risus, varius sit amet tempus in, malesuada ut dolor. Sed cursus risus at sapien laoreet viverra. Quisque odio dolor, porttitor vestibulum rhoncus sit amet, auctor a tortor. Nulla interdum mi lectus. Duis dapibus tincidunt odio ut commodo. Donec at felis leo. Vestibulum a tortor vitae sem rhoncus varius sed sagittis neque. Morbi eget mi lacus, bibendum semper justo. In ac enim eros, in tempus libero.
         p Sed a mi malesuada arcu laoreet hendrerit quis quis purus. Fusce a velit sit amet sem commodo semper. Duis vitae quam elit. In hac habitasse platea dictumst. Ut nec viverra metus. Vivamus eget eros vitae augue eleifend luctus scelerisque sit amet velit. Maecenas ac lacus ut ligula tempor consequat. Quisque venenatis lacinia sodales. Suspendisse semper turpis quis mi dapibus et posuere lacus congue. Morbi fermentum tincidunt nisl, quis aliquam lectus scelerisque quis. Quisque commodo dui id magna sagittis ut laoreet neque eleifend. Nam turpis metus, hendrerit vitae pellentesque eu, sollicitudin a tellus. Aenean at diam nisl, nec condimentum nibh.
+        p Morbi vitae odio id enim rhoncus vestibulum. Fusce dignissim turpis vel lacus vehicula eget mattis justo vestibulum. Aenean vulputate tempus volutpat. Pellentesque porttitor ultrices lectus, et pulvinar mauris mollis id. Praesent vel tellus elit, ac luctus libero. Integer elementum sagittis sollicitudin. Aliquam erat volutpat.
       .row
         ul.unstyled.tags.span6
           li.tag
@@ -152,7 +66,7 @@ article.row
             li
               a(href='#').btn.btn-info.btn-mini
                 i.icon-share
-                |  퍼머링크: http://curlybrace.com:3000/394893#123
+                |  퍼머링크: http://curlybrace.com:3000/394893
             li
               a(href='#').btn.btn-info.btn-mini
                 i.icon-edit
@@ -177,10 +91,99 @@ article.row
                 img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
             form
               textarea.input-xlarge(rows='2')
-              input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn.pull-right
-  .answer-write-box.span9
-    .answer-write
-      .alert.alert-info 이 질문에 답변해 주세요.
-      form
-        textarea
-        input(type='submit', value='답변 작성').btn.btn-primary.submit-btn.pull-right
+              input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn
+    - var answers = [1,2,3]
+    each c in answers
+      .answer-box.span9
+        .voting-box.span2.pull-right
+          .answer-vote
+            span.votecount(title='투표 수').span1 20
+              span.voteplus(title='+ 수') +30
+              span.voteminus(title='- 수') -10
+            .span1
+              form
+                button.btn.btn-small.btn-success
+                  i.icon-plus
+                  | &nbsp;
+                  i.icon-plus
+              form
+                button.btn.btn-small.btn-danger
+                  i.icon-minus
+                  | &nbsp;
+                  i.icon-minus
+          .socialbox.row
+            ul.unstyled
+              li
+                g:plusone(size='medium').social
+              li
+                .fb-like(data-layout='button_count', data-send='false', data-width='200', data-show-faces='false').social
+              li
+                a(href='https://twitter.com/share', data-hashtags='curlybrace').twitter-share-button.social Tweet
+        .answer-text
+          p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quis neque quis lacus varius dignissim et vitae neque. Integer quis pulvinar massa. Integer sed tortor in turpis lacinia vulputate. Proin mauris risus, varius sit amet tempus in, malesuada ut dolor. Sed cursus risus at sapien laoreet viverra. Quisque odio dolor, porttitor vestibulum rhoncus sit amet, auctor a tortor. Nulla interdum mi lectus. Duis dapibus tincidunt odio ut commodo. Donec at felis leo. Vestibulum a tortor vitae sem rhoncus varius sed sagittis neque. Morbi eget mi lacus, bibendum semper justo. In ac enim eros, in tempus libero.
+          p Sed a mi malesuada arcu laoreet hendrerit quis quis purus. Fusce a velit sit amet sem commodo semper. Duis vitae quam elit. In hac habitasse platea dictumst. Ut nec viverra metus. Vivamus eget eros vitae augue eleifend luctus scelerisque sit amet velit. Maecenas ac lacus ut ligula tempor consequat. Quisque venenatis lacinia sodales. Suspendisse semper turpis quis mi dapibus et posuere lacus congue. Morbi fermentum tincidunt nisl, quis aliquam lectus scelerisque quis. Quisque commodo dui id magna sagittis ut laoreet neque eleifend. Nam turpis metus, hendrerit vitae pellentesque eu, sollicitudin a tellus. Aenean at diam nisl, nec condimentum nibh.
+        .row
+          ul.unstyled.tags.span6
+            li.tag
+              a(href="#").btn.btn-mini
+                i.icon-tag
+                |  python
+            li.tag
+              a(href="#").btn.btn-mini
+                i.icon-tag
+                |  scala
+            li.tag
+              a(href="#").btn.btn-mini
+                i.icon-tag
+                |  node.js
+            li.tag
+              a(href="#").btn.btn-mini
+                i.icon-tag
+                |  ruby
+            li.tag
+              a(href="#").btn.btn-mini
+                i.icon-tag
+                |  java
+          .author.span2
+            a(href='/')
+              img(src='https://convore2.s3.amazonaws.com/userpics/3795/1297298357.jpg', alt='Avatar for tbeseda', title='tbeseda', width='40', height='40')
+            a(href='/') Outsider
+          time 2일 전
+        .submenu.row
+          .span9
+            ul.unstyled
+              li
+                a(href='#').btn.btn-info.btn-mini
+                  i.icon-share
+                  |  퍼머링크: http://curlybrace.com:3000/394893#123
+              li
+                a(href='#').btn.btn-info.btn-mini
+                  i.icon-edit
+                  |  수정
+        .comments-list.row
+          .span1 &nbsp;
+          .span8
+            - var comments = [1,2,3,4,5]
+            each c in comments
+              .comment
+                .profile
+                  a(href='/')
+                    img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
+                span
+                  b.author
+                    a(href='#') Outsider
+                  |  Ut porttitor iaculis sem id malesuada. Nam dolor elit, mollis ut faucibus nec, placerat eu augue. Nunc dictum iaculis velit. Aliquam nec tempor massa. Morbi ac justo lacus, et placerat purus. Aenean commodo leo vitae nibh gravida id consectetur diam vehicula.
+                  time 2일 전
+            .comment.comment-write
+              .profile
+                a(href='/')
+                  img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
+              form
+                textarea.input-xlarge(rows='2')
+                input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn.pull-right
+    .answer-write-box.span9
+      .answer-write
+        .alert.alert-info 이 질문에 답변해 주세요.
+        form
+          textarea
+          input(type='submit', value='답변 작성').btn.btn-primary.submit-btn.pull-right

@@ -26,7 +26,8 @@ html
                 a(href='#') 사용자
       .container.main-wrap
         .row
-          #contents.span9!= body
+          #contents.span9
+            block mainContent
           aside.span3
             a#postBtn(href='/question/form').btn.btn-large.btn-danger
               i.icon-upload-alt.icon-white.icon-large
@@ -60,4 +61,4 @@ html
       script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.2.min.js')
       script(type='text/javascript', src='/bootstrap/js/bootstrap.min.js')
       script(type='text/javascript', src='/javascripts/commons.js')
-      script(type='text/javascript', src='/javascripts/markdown.js')
+      block scripts
