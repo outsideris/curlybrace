@@ -5,4 +5,5 @@ module.exports = {
   , MONGODB_PORT: '27017'
   , MONGODB_DB: 'curlybrace'
   , MONGODB_COLLECTION_USERS: 'users'
+  , MONGODB_COLLECTION_TAGS: 'tags'
 };
