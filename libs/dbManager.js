@@ -13,7 +13,7 @@ var dbManager = module.exports = {
         , dbName: opt.dbName || CONST.MONGODB_DB
         , users: opt.users || CONST.MONGODB_COLLECTION_USERS
         , tags: opt.tags || CONST.MONGODB_COLLECTION_TAGS
-      }
+      };
 
       this.db = new Mongolian(config.host + ':' + config.port, {
         log: {

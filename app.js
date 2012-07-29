@@ -37,16 +37,17 @@ app.configure(function() {
 });
 
 app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 app.configure('production', function(){
-  app.use(express.errorHandler()); 
+  app.use(express.errorHandler());
 });
 
 // Routes
 var routeQnA = require('./routes/qna')
-  , routeMember = require('./routes/member');
+  , routeMember = require('./routes/member')
+  , routeAPIv1 = require('./routes/v1');
 
 // 질문&답변 관련
 app.get('/', routeQnA.index);
@@ -63,6 +64,9 @@ app.get('/join', routeMember.joinForm);
 app.post('/join', routeMember.processJoin);
 
 app.get('/auth/me2day', routeMember.requestMe2dayAuth);
+
+// API V1
+app.get('/v1/tags', routeAPIv1.findTags);
 
 // Binding Server
 everyauth.helpExpress(app);
