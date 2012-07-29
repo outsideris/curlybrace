@@ -57,8 +57,6 @@ app.get('/question/:id', routeQnA.questionView);
 // 회원관련
 app.get('/login', routeMember.loginForm);
 
-app.get('/join', routeMember.joinForm);
-
 app.post('/join', routeMember.processJoin);
 
 app.get('/auth/me2day', routeMember.requestMe2dayAuth);

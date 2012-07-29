@@ -21,13 +21,6 @@ describe('라우팅', function() {
         done();
       });
     });
-
-    it('회원가입 페이지는 200 OK 이어야 한다', function(done) {
-      http.get({path: '/join', port: 3000}, function(res) {
-        res.should.have.status(200);
-        done();
-      });
-    });
   });
 
   describe('OAuth 인증', function() {
