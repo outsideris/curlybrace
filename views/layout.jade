@@ -4,6 +4,7 @@ html
     title= title
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/font-awesome.css')
+    block css
     link(rel='stylesheet', href='/stylesheets/style.css')
     body
       .navbar.navbar-fixed-top
@@ -60,5 +61,5 @@ html
       #fb-root
       script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.2.min.js')
       script(type='text/javascript', src='/bootstrap/js/bootstrap.min.js')
-      script(type='text/javascript', src='/javascripts/commons.js')
       block scripts
+      script(type='text/javascript', src='/javascripts/commons.js')

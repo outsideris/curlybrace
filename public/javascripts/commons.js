@@ -57,4 +57,20 @@ $(document).ready(function() {
       preview.html(markdown.toHTML(editor.val()));
     });
   }
+
+  if ($('#tags').length) {
+    var opt = {
+      jsonContainer: 'results',
+      onResult:function(results) {
+        $(results).each(function(v) {
+          v.id = v.name;
+          v.readonly = true;
+        });
+        return results;
+      },
+      theme: 'facebook',
+      preventDuplicates: true
+    };
+    $('#tags').tokenInput('/v1/tags?how=startWith', opt);
+  }
 });
