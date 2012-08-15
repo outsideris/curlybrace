@@ -47,7 +47,8 @@ app.configure('production', function(){
 // Routes
 var routeQnA = require('./routes/qna')
   , routeMember = require('./routes/member')
-  , routeAPIv1 = require('./routes/v1');
+  , routeAPIv1 = require('./routes/v1')
+  , routeHelp = require('./routes/help');
 
 // 질문&답변 관련
 app.get('/', routeQnA.index);
@@ -64,6 +65,9 @@ app.get('/join', routeMember.joinForm);
 app.post('/join', routeMember.processJoin);
 
 app.get('/auth/me2day', routeMember.requestMe2dayAuth);
+
+// 도움말
+app.get('/help/markdown', routeHelp.markdown);
 
 // API V1
 app.get('/v1/tags', routeAPIv1.findTags);
