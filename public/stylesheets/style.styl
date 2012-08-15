@@ -146,11 +146,6 @@ ul.tags li
   font-size 0.8em
 
 // 글 읽기
-article h3
-  color DARKGREY_COLOR
-  font-size 1.2em
-  padding-left 10px
-
 article .question-vote span.votecount
   border-radius 30px
   background-color LIGHTBLUETONE_COLOR
@@ -381,11 +376,47 @@ aside .labelbox ul li a
 // 질문 작성폼
 article .question-form
   padding 10px 10px 10px 30px
-  margin-top 10px
+  margin-top 20px
+  margin-bottom 20px
 
+article .question-form input[type=text]
+  width 650px
+
+article .question-form form #preview-box,
 article .question-form form textarea
-  min-height 300px
+  min-height 500px
   font-size 0.9em
+  width 650px
+
+article .question-form form #preview-box
+  width 635px
+  border 1px solid LIGHTGREY_COLOR
+  border-radius 4px
+  padding 10px
+
+// 태그용 facebook 테마 커스터마이징
+article .question-form form ul.token-input-list-facebook
+    overflow hidden
+    cursor text
+    min-height 1px
+    z-index 999
+    margin 0
+    padding 0
+    list-style-type none
+    clear left
+    width 650px
+    display inline-block
+    height 18px
+    padding 4px
+    margin-bottom 9px
+    font-size 13px
+    line-height 18px
+    color #555555
+    background-color #ffffff
+    border 1px solid #cccccc
+    -webkit-border-radius 3px
+    -moz-border-radius 3px
+    border-radius 3px
 
 // 로그인
 .login

@@ -1,9 +1,74 @@
-article.row
-  .question-box.span9
-    .question-form
-      form
-        input(type='text', name='title', id='title', placeholder='제목').span8
-        textarea.span8
-        label(for=tags') 태그
-        input(type='text', name='tags', id='tags').span8
-        input(type='submit', value='질문하기').btn.btn-primary.pull-right.submit-btn
+extends layout
+
+block css
+  link(rel='stylesheet', href='/stylesheets/token-input-facebook.css')
+
+block mainContent
+  article.row
+    .question-box.span9
+      .question-form
+        form
+          input(type='text', name='title', id='title', placeholder='제목')
+          a(href="/help/markdown", target="_blank").btn.pull-right 마크다운 도움말
+          ul.nav.nav-tabs#editor-tabs
+            li
+              a(href='#editor', data-toggle='tab')#editor-tab Editor
+            li
+              a(href='#preview', data-toggle='tab')#preview-tab Preview
+          .tab-content
+            .tab-pane#editor
+              textarea
+            .tab-pane#preview
+              #preview-box
+          label(for=tags') 태그
+          input(type='text', name='tags', id='tags')
+          input(type='submit', value='질문하기').btn.btn-primary.pull-right.submit-btn
+
+block sidebar
+  .labelbox
+    h4 제목
+    ul.unstyled
+      li # 제목
+      li ## 제목
+      li ### 제목
+      li #### 제목
+      li ##### 제목
+      li ###### 제목
+    h4 코드
+    ul.unstyled
+      li `코드`
+      li ``코드``
+      li &nbsp;&nbsp;&nbsp;&nbsp;코드블록(공백 4칸후)
+    h4 리스트
+    ul.unstyled
+      li - 리스트
+      li * 리스트
+      li + 리스트
+      li 1. 리스트
+    h4 링크
+    ul.unstyled
+      li <http://>
+      li [링크](http://)
+    h4 이미지
+    ul.unstyled
+      li ![alt](이미지경로)
+    h4 이탤릭/볼드
+    ul.unstyled
+      li *이탤릭체*
+      li _이탤릭체_
+      li **볼드체**
+      li __볼드체__
+    h4 인용구
+    ul.unstyled
+      li >인용구
+    h4 수평선
+    ul.unstyled
+      li * * *
+      li ***
+      li ******
+      li - - -
+      li ---------
+
+block scripts
+  script(type='text/javascript', src='/javascripts/markdown.js')
+  script(type='text/javascript', src='/javascripts/jquery.tokeninput.js')
