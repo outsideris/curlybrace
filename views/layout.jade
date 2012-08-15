@@ -30,27 +30,28 @@ html
           #contents.span9
             block mainContent
           aside.span3
-            a#postBtn(href='/question/form').btn.btn-large.btn-danger
-              i.icon-upload-alt.icon-white.icon-large
-              |  질문하기
-            #recently-questions.labelbox
-              h4 최근 질문
-              ul.unstyled
-                li
-                  a(href='#')  질문...
-                li
-                  a(href='#')  질문...
-                li
-                  a(href='#')  질문...
-            #recently-answers.labelbox
-               h4 최근 답변된 질문
-               ul.unstyled
-                 li
-                   a(href='#') 질문...
-                 li
-                   a(href='#')  질문...
-                 li
-                   a(href='#')  질문...
+            block sidebar
+              a#postBtn(href='/question/form').btn.btn-large.btn-danger
+                i.icon-upload-alt.icon-white.icon-large
+                |  질문하기
+              #recently-questions.labelbox
+                h4 최근 질문
+                ul.unstyled
+                  li
+                    a(href='#')  질문...
+                  li
+                    a(href='#')  질문...
+                  li
+                    a(href='#')  질문...
+              #recently-answers.labelbox
+                 h4 최근 답변된 질문
+                 ul.unstyled
+                   li
+                     a(href='#') 질문...
+                   li
+                     a(href='#')  질문...
+                   li
+                     a(href='#')  질문...
         footer.row
           | Copyright &copy; 2012
           a(href='http://sideeffect.kr/', target='_blank')  Side Effect Studio
