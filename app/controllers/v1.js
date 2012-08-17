@@ -1,7 +1,7 @@
-var dbManager = require('../libs/dbManager')
-  , tagService = require('../libs/tagService');
+var dbService = require('../models/dbService')
+  , tagService = require('../models/tags');
 
-tagService.init(dbManager.init());
+tagService.init(dbService.init());
 
 exports.findTags = function(req, res){
   if (req.query.how === 'startWith') {

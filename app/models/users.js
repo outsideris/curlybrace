@@ -1,13 +1,10 @@
-var CONST = require('../conf/constant')
-  , AuthOriginEnum = require('../conf/enums').AuthOriginEnum;
-
-var authManager = module.exports = {
-    users: null,
+module.exports = {
+    coll: null,
     init: function(db) {
-      this.users = db.users;
+      this.coll = db.users;
     },
     isInited: function(callback) {
-      if (this.users) {
+      if (this.coll) {
         return true;
       } else {
         callback(new Error('users collection should not be null.'));
@@ -25,13 +22,13 @@ var authManager = module.exports = {
       };
       user['authInfo'][authOrigin] = userInfo;
 
-      this.users.insert(user, callback);
+      this.coll.insert(user, callback);
     }
   , findAcountBy: function(id, authOrigin, callback) {
       if (!this.isInited(callback)) { return false; }
 
       var criteria = {};
       criteria['authInfo.' + authOrigin + '.id'] = id;
-      this.users.findOne(criteria, callback);
+      this.coll.findOne(criteria, callback);
     }
 };

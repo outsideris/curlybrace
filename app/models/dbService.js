@@ -1,18 +1,18 @@
 var Mongolian = require('mongolian')
-  , CONST = require('../conf/constant');
+  , env = require('../../conf/config').env;
 
-var dbManager = module.exports = {
+module.exports = {
     db: null
   , users: null
   , tags: null
   , init: function(opt) {
       opt = opt || {};
       var config = {
-          host: opt.host || CONST.MONGODB_HOST
-        , port: opt.port || CONST.MONGODB_PORT
-        , dbName: opt.dbName || CONST.MONGODB_DB
-        , users: opt.users || CONST.MONGODB_COLLECTION_USERS
-        , tags: opt.tags || CONST.MONGODB_COLLECTION_TAGS
+          host: opt.host || env.MONGODB_HOST
+        , port: opt.port || env.MONGODB_PORT
+        , dbName: opt.dbName || env.MONGODB_DB
+        , users: opt.users || env.MONGODB_COLLECTION_USERS
+        , tags: opt.tags || env.MONGODB_COLLECTION_TAGS
       };
 
       this.db = new Mongolian(config.host + ':' + config.port, {

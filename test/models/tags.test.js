@@ -1,7 +1,6 @@
 var should = require('should')
-  , dbManager = require('../libs/dbManager')
-  , tagService = require('../libs/tagService')
-  , CONST = require('../conf/constant');
+  , dbService = require('../../app/models/dbService')
+  , tags = require('../../app/models/tags');
 
 var tagFixture = [
   {name: 'java'}
@@ -70,21 +69,21 @@ var tagFixture = [
   , {name: 'shell'}
 ];
 
-describe('tagService', function() {
-  var tags;
+describe('tags', function() {
+  var tagsCollection;
   before(function() {
-    var db = dbManager.init({'tags':'tags_test'});
-    tags = db.tags;
+    var db = dbService.init({'tags':'tags_test'});
+    tagsCollection = db.tags;
     require('util').inspect(tags);
     db.tags.insert(tagFixture);
-    tagService.init(db);
+    tags.init(db);
   });
   after(function() {
-    tags.remove();
+    tagsCollection.remove();
   });
   describe('태그 조회', function() {
     it('특정 문자열로 시작하는 태그리스트를 조회한다', function(done) {
-      tagService.findTagsStartWith('jav', function(err, tags) {
+      tags.findTagsStartWith('jav', function(err, tags) {
         tags.some(function(v) {
           return v.name == 'java';
         }).should.be.true;

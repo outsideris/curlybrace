@@ -4,7 +4,7 @@
  */
 
 var express = require('express')
-  , everyauth = require('./libs/everyauth').init()
+  , everyauth = require('./app/models/everyauth').init()
   , clog = require('clog');
 
 global.clog = clog;
@@ -44,31 +44,8 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-// Routes
-var routeQnA = require('./routes/qna')
-  , routeMember = require('./routes/member')
-  , routeAPIv1 = require('./routes/v1')
-  , routeHelp = require('./routes/help');
-
-// 질문&답변 관련
-app.get('/', routeQnA.index);
-
-app.get('/question/form', routeQnA.questionForm);
-
-app.get('/question/:id', routeQnA.questionView);
-
-// 회원관련
-app.get('/login', routeMember.loginForm);
-
-app.post('/join', routeMember.processJoin);
-
-app.get('/auth/me2day', routeMember.requestMe2dayAuth);
-
-// 도움말
-app.get('/help/markdown', routeHelp.markdown);
-
-// API V1
-app.get('/v1/tags', routeAPIv1.findTags);
+// routes
+require('./conf/routes')(app);
 
 // Binding Server
 everyauth.helpExpress(app);

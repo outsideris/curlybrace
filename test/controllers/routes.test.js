@@ -1,11 +1,11 @@
 var should = require('should')
   , http = require('http')
-  , conf = require('../conf/authconf');
+  , authToken = require('../../conf/config').authToken;
 
 describe('라우팅', function() {
   var server;
   before(function() {
-    server = require('../app')
+    server = require('../../app')
   });
   describe('정적페이지 ', function() {
     it('인덱스 페이지는 200 OK 이어야 한다', function(done) {
@@ -27,13 +27,13 @@ describe('라우팅', function() {
     var ea, everyauthMock, server;
 
     before(function() {
-      server = require('../app');
-      ea = require('../libs/everyauth');
+      server = require('../../app');
+      ea = require('../../app/models/everyauth');
 
       everyauthMock = ea.init();
       everyauthMock.twitter
-      .consumerKey(conf.twitter.consumerKey)
-      .consumerSecret(conf.twitter.consumerSecret)
+      .consumerKey(authToken.twitter.consumerKey)
+      .consumerSecret(authToken.twitter.consumerSecret)
       .getRequestToken(function() {
         var p = this.Promise();
         return p.fulfill({});
@@ -58,7 +58,7 @@ describe('라우팅', function() {
       })
     });
     after(function() {
-      delete require.cache[require.resolve('../libs/everyauth')];
+      delete require.cache[require.resolve('../../app/models/everyauth')];
       delete require.cache[require.resolve('everyauth')];
       delete require.cache[require.resolve('everyauth/lib/modules/twitter')];
     });

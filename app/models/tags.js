@@ -1,12 +1,10 @@
-var CONST = require('../conf/constant');
-
-var tagService = module.exports = {
-  tags: null,
+module.exports = {
+  coll: null,
   init: function(db) {
-    this.tags = db.tags;
+    this.coll = db.tags;
   },
   isInited: function(callback) {
-    if (this.tags) {
+    if (this.coll) {
       return true;
     } else {
       callback(new Error('tags collection should not be null.'));
@@ -17,6 +15,6 @@ var tagService = module.exports = {
     if (!this.isInited(callback)) { return false; }
 
     var regex = new RegExp(tag + "*");
-    this.tags.find({name:regex}, {_id:0}).toArray(callback);
+    this.coll.find({name:regex}, {_id:0}).toArray(callback);
   }
 };

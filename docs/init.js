@@ -1,6 +1,6 @@
-var dbManager = require('../libs/dbManager');
+var dbService = require('../app/models/dbService');
 
-var db = dbManager.init();
+var db = dbService.init();
 
 var defaultTags = [
   {name: 'java'}

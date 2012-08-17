@@ -1,11 +1,11 @@
 var should = require('should')
   , http = require('http')
-  , conf = require('../conf/authconf');
+  , authToken = require('../../conf/config').authToken;
 
 describe('API V1', function() {
   var server;
   before(function() {
-    server = require('../app')
+    server = require('../../app')
   });
   describe('태그명의 일부로 조회한다', function() {
     it('application/json으로 요청할 경우 JSON을 리턴한다', function(done) {

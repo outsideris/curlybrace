@@ -1,8 +1,7 @@
 var should = require('should')
-  , AuthOriginEnum = require('../conf/enums').AuthOriginEnum
-  , dbManager = require('../libs/dbManager')
-  , authManager = require('../libs/authManager')
-  , CONST = require('../conf/constant');
+  , AuthOriginEnum = require('../../conf/config').AuthOriginEnum
+  , dbService = require('../../app/models/dbService')
+  , users = require('../../app/models/users');
 
 var fixture = {
     facebookInfo: { id: '123456789',
@@ -20,22 +19,22 @@ var fixture = {
     }
 };
 
-describe('authManager', function() {
-  var users;
+describe('users', function() {
+  var usersCollection;
   before(function() {
-    var db = dbManager.init({'users':'user_test'});
-    users = db.users;
-    authManager.init(db);
+    var db = dbService.init({'users':'user_test'});
+    usersCollection = db.users;
+    users.init(db);
   });
   beforeEach(function() {
-    users.remove();
+    usersCollection.remove();
   });
   describe('사용자 추가', function() {
     it('페이스북 사용자 추가', function(done) {
-      authManager.addNewAcount(fixture.facebookInfo, AuthOriginEnum.facebook, function(err, user) {
+      users.addNewAcount(fixture.facebookInfo, AuthOriginEnum.facebook, function(err, user) {
         var criteria = {};
         criteria['authInfo.' + AuthOriginEnum.facebook + '.id'] = fixture.facebookInfo.id;
-        users.findOne(criteria, function(err, user) {
+        usersCollection.findOne(criteria, function(err, user) {
           should.exist(user);
           user.should.have.property('authInfo')
                      .have.property(AuthOriginEnum.facebook)
@@ -52,8 +51,8 @@ describe('authManager', function() {
         , regDate: new Date()
       };
       fixtureUser['authInfo'][AuthOriginEnum.facebook] = fixture.facebookInfo;
-      users.insert(fixtureUser);
-      authManager.findAcountBy(fixture.facebookInfo.id, AuthOriginEnum.facebook, function(err, user) {
+      usersCollection.insert(fixtureUser);
+      users.findAcountBy(fixture.facebookInfo.id, AuthOriginEnum.facebook, function(err, user) {
         user.should.have.property('authInfo')
                    .have.property(AuthOriginEnum.facebook)
                    .have.property('name', fixture.facebookInfo.name);

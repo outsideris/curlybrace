@@ -1,12 +1,12 @@
-var CONST = require('../conf/constant')
-  , everyauth = require('../libs/everyauth')
-  , dbManager = require('../libs/dbManager')
-  , authmanager = require('../libs/authManager');
+var env = require('../../conf/config').env
+  , everyauth = require('../models/everyauth')
+  , dbService = require('../models/dbService')
+  , users = require('../models/users');
 
-authmanager.init(dbManager.init());
+users.init(dbService.init());
 
 exports.processJoin = function(req, res) {
-  authmanager.addNewAcount(req.session.auth, req.body.nickname, function() {
+  users.addNewAcount(req.session.auth, req.body.nickname, function() {
     res.redirect('/', 302);
   });
 };
@@ -23,7 +23,7 @@ exports.requestMe2dayAuth = function(req, res) {
 
 exports.loginForm = function(req, res) {
   res.render('loginForm', {
-    title: CONST.SITENAME,
-    siteName: CONST.SITENAME
+    title: env.SITENAME,
+    siteName: env.SITENAME
   });
 };
