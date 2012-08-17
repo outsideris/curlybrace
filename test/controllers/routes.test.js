@@ -1,5 +1,6 @@
 var should = require('should')
   , http = require('http')
+  , env = require('../../conf/config').env
   , authToken = require('../../conf/config').authToken;
 
 describe('라우팅', function() {
@@ -9,14 +10,21 @@ describe('라우팅', function() {
   });
   describe('정적페이지 ', function() {
     it('인덱스 페이지는 200 OK 이어야 한다', function(done) {
-      http.get({path: '/', port: 3000}, function(res) {
+      http.get({path: '/', port: env.PORT}, function(res) {
         res.should.have.status(200);
         done();
       });
     });
 
     it('질문하기 페이지는 200 OK 이어야 한다', function(done) {
-      http.get({path: '/question/form', port: 3000}, function(res) {
+      http.get({path: '/question/form', port: env.PORT}, function(res) {
+        res.should.have.status(200);
+        done();
+      });
+    });
+
+    it('마크다운 도움말 페이지는 200 OK 이어야 한다', function(done) {
+      http.get({path: '/help/markdown', port: env.PORT}, function(res) {
         res.should.have.status(200);
         done();
       });
@@ -63,27 +71,27 @@ describe('라우팅', function() {
       delete require.cache[require.resolve('everyauth/lib/modules/twitter')];
     });
     it('로그인폼 페이지는 200 OK이어야 한다.', function(done) {
-      http.get({path: '/login', port: 3000}, function(res) {
+      http.get({path: '/login', port: env.PORT}, function(res) {
         res.should.have.status(200);
         done();
       });
     });
     it('트위터 인증 요청페이지는 트위터로 리다이렉트 된다.', function(done) {
-      http.get({path: '/auth/twitter', port: 3000}, function(res) {
+      http.get({path: '/auth/twitter', port: env.PORT}, function(res) {
         res.should.have.status(303);
         res.headers.location.should.match(/^https:\/\/api.twitter.com\/oauth\/authenticate/);
         done();
       });
     });
     it('페이스북 인증 요청페이지는 페이스북으로 리다이렉트 된다.', function(done) {
-      http.get({path: '/auth/facebook', port: 3000}, function(res) {
+      http.get({path: '/auth/facebook', port: env.PORT}, function(res) {
         res.should.have.status(303);
         res.headers.location.should.match(/^https:\/\/www.facebook.com\/dialog\/oauth/);
         done();
       });
     });
     it('구글 인증 요청페이지는 구글로 리다이렉트 된다.', function(done) {
-      http.get({path: '/auth/google', port: 3000}, function(res) {
+      http.get({path: '/auth/google', port: env.PORT}, function(res) {
         res.should.have.status(303);
         res.headers.location.should.match(/^https:\/\/accounts.google.com\/o\/oauth2\/auth/);
         done();

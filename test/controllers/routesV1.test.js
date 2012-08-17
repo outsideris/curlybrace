@@ -1,5 +1,6 @@
 var should = require('should')
   , http = require('http')
+  , env = require('../../conf/config').env
   , authToken = require('../../conf/config').authToken;
 
 describe('API V1', function() {
@@ -11,7 +12,7 @@ describe('API V1', function() {
     it('application/json으로 요청할 경우 JSON을 리턴한다', function(done) {
       http.get({
         path: '/v1/tags?q=jav&how=startWith'
-        , port: 3000
+        , port: env.PORT
         , 'Accept': 'application/json'
       }, function(res) {
         res.should.be.json;
