@@ -4,7 +4,9 @@
  */
 
 var express = require('express')
+  , path = require('path')
   , everyauth = require('./app/models/everyauth').init()
+  , env = require('./conf/config.js').env
   , clog = require('clog');
 
 global.clog = clog;
@@ -19,21 +21,22 @@ clog.configure({
   }
 });
 
-var app = module.exports = express.createServer();
+var app = module.exports = express();
 
 // Configuration
 app.configure(function() {
-  app.set('views', __dirname + '/views');
+  app.set('views', __dirname + '/app/views');
   app.set('view engine', 'jade');
-  app.set('view options', { layout: false });
+  app.use(express.favicon());
+  app.use(express.logger('dev'));
   app.use(express.bodyParser());
-  app.use(express.cookieParser());
-  app.use(express.session({ secret: 'htuayreve'}));
-  app.use(everyauth.middleware());
   app.use(express.methodOverride());
+  app.use(express.cookieParser('htuayreve'));
+  app.use(express.session());
   app.use(app.router);
-  app.use(require('stylus').middleware({ src: __dirname + '/public' }));
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(require('stylus').middleware(__dirname + '/public'));
+  app.use(everyauth.middleware());
 });
 
 app.configure('development', function(){
@@ -48,9 +51,8 @@ app.configure('production', function(){
 require('./conf/routes')(app);
 
 // Binding Server
-everyauth.helpExpress(app);
-app.listen(3000);
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+var server = app.listen(env.PORT);
+console.log("Express server listening on port %d in %s mode", server.address().port, app.get('env'));
 
 // error handling
 process.on('uncaughtException', function(err) {

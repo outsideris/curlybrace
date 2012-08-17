@@ -9,10 +9,10 @@
   }
 , "private": true
 , "dependencies": {
-    "express": "~2.5.0"
+    "express": "~3.0"
   , "jade": ">= 0.0.1"
   , "stylus": ">= 0.0.1"
-  , "everyauth": "~0.2.0"
+  , "everyauth": "~0.3.0"
   , "mongolian": ">= 0.1.10"
   , "clog": "~0.1"
   }

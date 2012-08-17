@@ -6,7 +6,8 @@ module.exports.AuthOriginEnum = {
 };
 
 module.exports.env = {
-  HOST: 'http://curlybrace.com:3000'
+  HOST: 'http://curlybrace.com'
+  , PORT: 3000
   , SITENAME: '{Curlybrace}'
   , MONGODB_HOST: 'localhost'
   , MONGODB_PORT: '27017'
