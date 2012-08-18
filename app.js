@@ -6,20 +6,8 @@
 var express = require('express')
   , path = require('path')
   , everyauth = require('./app/models/everyauth').init()
-  , env = require('./conf/config.js').env
-  , clog = require('clog');
-
-global.clog = clog;
-// configure clog
-clog.configure({
-  'log level': {
-    'log': true,
-    'info': true,
-    'warn': true,
-    'error': true,
-    'debug': true
-  }
-});
+  , env = require('./conf/config').env
+  , logger = require('./conf/config').logger;
 
 var app = module.exports = express();
 
@@ -52,9 +40,9 @@ require('./conf/routes')(app);
 
 // Binding Server
 var server = app.listen(env.PORT);
-console.log("Express server listening on port %d in %s mode", server.address().port, app.get('env'));
+logger.info("Express server listening", {port: server.address().port, mode: app.get('env')});
 
 // error handling
 process.on('uncaughtException', function(err) {
-  console.log('Caught exception: ' + err.stack || err.message);
+  //logger.debug('Caught exception:', {stackTrack: err.stack || err.message})
 });

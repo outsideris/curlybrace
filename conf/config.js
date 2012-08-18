@@ -1,3 +1,5 @@
+var winston = require('winston');
+
 module.exports.AuthOriginEnum = {
     facebook: 'facebook'
   , twitter: 'twitter'
@@ -38,3 +40,12 @@ module.exports.authToken = {
   }
 };
 
+module.exports.logger = new (winston.Logger)({
+  transports: [
+    new (winston.transports.Console)({
+      handleExceptions: true
+      , colorize: true
+      , timestamp: true
+    })
+  ]
+});

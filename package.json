@@ -14,10 +14,10 @@
   , "stylus": ">= 0.0.1"
   , "everyauth": "~0.3.0"
   , "mongolian": ">= 0.1.10"
-  , "clog": "~0.1"
+  , "winston": "~0.6.0"
   }
 , "devDependencies": {
-    "should": "~0.5.0"
+    "should": "~0.6.0"
   }
 , "scripts": {
     "start": "node app.js"

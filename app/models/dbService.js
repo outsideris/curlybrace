@@ -1,5 +1,6 @@
 var Mongolian = require('mongolian')
-  , env = require('../../conf/config').env;
+  , env = require('../../conf/config').env
+  , logger = require('../../conf/config').logger;
 
 module.exports = {
   db: null
@@ -18,10 +19,10 @@ module.exports = {
     if (!this.db) {
       this.db = new Mongolian(config.host + ':' + config.port, {
         log: {
-          debug: function(message){ console.log(message) }
-          , info:  function(message){ console.log(message) }
-          , warn:  function(message){ console.log(message) }
-          , error: function(message){ console.log(message) }
+          debug: function(message){ logger.info(message) }
+          , info:  function(message){ logger.info(message) }
+          , warn:  function(message){ logger.info(message) }
+          , error: function(message){ logger.infog(message) }
         }
       }).db(config.dbName);
     }

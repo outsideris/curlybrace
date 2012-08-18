@@ -1,7 +1,8 @@
 var should = require('should')
   , http = require('http')
   , env = require('../../conf/config').env
-  , authToken = require('../../conf/config').authToken;
+  , authToken = require('../../conf/config').authToken
+  , logger = require('../../conf/config').logger;
 
 describe('라우팅', function() {
   var server;
@@ -47,10 +48,10 @@ describe('라우팅', function() {
         return p.fulfill({});
       })
       .findOrCreateUser( function (session, accessToken, accessTokenSecret, twitterUserMetadata) {
-        clog.debug('session: ' + util.inspect(session));
-        clog.debug('accessToken: ' + util.inspect(accessToken));
-        clog.debug('accessTokenSecret: ' + util.inspect(accessTokenSecret));
-        clog.debug('twitterUserMetadata: ' + util.inspect(twitterUserMetadata));
+        logger.debug('', {session: session});
+        logger.debug('', {accessToken: accessToken});
+        logger.debug('', {accessTokenSecret: accessTokenSecret});
+        logger.debug('', {twitterUserMetadata: twitterUserMetadata});
         var promise = this.Promise();
         authManager.findAcountBy(twitterUserMetadata.id, AuthOriginEnum.twitter, function (err, user) {
           if (err) return promise.fail(err);

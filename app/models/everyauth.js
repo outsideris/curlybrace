@@ -4,7 +4,8 @@ var everyauth = require('everyauth')
   , Promise = everyauth.Promise
   , http = require('http')
   , util = require('util')
-  , AuthOriginEnum = require('../../conf/config').AuthOriginEnum;
+  , AuthOriginEnum = require('../../conf/config').AuthOriginEnum
+  , logger = require('../../conf/config').logger;
 
 module.exports = {
     init: function(db ) {
@@ -21,10 +22,10 @@ module.exports = {
       .appId(authToken.facebook.appId)
       .appSecret(authToken.facebook.appSecret)
       .findOrCreateUser( function (session, accessToken, accessTokenExtra, fbUserMetadata) {
-        clog.debug('session: ' + util.inspect(session));
-        clog.debug('accessToken: ' + util.inspect(accessToken));
-        clog.debug('accessTokenExtra: ' + util.inspect(accessTokenExtra));
-        clog.debug('fbUserMetadata: ' + util.inspect(fbUserMetadata));
+        logger.debug('', {session: session});
+        logger.debug('', {accessToken: accessToken});
+        logger.debug('', {accessTokenExtra: accessTokenExtra});
+        logger.debug('', {fbUserMetadata: fbUserMetadata});
         var promise = this.Promise();
         users.findAcountBy(fbUserMetadata.id, AuthOriginEnum.facebook, function(err, user) {
           if (err) return promise.fail(err);
@@ -45,10 +46,10 @@ module.exports = {
       .consumerKey(authToken.twitter.consumerKey)
       .consumerSecret(authToken.twitter.consumerSecret)
       .findOrCreateUser( function (session, accessToken, accessTokenSecret, twitterUserMetadata) {
-        clog.debug('session: ' + util.inspect(session));
-        clog.debug('accessToken: ' + util.inspect(accessToken));
-        clog.debug('accessTokenSecret: ' + util.inspect(accessTokenSecret));
-        clog.debug('twitterUserMetadata: ' + util.inspect(twitterUserMetadata));
+        logger.debug('', {session: session});
+        logger.debug('', {accessToken: accessToken});
+        logger.debug('', {accessTokenSecret: accessTokenSecret});
+        logger.debug('', {twitterUserMetadata: twitterUserMetadata});
         var promise = this.Promise();
         users.findAcountBy(twitterUserMetadata.id, AuthOriginEnum.twitter, function (err, user) {
           if (err) return promise.fail(err);
@@ -70,10 +71,10 @@ module.exports = {
       .appSecret(authToken.google.clientSecret)
       .scope('https://www.google.com/m8/feeds/')
       .findOrCreateUser( function (session, accessToken, accessTokenExtra, googleUserMetaData) {
-        clog.debug('session: ' + util.inspect(session));
-        clog.debug('accessToken: ' + util.inspect(accessToken));
-        clog.debug('accessTokenExtra: ' + util.inspect(accessTokenExtra));
-        clog.debug('googleUserMetaData: ' + util.inspect(googleUserMetaData));
+        logger.debug('', {session: session});
+        logger.debug('', {accessToken: accessToken});
+        logger.debug('', {accessTokenExtra: accessTokenExtra});
+        logger.debug('', {googleUserMetaData: googleUserMetaData});
         var promise = this.Promise();
         users.findAcountBy(googleUserMetaData.id, AuthOriginEnum.google, function (err, user) {
           if (err) return promise.fail(err);
