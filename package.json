@@ -13,7 +13,7 @@
   , "jade": ">= 0.0.1"
   , "stylus": ">= 0.0.1"
   , "everyauth": "~0.3.0"
-  , "mongolian": ">= 0.1.10"
+  , "mongodb": "~1.1.4"
   , "winston": "~0.6.0"
   }
 , "devDependencies": {

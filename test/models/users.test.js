@@ -21,13 +21,24 @@ var fixture = {
 
 describe('users', function() {
   var usersCollection;
-  before(function() {
-    var db = dbService.init({'users':'user_test'});
-    usersCollection = db.users;
-    users.init(db);
+  var db;
+  before(function(done) {
+    db = dbService.init();
+    db.once('connected', function(err, pdb) {
+      db = pdb;
+      db.setUsers('users_test');
+      usersCollection = db.users;
+      users.init(db);
+      done();
+    });
   });
   beforeEach(function() {
     usersCollection.remove();
+  });
+  after(function() {
+    usersCollection.remove();
+    db.db.close();
+    db.db = null;
   });
   describe('사용자 추가', function() {
     it('페이스북 사용자 추가', function(done) {

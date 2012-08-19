@@ -1,35 +1,40 @@
-var Mongolian = require('mongolian')
+var mongo = require('mongodb')
+  , Db = mongo.Db
+  , Server = mongo.Server
   , env = require('../../conf/config').env
-  , logger = require('../../conf/config').logger;
+  , logger = require('../../conf/config').logger
+  , EventEmitter = require('events').EventEmitter;
 
 module.exports = {
   db: null
+  , event: new EventEmitter()
   , users: null
   , tags: null
-  , init: function(opt) {
-    opt = opt || {};
-    var config = {
-      host: opt.host || env.MONGODB_HOST
-      , port: opt.port || env.MONGODB_PORT
-      , dbName: opt.dbName || env.MONGODB_DB
-      , users: opt.users || env.MONGODB_COLLECTION_USERS
-      , tags: opt.tags || env.MONGODB_COLLECTION_TAGS
-    };
+  , init: function() {
+    var self = this;
 
     if (!this.db) {
-      this.db = new Mongolian(config.host + ':' + config.port, {
-        log: {
-          debug: function(message){ logger.info(message) }
-          , info:  function(message){ logger.info(message) }
-          , warn:  function(message){ logger.info(message) }
-          , error: function(message){ logger.infog(message) }
+      var server = new Server(env.MONGODB_HOST, env.MONGODB_PORT, {auto_reconnect: true});
+      this.db = new Db(env.MONGODB_DB, server, {native_parser:true});
+
+      this.db.open(function(err, db) {
+        if(err) {
+          logger.error('Error Occured during connecting MongoDB', {error: err});
+        } else {
+          logger.info('MongoDB is connected!');
+
+          self.db = db;
+          self.users = db.collection(env.MONGODB_COLLECTION_USERS);
+          self.tags = db.collection(env.MONGODB_COLLECTION_TAGS);
         }
-      }).db(config.dbName);
+        self.event.emit('connected', err, self);
+      });
     }
 
-    this.users = this.db.collection(config.users);
-    this.tags = this.db.collection(config.tags);
-
-    return this;
+    return this.event;
+  }, setTags: function(collectionName) {
+    this.tags = this.db.collection(collectionName);
+  }, setUsers: function(collectionName) {
+    this.users = this.db.collection(collectionName);
   }
 };

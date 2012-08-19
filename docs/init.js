@@ -1,6 +1,8 @@
 var dbService = require('../app/models/dbService');
 
-var db = dbService.init();
+dbService.init(function(err, db) {
+  db.tags.insert(defaultTags);
+});
 
 var defaultTags = [
   {name: 'java'}
@@ -68,5 +70,3 @@ var defaultTags = [
   , {name: 'sbt'}
   , {name: 'shell'}
 ];
-
-db.tags.insert(defaultTags);

@@ -7,7 +7,10 @@ var express = require('express')
   , path = require('path')
   , everyauth = require('./app/models/everyauth').init()
   , env = require('./conf/config').env
-  , logger = require('./conf/config').logger;
+  , logger = require('./conf/config').logger
+  , dbService = require('./app/models/dbService');
+
+dbService.init(function(err, db) {});
 
 var app = module.exports = express();
 

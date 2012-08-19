@@ -1,14 +1,18 @@
 var dbService = require('../models/dbService')
-  , tagService = require('../models/tags');
+  , tagService = require('../models/tags')
+  , logger = require('../../conf/config').logger;
 
-tagService.init(dbService.init());
+var db = dbService.init();
+db.on('connected', function(err, db) {
+  tagService.init(db);
+});
 
 exports.findTags = function(req, res){
   if (req.query.how === 'startWith') {
     tagService.findTagsStartWith(req.query.q, function(err, tags) {
       if (req.accepts('application/json')) {
         if (err) {
-          console.log(err);
+          logger.error(err);
           res.send({
             success: false
             , results: []

@@ -71,15 +71,22 @@ var tagFixture = [
 
 describe('tags', function() {
   var tagsCollection;
-  before(function() {
-    var db = dbService.init({'tags':'tags_test'});
-    tagsCollection = db.tags;
-    require('util').inspect(tags);
-    db.tags.insert(tagFixture);
-    tags.init(db);
+  var db;
+  before(function(done) {
+    db = dbService.init();
+    db.once('connected', function(err, pdb) {
+      db = pdb;
+      db.setTags('tags_test');
+      tagsCollection = db.tags;
+      tagsCollection.insert(tagFixture);
+      tags.init(db);
+      done();
+    });
   });
   after(function() {
     tagsCollection.remove();
+    db.db.close();
+    db.db = null;
   });
   describe('태그 조회', function() {
     it('특정 문자열로 시작하는 태그리스트를 조회한다', function(done) {

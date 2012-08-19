@@ -3,7 +3,10 @@ var env = require('../../conf/config').env
   , dbService = require('../models/dbService')
   , users = require('../models/users');
 
-users.init(dbService.init());
+var db = dbService.init();
+db.on('connected', function(err, db) {
+  users.init(db);
+});
 
 exports.processJoin = function(req, res) {
   users.addNewAcount(req.session.auth, req.body.nickname, function() {

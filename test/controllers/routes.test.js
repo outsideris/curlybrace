@@ -2,12 +2,23 @@ var should = require('should')
   , http = require('http')
   , env = require('../../conf/config').env
   , authToken = require('../../conf/config').authToken
+  , dbService = require('../../app/models/dbService')
   , logger = require('../../conf/config').logger;
 
 describe('라우팅', function() {
   var server;
-  before(function() {
+  var db;
+  before(function(done) {
+    db = dbService.init();
+    db.once('connected', function(err, pdb) {
+      db = pdb;
+      done();
+    });
     server = require('../../app')
+  });
+  after(function() {
+    db.db.close();
+    db.db = null;
   });
   describe('정적페이지 ', function() {
     it('인덱스 페이지는 200 OK 이어야 한다', function(done) {
