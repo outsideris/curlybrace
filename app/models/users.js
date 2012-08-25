@@ -5,7 +5,17 @@ module.exports = (function() {
   var users = null;
   var isObjectIDType = function(id) {
     return id._bsontype === 'ObjectID';
-  }
+  };
+
+  var getNickName = function(profile, from) {
+
+    // me2day nickname
+    // google name
+    // facebook displayName
+    // github displayName
+    // twitter displayName
+  };
+
   return {
     init: function(db) {
       users = db.users;
