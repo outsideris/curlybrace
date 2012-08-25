@@ -1,7 +1,8 @@
 var should = require('should')
   , AuthOriginEnum = require('../../conf/config').AuthOriginEnum
   , dbService = require('../../app/models/dbService')
-  , users = require('../../app/models/users');
+  , users = require('../../app/models/users')
+  , logger = require('../../conf/config').logger;
 
 var fixture = {
     facebookInfo: { id: '123456789',
@@ -68,6 +69,54 @@ describe('users', function() {
                    .have.property(AuthOriginEnum.facebook)
                    .have.property('name', fixture.facebookInfo.name);
         done();
+      });
+    });
+    it('ObjectId 객체로 사용자 찾기', function(done) {
+      // given
+      var fixtureUser = {
+        nickname: fixture.facebookInfo.name
+        , defaultAcountType: AuthOriginEnum.facebook
+        , authInfo: {}
+        , regDate: new Date()
+      };
+      fixtureUser['authInfo'][AuthOriginEnum.facebook] = fixture.facebookInfo;
+      usersCollection.insert(fixtureUser, function(err, result) {
+        should.not.exist(err);
+        var insertedObjectID = result[0]._id;
+
+        // when
+        users.findOneByObjectId(insertedObjectID, function(err, user) {
+          //then
+          should.not.exist(err);
+          user.should.have.property('authInfo')
+            .have.property(AuthOriginEnum.facebook)
+            .have.property('name', fixture.facebookInfo.name);
+          done();
+        });
+      });
+    });
+    it('ObjectId 문자열로 사용자 찾기', function(done) {
+      // given
+      var fixtureUser = {
+        nickname: fixture.facebookInfo.name
+        , defaultAcountType: AuthOriginEnum.facebook
+        , authInfo: {}
+        , regDate: new Date()
+      };
+      fixtureUser['authInfo'][AuthOriginEnum.facebook] = fixture.facebookInfo;
+      usersCollection.insert(fixtureUser, function(err, result) {
+        should.not.exist(err);
+        var insertedObjectID = result[0]._id;
+
+        // when
+        users.findOneByObjectId(insertedObjectID.toString(), function(err, user) {
+          //then
+          should.not.exist(err);
+          user.should.have.property('authInfo')
+            .have.property(AuthOriginEnum.facebook)
+            .have.property('name', fixture.facebookInfo.name);
+          done();
+        });
       });
     });
   });
