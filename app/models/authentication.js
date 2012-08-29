@@ -8,6 +8,7 @@ var authToken = require('../../conf/config').authToken
   , FacebookStrategy = require('passport-facebook').Strategy
   , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
   , GitHubStrategy = require('passport-github').Strategy
+  , Me2dayStrategy = require('passport-me2day').Strategy
   , logger = require('../../conf/config').logger;
 
 module.exports = function(passport) {
@@ -94,6 +95,25 @@ module.exports = function(passport) {
           return done(err, user);
         } else {
           users.addNewAcount(profile, AuthOriginEnum.github, function(err, insertedUser) {
+            return done(err, insertedUser[0]);
+          });
+        }
+      });
+    }
+  ));
+
+  passport.use(new Me2dayStrategy({
+      userKey: authToken.me2day.key
+      , nonce: authToken.me2day.nonce
+      , callbackURL: env.HOST + "/auth/me2day/callback"
+    },
+    function(userKey, profile, done) {
+      users.findAcountBy(profile.id, AuthOriginEnum.me2day, function(err, user) {
+        if (err) return done(err, null);
+        if (user) {
+          return done(err, user);
+        } else {
+          users.addNewAcount(profile, AuthOriginEnum.me2day, function(err, insertedUser) {
             return done(err, insertedUser[0]);
           });
         }

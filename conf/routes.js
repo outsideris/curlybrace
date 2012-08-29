@@ -31,6 +31,8 @@ app.get('/auth/google',
 
 app.get('/auth/github', passport.authenticate('github'));
 
+app.get('/auth/me2day', passport.authenticate('me2day'));
+
 app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/login' }),
   function(req, res) {
@@ -51,6 +53,12 @@ app.get('/auth/google/callback',
 
 app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+});
+
+app.get('/auth/me2day/callback',
+  passport.authenticate('me2day', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
 });

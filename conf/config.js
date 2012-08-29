@@ -42,6 +42,7 @@ module.exports.authToken = {
   }
   , me2day: {
     key : '6c8bc00661adf619c93e4282f0faffe3'
+    , nonce: '8D9FBE3A'
   }
 };
 
