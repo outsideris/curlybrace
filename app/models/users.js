@@ -1,4 +1,5 @@
 var ObjectID = require('mongodb').ObjectID
+  , authProvider = require('../../conf/config').authProvider
   , logger = require('../../conf/config').logger;
 
 module.exports = (function() {
@@ -7,45 +8,41 @@ module.exports = (function() {
     return id._bsontype === 'ObjectID';
   };
 
-  var getNickName = function(profile, from) {
+  var getNickName = function(profile, provider) {
+    return profile[authProvider[provider].nickNameField];
+  };
 
-    // me2day nickname
-    // google name
-    // facebook displayName
-    // github displayName
-    // twitter displayName
+  var isInited = function(callback) {
+    if (users) {
+      return true;
+    } else {
+      callback(new Error('users collection should not be null.'));
+      return false;
+    }
   };
 
   return {
     init: function(db) {
       users = db.users;
     },
-    isInited: function(callback) {
-      if (users) {
-        return true;
-      } else {
-        callback(new Error('users collection should not be null.'));
-        return false;
-      }
-    },
-    addNewAcount: function(userInfo, authOrigin, callback) {
-      if (!this.isInited(callback)) { return false; }
+    insert: function(profile, provider, callback) {
+      if (!isInited(callback)) { return false; }
 
       var user = {
-          nickname: userInfo.name
-        , defaultAcountType: authOrigin
+          nickname: getNickName(profile, provider)
+        , defaultProvider: provider
         , authInfo: {}
         , regDate: new Date()
       };
-      user['authInfo'][authOrigin] = userInfo;
+      user['authInfo'][provider] = profile;
 
       users.insert(user, {safe:true}, callback);
     },
-    findAcountBy: function(id, authOrigin, callback) {
+    findOneBy: function(id, provider, callback) {
       if (!this.isInited(callback)) { return false; }
 
       var criteria = {};
-      criteria['authInfo.' + authOrigin + '.id'] = id;
+      criteria['authInfo.' + provider + '.id'] = id;
       users.findOne(criteria, callback);
     },
     findOneByObjectId: function(id, callback) {

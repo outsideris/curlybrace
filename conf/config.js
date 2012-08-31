@@ -1,11 +1,22 @@
 var winston = require('winston');
 
-module.exports.AuthOriginEnum = {
-    facebook: 'facebook'
-  , twitter: 'twitter'
-  , google: 'google'
-  , github: 'github'
-  , me2day: 'me2day'
+module.exports.authProvider = {
+  facebook: {
+    name: 'facebook'
+    , nickNameField: 'displayName'
+  }, twitter: {
+    name: 'twitter'
+    , nickNameField: 'displayName'
+  }, google: {
+    name: 'google'
+    , nickNameField: 'name'
+  }, github: {
+    name: 'github'
+    , nickNameField: 'displayName'
+  }, me2day: {
+    name: 'me2day'
+    , nickNameField: 'nickname'
+  }
 };
 
 module.exports.env = {

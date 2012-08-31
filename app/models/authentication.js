@@ -1,5 +1,5 @@
 var authToken = require('../../conf/config').authToken
-  , AuthOriginEnum = require('../../conf/config').AuthOriginEnum
+  , authProvider = require('../../conf/config').authProvider
   , env = require('../../conf/config').env
   , users = require('./users')
   , http = require('http')
@@ -30,12 +30,12 @@ module.exports = function(passport) {
       callbackURL: env.HOST + "/auth/twitter/callback"
     },
     function(token, tokenSecret, profile, done) {
-      users.findAcountBy(profile.id, AuthOriginEnum.twitter, function (err, user) {
+      users.findOneBy(profile.id, authProvider.twitter.name, function (err, user) {
         if (err) return done(err, null);
         if (user) {
           return done(err, user);
         } else {
-          users.addNewAcount(profile, AuthOriginEnum.twitter, function(err, insertedUser) {
+          users.insert(profile, authProvider.twitter.name, function(err, insertedUser) {
             return done(err, insertedUser);
           });
         }
@@ -49,12 +49,12 @@ module.exports = function(passport) {
       callbackURL: env.HOST + "/auth/facebook/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-      users.findAcountBy(profile.id, AuthOriginEnum.facebook, function(err, user) {
+      users.findOneBy(profile.id, authProvider.facebook.name, function(err, user) {
         if (err) return done(err, null);
         if (user) {
           return done(err, user);
         } else {
-          users.addNewAcount(profile, AuthOriginEnum.facebook, function(err, insertedUser) {
+          users.insert(profile, authProvider.facebook.name, function(err, insertedUser) {
             return done(err, insertedUser[0]);
           });
         }
@@ -70,12 +70,12 @@ module.exports = function(passport) {
     },
     function(accessToken, refreshToken, profile, done) {
       profile = JSON.parse(profile._raw);
-      users.findAcountBy(profile.id, AuthOriginEnum.google, function(err, user) {
+      users.findOneBy(profile.id, authProvider.google.name, function(err, user) {
         if (err) return done(err, null);
         if (user) {
           return done(err, user);
         } else {
-          users.addNewAcount(profile, AuthOriginEnum.google, function(err, insertedUser) {
+          users.insert(profile, authProvider.google.name, function(err, insertedUser) {
             return done(err, insertedUser[0]);
           });
         }
@@ -89,12 +89,12 @@ module.exports = function(passport) {
       callbackURL: env.HOST + "/auth/github/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-      users.findAcountBy(profile.id, AuthOriginEnum.github, function(err, user) {
+      users.findOneBy(profile.id, authProvider.github.name, function(err, user) {
         if (err) return done(err, null);
         if (user) {
           return done(err, user);
         } else {
-          users.addNewAcount(profile, AuthOriginEnum.github, function(err, insertedUser) {
+          users.insert(profile, authProvider.github.name, function(err, insertedUser) {
             return done(err, insertedUser[0]);
           });
         }
@@ -108,12 +108,12 @@ module.exports = function(passport) {
       , callbackURL: env.HOST + "/auth/me2day/callback"
     },
     function(userKey, profile, done) {
-      users.findAcountBy(profile.id, AuthOriginEnum.me2day, function(err, user) {
+      users.findOneBy(profile.id, authProvider.me2day.name, function(err, user) {
         if (err) return done(err, null);
         if (user) {
           return done(err, user);
         } else {
-          users.addNewAcount(profile, AuthOriginEnum.me2day, function(err, insertedUser) {
+          users.insert(profile, authProvider.me2day.name, function(err, insertedUser) {
             return done(err, insertedUser[0]);
           });
         }

@@ -1,5 +1,5 @@
 var should = require('should')
-  , AuthOriginEnum = require('../../conf/config').AuthOriginEnum
+  , authProvider = require('../../conf/config').authProvider
   , dbService = require('../../app/models/dbService')
   , users = require('../../app/models/users')
   , logger = require('../../conf/config').logger;
@@ -43,13 +43,13 @@ describe('users', function() {
   });
   describe('사용자 추가', function() {
     it('페이스북 사용자 추가', function(done) {
-      users.addNewAcount(fixture.facebookInfo, AuthOriginEnum.facebook, function(err, user) {
+      users.insert(fixture.facebookInfo, authProvider.facebook.name, function(err, user) {
         var criteria = {};
-        criteria['authInfo.' + AuthOriginEnum.facebook + '.id'] = fixture.facebookInfo.id;
+        criteria['authInfo.' + authProvider.facebook.name + '.id'] = fixture.facebookInfo.id;
         usersCollection.findOne(criteria, function(err, user) {
           should.exist(user);
           user.should.have.property('authInfo')
-                     .have.property(AuthOriginEnum.facebook)
+                     .have.property(authProvider.facebook.name)
                      .have.property('name', fixture.facebookInfo.name);
           done();
         });
@@ -58,15 +58,15 @@ describe('users', function() {
     it('페이스북 사용자 찾기', function(done) {
       var fixtureUser = {
           nickname: fixture.facebookInfo.name
-        , defaultAcountType: AuthOriginEnum.facebook
+        , defaultAcountType: authProvider.facebook.name
         , authInfo: {}
         , regDate: new Date()
       };
-      fixtureUser['authInfo'][AuthOriginEnum.facebook] = fixture.facebookInfo;
+      fixtureUser['authInfo'][authProvider.facebook.name] = fixture.facebookInfo;
       usersCollection.insert(fixtureUser);
-      users.findAcountBy(fixture.facebookInfo.id, AuthOriginEnum.facebook, function(err, user) {
+      users.findOneBy(fixture.facebookInfo.id, authProvider.facebook.name, function(err, user) {
         user.should.have.property('authInfo')
-                   .have.property(AuthOriginEnum.facebook)
+                   .have.property(authProvider.facebook.name)
                    .have.property('name', fixture.facebookInfo.name);
         done();
       });
@@ -75,11 +75,11 @@ describe('users', function() {
       // given
       var fixtureUser = {
         nickname: fixture.facebookInfo.name
-        , defaultAcountType: AuthOriginEnum.facebook
+        , defaultAcountType: authProvider.facebook.name
         , authInfo: {}
         , regDate: new Date()
       };
-      fixtureUser['authInfo'][AuthOriginEnum.facebook] = fixture.facebookInfo;
+      fixtureUser['authInfo'][authProvider.facebook.name] = fixture.facebookInfo;
       usersCollection.insert(fixtureUser, function(err, result) {
         should.not.exist(err);
         var insertedObjectID = result[0]._id;
@@ -89,7 +89,7 @@ describe('users', function() {
           //then
           should.not.exist(err);
           user.should.have.property('authInfo')
-            .have.property(AuthOriginEnum.facebook)
+            .have.property(authProvider.facebook.name)
             .have.property('name', fixture.facebookInfo.name);
           done();
         });
@@ -99,11 +99,11 @@ describe('users', function() {
       // given
       var fixtureUser = {
         nickname: fixture.facebookInfo.name
-        , defaultAcountType: AuthOriginEnum.facebook
+        , defaultAcountType: authProvider.facebook.name
         , authInfo: {}
         , regDate: new Date()
       };
-      fixtureUser['authInfo'][AuthOriginEnum.facebook] = fixture.facebookInfo;
+      fixtureUser['authInfo'][authProvider.facebook.name] = fixture.facebookInfo;
       usersCollection.insert(fixtureUser, function(err, result) {
         should.not.exist(err);
         var insertedObjectID = result[0]._id;
@@ -113,7 +113,7 @@ describe('users', function() {
           //then
           should.not.exist(err);
           user.should.have.property('authInfo')
-            .have.property(AuthOriginEnum.facebook)
+            .have.property(authProvider.facebook.name)
             .have.property('name', fixture.facebookInfo.name);
           done();
         });
