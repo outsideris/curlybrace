@@ -43,14 +43,14 @@ module.exports = (function() {
       users.insert(user, {safe:true}, callback);
     },
     findOneBy: function(id, provider, callback) {
-      if (!this.isInited(callback)) { return false; }
+      if (!isInited(callback)) { return false; }
 
       var criteria = {};
       criteria['authInfo.' + provider + '.id'] = id;
       users.findOne(criteria, callback);
     },
     findOneByObjectId: function(id, callback) {
-      if (!this.isInited(callback)) { return false; }
+      if (!isInited(callback)) { return false; }
 
       var criteria = {};
       if (isObjectIDType(id)) {
