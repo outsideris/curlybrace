@@ -34,7 +34,11 @@ module.exports = (function() {
         , authInfo: {}
         , regDate: new Date()
       };
-      user['authInfo'][provider] = profile;
+      if (provider === authProvider.facebook.name || provider === authProvider.twitter.name) {
+        user['authInfo'][provider] = profile._json;
+      } else {
+        user['authInfo'][provider] = profile;
+      }
 
       users.insert(user, {safe:true}, callback);
     },
