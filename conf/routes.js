@@ -12,15 +12,18 @@ app.get('/question/form', qna.questionForm);
 app.get('/question/:id', qna.questionView);
 
 // 회원관련
-app.get('/login', users.loginForm);
+app.get('/login', ensureUnauthenticated, users.loginForm);
 
-app.post('/join', users.processJoin);
+  app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+  });
 
-app.get('/auth/twitter', passport.authenticate('twitter'));
+app.get('/auth/twitter', ensureUnauthenticated, passport.authenticate('twitter'));
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook', ensureUnauthenticated, passport.authenticate('facebook'));
 
-app.get('/auth/google',
+app.get('/auth/google', ensureUnauthenticated,
   passport.authenticate('google', {
     scope: [
       'https://www.googleapis.com/auth/userinfo.profile'
@@ -29,9 +32,9 @@ app.get('/auth/google',
   }
 ));
 
-app.get('/auth/github', passport.authenticate('github'));
+app.get('/auth/github', ensureUnauthenticated, passport.authenticate('github'));
 
-app.get('/auth/me2day', passport.authenticate('me2day'));
+app.get('/auth/me2day', ensureUnauthenticated, passport.authenticate('me2day'));
 
 app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/login' }),
@@ -69,3 +72,17 @@ app.get('/help/markdown', help.markdown);
 // API V1
 app.get('/v1/tags', api_v1.findTags);
 };
+
+
+// confirm authenticated
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login')
+}
+
+function ensureUnauthenticated(req, res, next) {
+  if (req.isUnauthenticated()) { return next(); }
+  res.redirect('/')
+}
+
+

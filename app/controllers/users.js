@@ -10,6 +10,7 @@ db.on('connected', function(err, db) {
 exports.loginForm = function(req, res) {
   res.render('loginForm', {
     title: env.SITENAME,
-    siteName: env.SITENAME
+    siteName: env.SITENAME,
+    user: req.user
   });
 };

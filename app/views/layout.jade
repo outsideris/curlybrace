@@ -13,7 +13,10 @@ html
             a.brand(href="/") {curlybrace}
             ul.nav.unstyled.pull-right
               li.active
-                a(href='/login') Login
+                if !user
+                  a(href='/login') Login
+                else
+                  a(href='/user') #{user.nickname}
             form.navbar-form.pull-right
               input.search-query(type='txt', placeholder="Search")
             ul.nav.unstyled
