@@ -34,7 +34,8 @@ module.exports = (function() {
         , authInfo: {}
         , regDate: new Date()
       };
-      if (provider === authProvider.facebook.name || provider === authProvider.twitter.name) {
+      if (provider === authProvider.facebook.name || provider === authProvider.twitter.name
+           || provider === authProvider.github.name) {
         user['authInfo'][provider] = profile._json;
       } else {
         user['authInfo'][provider] = profile;
