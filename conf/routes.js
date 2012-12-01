@@ -7,17 +7,17 @@ module.exports = function(app, passport) {
 // 질문&답변 관련
 app.get('/', qna.index);
 
-app.get('/question/form', qna.questionForm);
+app.get('/question/form', ensureAuthenticated, qna.questionForm);
 
 app.get('/question/:id', qna.questionView);
 
 // 회원관련
 app.get('/login', ensureUnauthenticated, users.loginForm);
 
-  app.get('/logout', function(req, res){
-    req.logout();
-    res.redirect('/');
-  });
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 
 app.get('/auth/twitter', ensureUnauthenticated, passport.authenticate('twitter'));
 
@@ -84,5 +84,3 @@ function ensureUnauthenticated(req, res, next) {
   if (req.isUnauthenticated()) { return next(); }
   res.redirect('/')
 }
-
-
