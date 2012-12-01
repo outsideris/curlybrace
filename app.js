@@ -5,9 +5,9 @@
 
 var express = require('express')
   , path = require('path')
-  , everyauth = require('./app/models/everyauth').init()
   , env = require('./conf/config').env
   , logger = require('./conf/config').logger
+  , passport = require('passport')
   , dbService = require('./app/models/dbService');
 
 dbService.init(function(err, db) {});
@@ -24,10 +24,11 @@ app.configure(function() {
   app.use(express.methodOverride());
   app.use(express.cookieParser('htuayreve'));
   app.use(express.session());
+  app.use(passport.initialize());
+  app.use(passport.session());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(require('stylus').middleware(__dirname + '/public'));
-  app.use(everyauth.middleware());
 });
 
 app.configure('development', function(){
@@ -38,8 +39,11 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
+// autentication
+require('./app/models/authentication')(passport);
+
 // routes
-require('./conf/routes')(app);
+require('./conf/routes')(app, passport);
 
 // Binding Server
 var server = app.listen(env.PORT);
