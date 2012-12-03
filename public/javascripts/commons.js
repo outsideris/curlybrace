@@ -64,12 +64,12 @@ $(document).ready(function() {
   if ($('#tags').length) {
     var opt = {
       jsonContainer: 'results',
-      onResult:function(results) {
-        $(results).each(function(v) {
-          v.id = v.name;
-          v.readonly = true;
+      onResult:function(res) {
+        $(res.results).each(function(index, elem) {
+          elem.id = elem.name;
+          elem.readonly = true;
         });
-        return results;
+        return res;
       },
       theme: 'facebook',
       preventDuplicates: true
