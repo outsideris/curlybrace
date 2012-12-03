@@ -4,19 +4,19 @@ block css
   link(rel='stylesheet', href='/stylesheets/token-input-facebook.css')
 
 block mainContent
-  article.row
-    .question-box.span9
+  article
+    .question-box
       .question-form
         form
           input(type='text', name='title', id='title', placeholder='제목')
           a(href="/help/markdown", target="_blank").btn.pull-right 마크다운 도움말
-          ul.nav.nav-tabs#editor-tabs
-            li
+          ul.nav.nav-tabs
+            li.active
               a(href='#editor', data-toggle='tab')#editor-tab Editor
             li
               a(href='#preview', data-toggle='tab')#preview-tab Preview
           .tab-content
-            .tab-pane#editor
+            .tab-pane#editor.active
               textarea
             .tab-pane#preview
               #preview-box

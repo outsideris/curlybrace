@@ -33,7 +33,6 @@ transform()
   font-style normal
 
 body
-  font 14px "Lucida Grande", Helvetica, Arial, sans-serif
   background-color #1d83a4
 
 a
@@ -41,6 +40,7 @@ a
   color LIGHTBLUETONE_COLOR
   &:focus
   &:hover
+    text-decoration none
     color REDTONE_COLOR
 
 .clear
@@ -50,19 +50,23 @@ a
 #betatag
   font-size 0.4em
   font-style normal
-  padding 2px 3px 0 2px
+  padding 0 5px
+  margin-left 3px
   text-decoration none
   color WHITE_COLOR
   text-shadow none
   background-color #e12e01
-  top -8px
+  top -5px
   left 0
   position relative
   border-radius 7px
+  display inline-block
   transform rotate(30deg)
 
 .main-wrap
   padding-top 50px
+  width 960px
+  margin 0 auto
 
 // 푸터
 footer
@@ -86,23 +90,29 @@ footer a
 
 #questionLists
   list-style none
+  margin-left 0
 
 #questionLists .question
   border-top 1px dotted #B1B1B1
   min-height 50px
 
-#questionLists .question h3
+#questionLists .question h4
   color DARKGREY_COLOR
+  margin-left 15px
   &:focus
   &:hover
     color REDTONE_COLOR
 
 #questionLists .question .infomation
+  float right
+  width 110px
   margin-top 10px
+  margin-left 10px
 
 #questionLists .question span.votecount,
 #questionLists .question span.answercount
   border-radius 30px
+  float left
   background-color LIGHTBLUETONE_COLOR
   text-align center
   width 45px
@@ -111,6 +121,7 @@ footer a
   line-height 45px
   font-size 1em
   color WHITE_COLOR
+  margin-right 5px
 
 #questionLists .question span.answercount
   background-color REDTONE_COLOR
@@ -123,15 +134,24 @@ footer a
   border-left 1px solid #CCC
   padding 5px
   float right
-  font-size 0.9em
+  font-size 1.1em
+  width 200px
 
 #questionLists .question div.author img
   margin-right 5px
+  width 30px
+  height 30px
+
+#questionLists .question time
+  line-height 30px
+  font-size 0.8em
+  float right
+  margin-right 15px
 
 ul.tags
   font-size 0.7em
   margin-top 10px
-  margin-left 50px
+  margin-left 35px
 
 ul.tags li
   margin 0 5px 0 0
@@ -139,13 +159,13 @@ ul.tags li
   & a
     color DARKGREY_COLOR
 
-#questionLists .question time
-  float right
-  vertical-align bottom
-  line-height 40px
-  font-size 0.8em
-
 // 글 읽기
+article .question-vote
+  float right
+  width 130px
+  margin-left 20px
+  margin-top 20px
+
 article .question-vote span.votecount
   border-radius 30px
   background-color LIGHTBLUETONE_COLOR
@@ -156,6 +176,8 @@ article .question-vote span.votecount
   line-height 45px
   font-size 1em
   color WHITE_COLOR
+  float left
+  margin-right 20px
 
 article .question-vote span.voteplus,
 article .question-vote span.voteminus
@@ -182,13 +204,24 @@ article .question-vote span.voteminus
 article .question-vote button
   display block
   margin-left 10px
+  margin-bottom 3px
+
+article .question-vote button span
+  font-size 1.5em;
+  font-weight bold
+  margin-left 2px
 
 article .question-box
   border-top 1px dotted #B1B1B1
   padding-top 10px
 
+article .question-box a h3
+  color DARKGREY_COLOR
+  margin-left 15px
+
 article .socialbox ul li
   float right
+  margin-right 10px
 
 article .question-box .question-text
   padding 10px 10px 10px 20px
@@ -197,8 +230,11 @@ article div.author
   float right
   border-left 1px solid #CCC
   padding 5px
-  margin-left 7px
-   
+  width 200px
+
+article div.author time
+  float right
+
 article time
   margin-left 10px
   color DARKGREY_COLOR
@@ -217,7 +253,8 @@ article div.comments-list
 
 article div.comment
   border-top 1px dotted #B1B1B1
-  padding 5px
+  padding 5px 10px 5px 5px
+  margin-left 100px
 
 article div.comment div.profile
   float left
@@ -239,7 +276,7 @@ article div.comment-write form
   display inline
 
 article div.comment-write textarea
-  width 91%
+  width 90%
   margin 0 auto
 
 article div.comment-write input[type='submit']
@@ -286,6 +323,12 @@ article .answer-box .voting-box .answer-vote span.voteminus
 article .answer-box .voting-box .answer-vote button
   display block
   margin-left 10px
+  margin-bottom 3px
+
+article .answer-box .voting-box .answer-vote button span
+  font-size 1.5em;
+  font-weight bold
+  margin-left 2px
 
 article .answer-box .socialbox
   padding-left 30px
@@ -310,6 +353,8 @@ article time
 
 article .answer-vote
   margin-top 10px
+  margin-left 20px
+  width 130px
 
 article .answer-vote .voting
   background-color #2DAEBF
@@ -318,11 +363,12 @@ article .answer-vote .voting
 
 article .answer-vote .votecount
   display block
-  margin 7px 0
   text-align center
   font-size 2em
   font-weight bold
-   
+  float left
+  margin-right 20px
+
 article .answer-write-box
   border-top 1px dotted #B1B1B1
   margin-top 20px
@@ -368,7 +414,7 @@ aside .labelbox ul li
   line-height 1.5em
 
 aside .labelbox ul li a
-  color LIGHTGREY_COLOR
+  color WHITE_COLOR
   &:focus
   &:hover
     color REDTONE_COLOR
@@ -414,8 +460,6 @@ article .question-form form ul.token-input-list-facebook
     color #555555
     background-color #ffffff
     border 1px solid #cccccc
-    -webkit-border-radius 3px
-    -moz-border-radius 3px
     border-radius 3px
 
 // 로그인
@@ -428,4 +472,54 @@ article .question-form form ul.token-input-list-facebook
 
 .login ul li
   margin-bottom 30px
+  list-style none
+
+// 도움말
+.help-box h2.header
+  margin-left 15px
+
+.help-box section h3.title
+  padding-bottom 9px
+  margin 20px 0 15px 30px
+  border-bottom 1px solid LIGHTGREY_COLOR
+
+.help-box .docs-markdown,
+.help-box .docs-html
+  position relative
+  margin 15px 0
+  padding 39px 19px 14px
+  *padding-top 19px
+  background-color #fff
+  border 1px solid #ddd
+  border-radius 4px
+  width 280px
+
+.help-box .docs-markdown
+  float left
+  margin-left 60px
+  margin-right 10px
+
+.help-box .docs-html
+  float left
+
+.help-box .docs-markdown:after,
+.help-box .docs-html:after
+  position absolute
+  top -1px
+  left -1px
+  padding 3px 7px
+  font-size 12px
+  font-weight bold
+  background-color #f5f5f5
+  border 1px solid #ddd
+  color #9da0a4
+  -webkit-border-radius: 4px 0 4px 0
+  -moz-border-radius: 4px 0 4px 0
+  border-radius: 4px 0 4px 0
+
+.help-box .docs-markdown:after
+  content "Markdown"
+
+.help-box .docs-html:after
+  content "HTML"
 

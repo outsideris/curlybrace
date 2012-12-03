@@ -2,100 +2,88 @@ extends ../layout
 
 block mainContent
   article.help-box
-    h2 마크다운 사용방법
-    section.span9
-      .page-header
-        h2 제목
+    h2.header 마크다운 사용방법
+    section
+      h3.title 제목
       .row
-        .span4.alert.alert-info Markdown
-        .span3.alert.alert-info HTML
-      .row
-        .span4.well.markdown
+        .docs-markdown
           p # 제목
           p ## 제목
           p ### 제목
           p #### 제목
           p ##### 제목
           p ###### 제목
-        .span3.well.html
+        .docs-html
           h1 제목
           h2 제목
           h3 제목
           h4 제목
           h5 제목
           h6 제목
-    section.span9
-      .page-header
-        h2 목록
+    section
+      h3.title 목록
       .row
-        .span4.alert.alert-info Markdown
-        .span3.alert.alert-info HTML
-      .row
-        .span4.well.markdown
+        .docs-markdown
           p * 리스트
           p * 리스트
           p * 리스트
-        .span3.well.html
+        .docs-html
           ul
             li 리스트
             li 리스트
             li 리스트
       .row
-        .span4.well.markdown
+        .docs-markdown
           p + 리스트
           p + 리스트
           p + 리스트
-        .span3.well.html
+        .docs-html
           ul
             li 리스트
             li 리스트
             li 리스트
       .row
-        .span4.well.markdown
+        .docs-markdown
           p - 리스트
           p - 리스트
           p - 리스트
-        .span3.well.html
+        .docs-html
           ul
             li 리스트
             li 리스트
             li 리스트
       .row
-        .span4.well.markdown
+        .docs-markdown
           p 1. 리스트
           p 1. 리스트
           p 1. 리스트
-        .span3.well.html
+        .docs-html
           ol
             li 리스트
             li 리스트
             li 리스트
       .row
-        .span4.well.markdown
+        .docs-markdown
           p 1. 리스트
           p 2. 리스트
           p 3. 리스트
-        .span3.well.html
+        .docs-html
           ol
             li 리스트
             li 리스트
             li 리스트
-    section.span9
-      .page-header
-        h2 중첩 목록
-          small  공백을 4칸 들여쓰고 리스트기호간에 섞어 쓸 수 있다.
+    section
+      h3.title 중첩 목록
+        small  공백을 4칸 들여쓰고 리스트 기호간에 섞어 쓸 수 있다.
       .row
-        .span4.alert.alert-info Markdown
-        .span3.alert.alert-info HTML
-      .row
-        .span4.well.markdown
+        .docs-markdown
           p * 리스트
           p &nbsp;&nbsp;&nbsp;&nbsp;- 리스트
           p &nbsp;&nbsp;&nbsp;&nbsp;- 리스트
           p * 리스트
           p &nbsp;&nbsp;&nbsp;&nbsp;+ 리스트
           p &nbsp;&nbsp;&nbsp;&nbsp;+ 리스트
-        .span3.well.html
+        .docs-html
           ul
             li 리스트
               ul
@@ -106,14 +94,14 @@ block mainContent
                 li 리스트
                 li 리스트
       .row
-        .span4.well.markdown
+        .docs-markdown
           p - 리스트
           p &nbsp;&nbsp;&nbsp;&nbsp;1. 리스트
           p &nbsp;&nbsp;&nbsp;&nbsp;1. 리스트
           p - 리스트
           p &nbsp;&nbsp;&nbsp;&nbsp;1. 리스트
           p &nbsp;&nbsp;&nbsp;&nbsp;2. 리스트
-        .span3.well.html
+        .docs-html
           ul
             li 리스트
               ol
@@ -123,14 +111,10 @@ block mainContent
               ol
                 li 리스트
                 li 리스트
-    section.span9
-      .page-header
-        h2 링크
+    section
+      h3.title 링크
       .row
-        .span4.alert.alert-info Markdown
-        .span3.alert.alert-info HTML
-      .row
-        .span4.well.markdown
+        .docs-markdown
           p [구글](http://google.com)
           p [스택오버플로우](http://stackoverflow.com/ "스택오버플로우")
           p <http://www.quora.com/>
@@ -139,7 +123,7 @@ block mainContent
           p [twitter]: http://twitter.com
           p [1]: http://facebook.com
           p [2]: http://plus.google.com
-        .span3.well.html
+        .docs-html
           p
             a(href="http://google.com") 구글
           p
@@ -150,33 +134,25 @@ block mainContent
             a(href="http://twitter.com") 트위터,
             a(href="http://facebook.com") 페이스북,
             a(href="http://plus.google.com") 구글+
-    section.span9
-      .page-header
-        h2 인용문
+    section
+      h3.title 인용문
       .row
-        .span4.alert.alert-info Markdown
-        .span3.alert.alert-info HTML
-      .row
-        .span4.well.markdown
+        .docs-markdown
           p 오비완 케노비가 루크 스카이워커에게 말했다.
           p >Use the Force, Luke
-        .span3.well.html
+        .docs-html
           p 오비완 케노비가 루크 스카이워커에게 말했다.
           blockquote
             p Use the Force, Luke
-    section.span9
-      .page-header
-        h2 이탤릭체, 볼드체
+    section
+      h3.title 이탤릭체, 볼드체
       .row
-        .span4.alert.alert-info Markdown
-        .span3.alert.alert-info HTML
-      .row
-        .span4.well.markdown
+        .docs-markdown
           p *이탤릭체*입니다
           p _이탤릭체_입니다
           p **볼드체**입니다
           p __볼드체__입니다
-        .span3.well.html
+        .docs-html
           p
             em 이탤릭체
             입니다
@@ -189,21 +165,17 @@ block mainContent
           p
             strong 볼드체
             입니다
-    section.span9
-      .page-header
-        h2 코드
-          small  코드블록의 경우 들여쓰기 4칸을 합니다.
+    section
+      h3.title 코드
+        small  코드블록의 경우 들여쓰기 4칸을 합니다.
       .row
-        .span4.alert.alert-info Markdown
-        .span3.alert.alert-info HTML
-      .row
-        .span4.well.markdown
+        .docs-markdown
           p `var foo = "var";`와 같이 사용합니다
           p ``var foo = "var";``와 같이 사용합니다
           p &nbsp;&nbsp;&nbsp;&nbsp;function foo() {
           p &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "var";
           p &nbsp;&nbsp;&nbsp;&nbsp;}
-        .span3.well.html
+        .docs-html
           p
             code var foo = "var";
             와 같이 사용합니다
@@ -213,31 +185,23 @@ block mainContent
           pre: code function foo() {
             |  return "var";
             | }
-    section.span9
-      .page-header
-        h2 이미지
+    section
+      h3.title 이미지
       .row
-        .span4.alert.alert-info Markdown
-        .span3.alert.alert-info HTML
-      .row
-        .span4.well.markdown
+        .docs-markdown
           p ![깃허브 로그인버튼](http://curlybrace.dev/images/signin_github.png)
-        .span3.well.html
+        .docs-html
           p: img(alt="깃허브 로그인버튼", src="http://curlybrace.dev/images/signin_github.png")
-    section.span9
-      .page-header
-        h2 수평선
+    section
+      h3.title 수평선
       .row
-        .span4.alert.alert-info Markdown
-        .span3.alert.alert-info HTML
-      .row
-        .span4.well.markdown
+        .docs-markdown
           p * * *
           p ***
           p ******
           p - - -
           p ------------
-        .span3.well.html
+        .docs-html
           p: hr
           p: hr
           p: hr

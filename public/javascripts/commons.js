@@ -1,9 +1,13 @@
 $(document).ready(function() {
   var tooltipOpt = {
     placement: 'bottom'
+  };
+  if ($('.votecount').length) {
+    $('.votecount').tooltip(tooltipOpt);
   }
-  $('.votecount').tooltip(tooltipOpt);
-  $('.answercount').tooltip(tooltipOpt);
+  if ($('.votecount').length) {
+    $('.answercount').tooltip(tooltipOpt);
+  }
 
   if ($('.socialbox').length) {
     //Twitter Button
@@ -45,7 +49,6 @@ $(document).ready(function() {
     var editor = $('#editor').find('textarea');
     var preview = $('#preview-box');
 
-    $('#editor-tab').tab('show');
     $('#editor-tab').click(function(e) {
       e.preventDefault();
       $(this).tab('show');

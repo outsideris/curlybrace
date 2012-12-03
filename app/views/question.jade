@@ -1,40 +1,39 @@
 extends layout
 
 block mainContent
-  article.row
-    .question-box.span9
-      .row
-        h3.span7 Question 1 Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
-        .question-vote.row
-          span.votecount(title='투표 수').span1 20
-            span.voteplus(title='+ 수') +30
-            span.voteminus(title='- 수') -10
-          .span1
-            form
-              button.btn.btn-small.btn-success
-               i.icon-plus
-               | &nbsp;
-               i.icon-plus
-            form
-              button.btn.btn-small.btn-danger
-               i.icon-minus
-               | &nbsp;
-               i.icon-minus
+  article
+    .question-box
+      .question-vote.row
+        span.votecount(title='투표 수') 20
+          span.voteplus(title='+ 수') +30
+          span.voteminus(title='- 수') -10
+        form
+          button.btn.btn-small.btn-success
+           i.icon-plus
+           | &nbsp;
+           i.icon-plus
+           span ;
+          button.btn.btn-small.btn-danger
+           i.icon-minus
+           | &nbsp;
+           i.icon-minus
+           span ;
+      a(href='#')
+        h3 입법권은 국회에 속한다. 국가는 노인과 청소년의 복지향상을 위한 정책을 실시할 의무를 진다.
       .socialbox.row
-        .span9
-          ul.unstyled
-            li
-              g:plusone(size='medium').social
-            li
-              .fb-like(data-layout='button_count', data-send='false', data-width='100', data-show-faces='false').social
-            li
-              a(href='https://twitter.com/share', data-hashtags='curlybrace').twitter-share-button.social Tweet
+        ul.unstyled
+          li
+            g:plusone(size='medium').social
+          li
+            .fb-like(data-layout='button_count', data-send='false', data-width='100', data-show-faces='false').social
+          li
+            a(href='https://twitter.com/share', data-hashtags='curlybrace').twitter-share-button.social Tweet
       .question-text
-        p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quis neque quis lacus varius dignissim et vitae neque. Integer quis pulvinar massa. Integer sed tortor in turpis lacinia vulputate. Proin mauris risus, varius sit amet tempus in, malesuada ut dolor. Sed cursus risus at sapien laoreet viverra. Quisque odio dolor, porttitor vestibulum rhoncus sit amet, auctor a tortor. Nulla interdum mi lectus. Duis dapibus tincidunt odio ut commodo. Donec at felis leo. Vestibulum a tortor vitae sem rhoncus varius sed sagittis neque. Morbi eget mi lacus, bibendum semper justo. In ac enim eros, in tempus libero.
-        p Sed a mi malesuada arcu laoreet hendrerit quis quis purus. Fusce a velit sit amet sem commodo semper. Duis vitae quam elit. In hac habitasse platea dictumst. Ut nec viverra metus. Vivamus eget eros vitae augue eleifend luctus scelerisque sit amet velit. Maecenas ac lacus ut ligula tempor consequat. Quisque venenatis lacinia sodales. Suspendisse semper turpis quis mi dapibus et posuere lacus congue. Morbi fermentum tincidunt nisl, quis aliquam lectus scelerisque quis. Quisque commodo dui id magna sagittis ut laoreet neque eleifend. Nam turpis metus, hendrerit vitae pellentesque eu, sollicitudin a tellus. Aenean at diam nisl, nec condimentum nibh.
-        p Morbi vitae odio id enim rhoncus vestibulum. Fusce dignissim turpis vel lacus vehicula eget mattis justo vestibulum. Aenean vulputate tempus volutpat. Pellentesque porttitor ultrices lectus, et pulvinar mauris mollis id. Praesent vel tellus elit, ac luctus libero. Integer elementum sagittis sollicitudin. Aliquam erat volutpat.
+        p 피고인의 자백이 고문·폭행·협박·구속의 부당한 장기화 또는 기망 기타의 방법에 의하여 자의로 진술된 것이 아니라고 인정될 때 또는 정식재판에 있어서 피고인의 자백이 그에게 불리한 유일한 증거일 때에는 이를 유죄의 증거로 삼거나 이를 이유로 처벌할 수 없다. 대한민국의 영토는 한반도와 그 부속도서로 한다. 국가는 청원에 대하여 심사할 의무를 진다. 연소자의 근로는 특별한 보호를 받는다. 정당은 그 목적, 조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에 참여하는 데 필요한 조직을 가져야 한다. 주거에 대한 압수나 수색을 할 때에는 검사의 신청에 의하여 법관이 발부한 영장을 제시하여야 한다.
+        p 국회의원이 회기 전에 체포 또는 구금된 때에는 현행범이 아닌 한 국회의 요구가 있으면 회기 중 석방된다. 혼인과 가족생활은 개인의 존엄과 양성의 평등을 기초로 성립되고 유지되어야 하며, 국가는 이를 보장한다. 정당의 설립은 자유이며, 복수정당제는 보장된다. 대통령이 임시회의 집회를 요구할 때에는 기간과 집회요구의 이유를 명시하여야 한다. 정당의 설립은 자유이며, 복수정당제는 보장된다. 국민의 자유와 권리는 헌법에 열거되지 아니한 이유로 경시되지 아니한다. 모든 국민은 신속한 재판을 받을 권리를 가진다. 모든 국민은 거주 이전의 자유를 가진다. 대한민국은 통일을 지향하며, 자유민주적 기본질서에 입각한 평화적 통일정책을 수립하고 이를 추진한다.
+        p 대한민국의 주권은 국민에게 있고, 모든 권력은 국민으로부터 나온다. 모든 국민은 양심의 자유를 가진다. 국회의원의 선거구와 비례대표제 기타 선거에 관한 사항은 법률로 정한다. 모든 국민은 인간다운 생활을 할 권리를 가진다. 모든 국민은 인간으로서의 존엄과 가치를 가지며, 행복을 추구할 권리를 가진다. 공개하지 아니한 회의내용의 공표에 관하여는 법률이 정하는 바에 의한다. 통신·방송의 시설기준과 신문의 기능을 보장하기 위하여 필요한 사항은 법률로 정한다.
       .row
-        ul.unstyled.tags.span6
+        ul.unstyled.tags
           li.tag
             a(href="#").btn.btn-mini
               i.icon-tag
@@ -55,25 +54,22 @@ block mainContent
             a(href="#").btn.btn-mini
               i.icon-tag
               |  java
-        .author.span2
+        .author
           a(href='/')
             img(src='https://convore2.s3.amazonaws.com/userpics/3795/1297298357.jpg', alt='Avatar for tbeseda', title='tbeseda', width='40', height='40')
           a(href='/') Outsider
-        time 2일 전
+          time 2일 전
       .submenu.row
-        .span9
-          ul.unstyled
-            li
-              a(href='#').btn.btn-info.btn-mini
-                i.icon-share
-                |  퍼머링크: http://curlybrace.com:3000/394893
-            li
-              a(href='#').btn.btn-info.btn-mini
-                i.icon-edit
-                |  수정
+        ul.unstyled
+          li
+            a(href='#').btn.btn-info.btn-mini
+              i.icon-share
+              |  퍼머링크: http://curlybrace.com:3000/394893
+          li
+            a(href='#').btn.btn-info.btn-mini
+              i.icon-edit
+              |  수정
       .comments-list.row
-        .span1 &nbsp;
-        .span8
           - var comments = [1,2,3,4,5]
           each c in comments
             .comment
@@ -83,7 +79,7 @@ block mainContent
               span
                 b.author
                   a(href='#') Outsider
-                |  Ut porttitor iaculis sem id malesuada. Nam dolor elit, mollis ut faucibus nec, placerat eu augue. Nunc dictum iaculis velit. Aliquam nec tempor massa. Morbi ac justo lacus, et placerat purus. Aenean commodo leo vitae nibh gravida id consectetur diam vehicula.
+                | 사회적 특수계급의 제도는 인정되지 아니하며, 어떠한 형태로도 이를 창설할 수 없다. 대한민국의 주권은 국민에게 있고, 모든 권력은 국민으로부터 나온다. 피고인의 자백이 고문·폭행·협박·구속의 부당한 장기화 또는 기망 기타의 방법에 의하여 자의로 진술된 것이 아니라고 인정될 때 또는 정식재판에 있어서 피고인의 자백이 그에게 불리한 유일한 증거일 때에는 이를 유죄의 증거로 삼거나 이를 이유로 처벌할 수 없다. 정당의 설립은 자유이며, 복수정당제는 보장된다. 모든 국민은 법률이 정하는 바에 의하여 국방의 의무를 진다.
                 time 2일 전
           .comment.comment-write
             .profile
@@ -94,36 +90,36 @@ block mainContent
               input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn.pull-right
     - var answers = [1,2,3]
     each c in answers
-      .answer-box.span9
-        .voting-box.span2.pull-right
+      .answer-box
+        .voting-box.pull-right
           .answer-vote
-            span.votecount(title='투표 수').span1 20
+            span.votecount(title='투표 수') 20
               span.voteplus(title='+ 수') +30
               span.voteminus(title='- 수') -10
-            .span1
-              form
-                button.btn.btn-small.btn-success
-                  i.icon-plus
-                  | &nbsp;
-                  i.icon-plus
-              form
-                button.btn.btn-small.btn-danger
-                  i.icon-minus
-                  | &nbsp;
-                  i.icon-minus
-          .socialbox.row
+            form
+              button.btn.btn-small.btn-success
+                i.icon-plus
+                | &nbsp;
+                i.icon-plus
+                span ;
+              button.btn.btn-small.btn-danger
+                i.icon-minus
+                | &nbsp;
+                i.icon-minus
+                span ;
+          .socialbox
             ul.unstyled
               li
-                g:plusone(size='medium').social
+                a(href='https://twitter.com/share', data-hashtags='curlybrace').twitter-share-button.social Tweet
               li
                 .fb-like(data-layout='button_count', data-send='false', data-width='200', data-show-faces='false').social
               li
-                a(href='https://twitter.com/share', data-hashtags='curlybrace').twitter-share-button.social Tweet
+                g:plusone(size='medium').social
         .answer-text
-          p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quis neque quis lacus varius dignissim et vitae neque. Integer quis pulvinar massa. Integer sed tortor in turpis lacinia vulputate. Proin mauris risus, varius sit amet tempus in, malesuada ut dolor. Sed cursus risus at sapien laoreet viverra. Quisque odio dolor, porttitor vestibulum rhoncus sit amet, auctor a tortor. Nulla interdum mi lectus. Duis dapibus tincidunt odio ut commodo. Donec at felis leo. Vestibulum a tortor vitae sem rhoncus varius sed sagittis neque. Morbi eget mi lacus, bibendum semper justo. In ac enim eros, in tempus libero.
-          p Sed a mi malesuada arcu laoreet hendrerit quis quis purus. Fusce a velit sit amet sem commodo semper. Duis vitae quam elit. In hac habitasse platea dictumst. Ut nec viverra metus. Vivamus eget eros vitae augue eleifend luctus scelerisque sit amet velit. Maecenas ac lacus ut ligula tempor consequat. Quisque venenatis lacinia sodales. Suspendisse semper turpis quis mi dapibus et posuere lacus congue. Morbi fermentum tincidunt nisl, quis aliquam lectus scelerisque quis. Quisque commodo dui id magna sagittis ut laoreet neque eleifend. Nam turpis metus, hendrerit vitae pellentesque eu, sollicitudin a tellus. Aenean at diam nisl, nec condimentum nibh.
+          p 형사피고인은 유죄의 판결이 확정될 때까지는 무죄로 추정된다. 신체장애자 및 질병·노령 기타의 사유로 생활능력이 없는 국민은 법률이 정하는 바에 의하여 국가의 보호를 받는다. 국가는 사회보장·사회복지의 증진에 노력할 의무를 진다. 모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을 박탈당하지 아니한다. 형사피고인은 상당한 이유가 없는 한 지체없이 공개재판을 받을 권리를 가진다. 교육의 자주성·전문성·정치적 중립성 및 대학의 자율성은 법률이 정하는 바에 의하여 보장된다. 국가는 개인이 가지는 불가침의 기본적 인권을 확인하고 이를 보장할 의무를 진다. 대한민국은 민주공화국이다. 사회적 특수계급의 제도는 인정되지 아니하며, 어떠한 형태로도 이를 창설할 수 없다.
+          p 국가는 평생교육을 진흥하여야 한다. 군인 또는 군무원이 아닌 국민은 대한민국의 영역 안에서는 중대한 군사상 기밀, 초병, 초소, 유독음식물공급, 포로, 군용물에 관한 죄 중 법률이 정한 경우와 비상계엄이 선포된 경우를 제외하고는 군사법원의 재판을 받지 아니한다. 모든 국민은 법률이 정하는 바에 의하여 선거권을 가진다. 사회적 특수계급의 제도는 인정되지 아니하며, 어떠한 형태로도 이를 창설할 수 없다. 다만, 현행범인인 경우와 장기 3년 이상의 형에 해당하는 죄를 범하고 도피 또는 증거인멸의 염려가 있을 때에는 사후에 영장을 청구할 수 있다. 국회의원은 법률이 정하는 직을 겸할 수 없다. 사회적 특수계급의 제도는 인정되지 아니하며, 어떠한 형태로도 이를 창설할 수 없다. 모든 국민은 학문과 예술의 자유를 가진다. 근로조건의 기준은 인간의 존엄성을 보장하도록 법률로 정한다.
         .row
-          ul.unstyled.tags.span6
+          ul.unstyled.tags
             li.tag
               a(href="#").btn.btn-mini
                 i.icon-tag
@@ -144,44 +140,41 @@ block mainContent
               a(href="#").btn.btn-mini
                 i.icon-tag
                 |  java
-          .author.span2
+          .author
             a(href='/')
               img(src='https://convore2.s3.amazonaws.com/userpics/3795/1297298357.jpg', alt='Avatar for tbeseda', title='tbeseda', width='40', height='40')
             a(href='/') Outsider
-          time 2일 전
+            time 2일 전
         .submenu.row
-          .span9
-            ul.unstyled
-              li
-                a(href='#').btn.btn-info.btn-mini
-                  i.icon-share
-                  |  퍼머링크: http://curlybrace.com:3000/394893#123
-              li
-                a(href='#').btn.btn-info.btn-mini
-                  i.icon-edit
-                  |  수정
+          ul.unstyled
+            li
+              a(href='#').btn.btn-info.btn-mini
+                i.icon-share
+                |  퍼머링크: http://curlybrace.com:3000/394893#123
+            li
+              a(href='#').btn.btn-info.btn-mini
+                i.icon-edit
+                |  수정
         .comments-list.row
-          .span1 &nbsp;
-          .span8
-            - var comments = [1,2,3,4,5]
-            each c in comments
-              .comment
-                .profile
-                  a(href='/')
-                    img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
-                span
-                  b.author
-                    a(href='#') Outsider
-                  |  Ut porttitor iaculis sem id malesuada. Nam dolor elit, mollis ut faucibus nec, placerat eu augue. Nunc dictum iaculis velit. Aliquam nec tempor massa. Morbi ac justo lacus, et placerat purus. Aenean commodo leo vitae nibh gravida id consectetur diam vehicula.
-                  time 2일 전
-            .comment.comment-write
+          - var comments = [1,2,3,4,5]
+          each c in comments
+            .comment
               .profile
                 a(href='/')
                   img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
-              form
-                textarea.input-xlarge(rows='2')
-                input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn.pull-right
-    .answer-write-box.span9
+              span
+                b.author
+                  a(href='#') Outsider
+                | 교육의 자주성·전문성·정치적 중립성 및 대학의 자율성은 법률이 정하는 바에 의하여 보장된다. 정당은 그 목적, 조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에 참여하는 데 필요한 조직을 가져야 한다. 모든 국민의 재산권은 보장된다. 그 내용과 한계는 법률로 정한다. 국회의원은 국가이익을 우선하여 양심에 따라 직무를 행한다.
+                time 2일 전
+          .comment.comment-write
+            .profile
+              a(href='/')
+                img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
+            form
+              textarea.input-xlarge(rows='2')
+              input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn.pull-right
+    .answer-write-box
       .answer-write
         .alert.alert-info 이 질문에 답변해 주세요.
         form

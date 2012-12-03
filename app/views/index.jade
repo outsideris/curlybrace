@@ -4,14 +4,14 @@ block mainContent
   ul#questionLists
     - var questions = [1,2,3,4,5,6,7,8]
     each c in questions
-      li.question.row
-        a(href='/question/123/').row
-          h3.span7 Question #{c} Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
-          div.infomation
-            span.votecount(title='투표 수').span1 20
-            span.answercount(title='답변 수').span1 30
+      li.question
+        div.infomation
+          span.votecount(title='투표 수') 20
+          span.answercount(title='답변 수') 30
+        a(href='/question/123/')
+          h4 모든 국민은 사생활의 비밀과 자유를 침해받지 아니한다. 모든 국민은 사생활의 비밀과 자유를 침해받지 아...
         .row
-          ul.unstyled.tags.span6
+          ul.unstyled.tags
             li.tag
               a(href="#").btn.btn-mini
                 i.icon-tag
@@ -28,8 +28,8 @@ block mainContent
               a(href="#").btn.btn-mini
                 i.icon-tag
                 |  ruby
-          .author.span2
-              a(href='/')
-                 img(src='https://convore2.s3.amazonaws.com/userpics/3795/1297298357.jpg', alt='Avatar for tbeseda', title='tbeseda', width='20', height='20')
-              a(href='/') Outsider
-          time 2일 전
+          .author
+            a(href='/')
+              img(src='https://convore2.s3.amazonaws.com/userpics/3795/1297298357.jpg', alt='Avatar for tbeseda', title='tbeseda')
+            a(href='/') Outsider
+            time 1주일 전
