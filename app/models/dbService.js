@@ -15,7 +15,7 @@ module.exports = {
 
     if (!this.db) {
       var server = new Server(env.MONGODB_HOST, env.MONGODB_PORT, {auto_reconnect: true});
-      this.db = new Db(env.MONGODB_DB, server, {native_parser:true});
+      this.db = new Db(env.MONGODB_DB, server, {native_parser:true, safe: true});
 
       this.db.open(function(err, db) {
         if(err) {
