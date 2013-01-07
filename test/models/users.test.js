@@ -1,8 +1,9 @@
+"use strict";
+
 var should = require('should')
   , authProvider = require('../../conf/config').authProvider
   , dbService = require('../../app/models/dbService')
-  , users = require('../../app/models/users')
-  , logger = require('../../conf/config').logger;
+  , users = require('../../app/models/users');
 
 var fixture = {
   facebookInfo: {
@@ -38,11 +39,13 @@ describe('users', function() {
   beforeEach(function() {
     usersCollection.remove(function(err, numberOfRemovedDocs) {
       should.not.exist(err);
+      should.exist(numberOfRemovedDocs);
     });
   });
   after(function() {
     usersCollection.remove(function(err, numberOfRemovedDocs) {
       should.not.exist(err);
+      should.exist(numberOfRemovedDocs);
     });
     db.db.close();
     db.db = null;
@@ -50,6 +53,8 @@ describe('users', function() {
   describe('사용자 추가', function() {
     it('페이스북 사용자 추가', function(done) {
       users.insert(fixture.facebookInfo, authProvider.facebook.name, function(err, user) {
+        should.exist(user);
+
         var criteria = {};
         criteria['authInfo.' + authProvider.facebook.name + '.id'] = fixture.facebookInfo._json.id;
         usersCollection.findOne(criteria, function(err, user) {
@@ -68,9 +73,10 @@ describe('users', function() {
         , authInfo: {}
         , regDate: new Date()
       };
-      fixtureUser['authInfo'][authProvider.facebook.name] = fixture.facebookInfo._json;
+      fixtureUser.authInfo[authProvider.facebook.name] = fixture.facebookInfo._json;
       usersCollection.insert(fixtureUser, function(err, result) {
         should.not.exist(err);
+        should.exist(result);
       });
       users.findOneBy(fixture.facebookInfo._json.id, authProvider.facebook.name, function(err, user) {
         user.should.have.property('authInfo')
@@ -87,7 +93,7 @@ describe('users', function() {
         , authInfo: {}
         , regDate: new Date()
       };
-      fixtureUser['authInfo'][authProvider.facebook.name] = fixture.facebookInfo._json;
+      fixtureUser.authInfo[authProvider.facebook.name] = fixture.facebookInfo._json;
       usersCollection.insert(fixtureUser, function(err, result) {
         should.not.exist(err);
         var insertedObjectID = result[0]._id;
@@ -113,7 +119,7 @@ describe('users', function() {
         , authInfo: {}
         , regDate: new Date()
       };
-      fixtureUser['authInfo'][authProvider.facebook.name] = fixture.facebookInfo._json;
+      fixtureUser.authInfo[authProvider.facebook.name] = fixture.facebookInfo._json;
       usersCollection.insert(fixtureUser, function(err, result) {
         should.not.exist(err);
         var insertedObjectID = result[0]._id;

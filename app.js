@@ -10,7 +10,7 @@ var express = require('express')
   , passport = require('passport')
   , dbService = require('./app/models/dbService');
 
-dbService.init(function(err, db) {});
+dbService.init();
 
 var app = module.exports = express();
 
@@ -51,5 +51,5 @@ logger.info("Express server listening", {port: server.address().port, mode: app.
 
 // error handling
 process.on('uncaughtException', function(err) {
-  //logger.debug('Caught exception:', {stackTrack: err.stack || err.message})
+  logger.debug('Caught exception:', {stackTrack: err.stack || err.message});
 });

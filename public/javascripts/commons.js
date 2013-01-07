@@ -1,4 +1,6 @@
 $(document).ready(function() {
+  "use strict";
+
   var tooltipOpt = {
     placement: 'bottom'
   };
@@ -11,7 +13,7 @@ $(document).ready(function() {
 
   if ($('.socialbox').length) {
     //Twitter Button
-    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    (function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs"));
 
     //Facebook Like Button
     window.fbAsyncInit = function() {

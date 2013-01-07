@@ -1,3 +1,5 @@
+"use strict";
+
 var mongo = require('mongodb')
   , Db = mongo.Db
   , Server = mongo.Server
@@ -14,8 +16,8 @@ module.exports = {
     var self = this;
 
     if (!this.db) {
-      var server = new Server(env.MONGODB_HOST, env.MONGODB_PORT, {auto_reconnect: true});
-      this.db = new Db(env.MONGODB_DB, server, {native_parser:true, safe: true});
+      var server = new Server(env.MONGODB_HOST, env.MONGODB_PORT, {'auto_reconnect': true});
+      this.db = new Db(env.MONGODB_DB, server, {'native_parser':true, 'safe': true});
 
       this.db.open(function(err, db) {
         if(err) {

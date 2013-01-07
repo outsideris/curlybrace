@@ -1,3 +1,5 @@
+"use strict";
+
 var env = require('../../conf/config').env;
 
 exports.markdown = function(req, res) {

@@ -1,3 +1,5 @@
+"use strict";
+
 var env = require('../../conf/config').env;
 
 exports.index = function(req, res){

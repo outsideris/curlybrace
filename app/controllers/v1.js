@@ -1,3 +1,5 @@
+"use strict";
+
 var dbService = require('../models/dbService')
   , tagService = require('../models/tags')
   , logger = require('../../conf/config').logger;

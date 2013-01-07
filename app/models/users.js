@@ -1,6 +1,7 @@
+"use strict";
+
 var ObjectID = require('mongodb').ObjectID
-  , authProvider = require('../../conf/config').authProvider
-  , logger = require('../../conf/config').logger;
+  , authProvider = require('../../conf/config').authProvider;
 
 module.exports = (function() {
   var users = null;
@@ -30,7 +31,7 @@ module.exports = (function() {
         , "profile_image": profile_image
         , "description": description
         , "email": email
-      }
+      };
     };
 
     if (provider === authProvider.facebook.name) {
@@ -69,7 +70,7 @@ module.exports = (function() {
         , authInfo: {}
         , regDate: new Date()
       };
-      user['authInfo'][provider] = normalizeProfile(profile, provider);
+      user.authInfo[provider] = normalizeProfile(profile, provider);
 
 
       users.insert(user, {safe:true}, callback);
@@ -86,9 +87,9 @@ module.exports = (function() {
 
       var criteria = {};
       if (isObjectIDType(id)) {
-        criteria['_id'] = id;
+        criteria._id = id;
       } else {
-        criteria['_id'] = new ObjectID(id);
+        criteria._id = new ObjectID(id);
       }
 
       users.findOne(criteria, callback);

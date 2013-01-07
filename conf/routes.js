@@ -1,9 +1,22 @@
+"use strict";
+
 var qna = require('../app/controllers/qna')
   , users = require('../app/controllers/users')
-  , api_v1 = require('../app/controllers/v1')
+  , apiV1 = require('../app/controllers/v1')
   , help = require('../app/controllers/help');
 
 module.exports = function(app, passport) {
+// confirm authenticated
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login');
+}
+
+function ensureUnauthenticated(req, res, next) {
+  if (req.isUnauthenticated()) { return next(); }
+  res.redirect('/');
+}
+
 // 질문&답변 관련
 app.get('/', qna.index);
 
@@ -70,17 +83,7 @@ app.get('/auth/me2day/callback',
 app.get('/help/markdown', help.markdown);
 
 // API V1
-app.get('/v1/tags', api_v1.findTags);
+app.get('/v1/tags', apiV1.findTags);
 };
 
 
-// confirm authenticated
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
-}
-
-function ensureUnauthenticated(req, res, next) {
-  if (req.isUnauthenticated()) { return next(); }
-  res.redirect('/')
-}

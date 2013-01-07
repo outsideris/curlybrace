@@ -1,8 +1,8 @@
-var should = require('should')
-  , http = require('http')
+"use strict";
+
+var http = require('http')
   , env = require('../../conf/config').env
-  , dbService = require('../../app/models/dbService')
-  , authToken = require('../../conf/config').authToken;
+  , dbService = require('../../app/models/dbService');
 
 describe('API V1', function() {
   var server;
@@ -34,6 +34,6 @@ describe('API V1', function() {
         done();
       });
     });
-  })
+  });
 });
 

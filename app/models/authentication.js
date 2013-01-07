@@ -1,19 +1,17 @@
+"use strict";
+
 var authToken = require('../../conf/config').authToken
   , authProvider = require('../../conf/config').authProvider
   , env = require('../../conf/config').env
   , users = require('./users')
-  , http = require('http')
-  , util = require('util')
   , TwitterStrategy = require('passport-twitter').Strategy
   , FacebookStrategy = require('passport-facebook').Strategy
   , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
   , GitHubStrategy = require('passport-github').Strategy
-  , Me2dayStrategy = require('passport-me2day').Strategy
-  , logger = require('../../conf/config').logger;
+  , Me2dayStrategy = require('passport-me2day').Strategy;
 
 module.exports = function(passport) {
   passport.serializeUser(function(user, done) {
-    console.log(user);
     var id = user._id || user[0]._id;
     done(null, id);
   });
@@ -31,7 +29,7 @@ module.exports = function(passport) {
     },
     function(token, tokenSecret, profile, done) {
       users.findOneBy(profile.id, authProvider.twitter.name, function (err, user) {
-        if (err) return done(err, null);
+        if (err)  { return done(err, null); }
         if (user) {
           return done(err, user);
         } else {
@@ -50,7 +48,7 @@ module.exports = function(passport) {
     },
     function(accessToken, refreshToken, profile, done) {
       users.findOneBy(profile.id, authProvider.facebook.name, function(err, user) {
-        if (err) return done(err, null);
+        if (err)  { return done(err, null); }
         if (user) {
           return done(err, user);
         } else {
@@ -71,7 +69,7 @@ module.exports = function(passport) {
     function(accessToken, refreshToken, profile, done) {
       profile = JSON.parse(profile._raw);
       users.findOneBy(profile.id, authProvider.google.name, function(err, user) {
-        if (err) return done(err, null);
+        if (err) { return done(err, null); }
         if (user) {
           return done(err, user);
         } else {
@@ -90,7 +88,7 @@ module.exports = function(passport) {
     },
     function(accessToken, refreshToken, profile, done) {
       users.findOneBy(profile.id, authProvider.github.name, function(err, user) {
-        if (err) return done(err, null);
+        if (err) { return done(err, null); }
         if (user) {
           return done(err, user);
         } else {
@@ -109,7 +107,7 @@ module.exports = function(passport) {
     },
     function(userKey, profile, done) {
       users.findOneBy(profile.id, authProvider.me2day.name, function(err, user) {
-        if (err) return done(err, null);
+        if (err)  { return done(err, null); }
         if (user) {
           return done(err, user);
         } else {

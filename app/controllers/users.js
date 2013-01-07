@@ -1,3 +1,5 @@
+"use strict";
+
 var env = require('../../conf/config').env
   , dbService = require('../models/dbService')
   , users = require('../models/users');

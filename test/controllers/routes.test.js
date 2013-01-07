@@ -1,9 +1,8 @@
-var should = require('should')
-  , http = require('http')
+"use strict";
+
+var http = require('http')
   , env = require('../../conf/config').env
-  , authToken = require('../../conf/config').authToken
-  , dbService = require('../../app/models/dbService')
-  , logger = require('../../conf/config').logger;
+  , dbService = require('../../app/models/dbService');
 
 describe('라우팅', function() {
   var server;
@@ -14,7 +13,7 @@ describe('라우팅', function() {
       db = pdb;
       done();
     });
-    server = require('../../app')
+    server = require('../../app');
   });
   after(function() {
     db.db.close();

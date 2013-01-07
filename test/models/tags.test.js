@@ -1,7 +1,8 @@
+"use strict";
+
 var should = require('should')
   , dbService = require('../../app/models/dbService')
-  , tags = require('../../app/models/tags')
-  , assert = require('assert');
+  , tags = require('../../app/models/tags');
 
 var tagFixture = [
   {name: 'java'}
@@ -80,7 +81,8 @@ describe('tags', function() {
       db.setTags('tags_test');
       tagsCollection = db.tags;
       tagsCollection.insert(tagFixture, function(err, result) {
-        assert.equal(null, err);
+        should.not.exist(err);
+        should.exist(result);
       });
       tags.init(db);
       done();
@@ -88,7 +90,8 @@ describe('tags', function() {
   });
   after(function() {
     tagsCollection.remove(function(err, numberOfRemovedDocs) {
-      assert.equal(null, err);
+      should.not.exist(err);
+      should.exist(numberOfRemovedDocs);
     });
     db.db.close();
     db.db = null;
@@ -97,7 +100,7 @@ describe('tags', function() {
     it('특정 문자열로 시작하는 태그리스트를 조회한다', function(done) {
       tags.findTagsStartWith('jav', function(err, tags) {
         tags.some(function(v) {
-          return v.name == 'java';
+          return v.name === 'java';
         }).should.be.true;
         done();
       });
