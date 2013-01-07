@@ -1,6 +1,7 @@
 var should = require('should')
   , dbService = require('../../app/models/dbService')
-  , tags = require('../../app/models/tags');
+  , tags = require('../../app/models/tags')
+  , assert = require('assert');
 
 var tagFixture = [
   {name: 'java'}
@@ -78,13 +79,17 @@ describe('tags', function() {
       db = pdb;
       db.setTags('tags_test');
       tagsCollection = db.tags;
-      tagsCollection.insert(tagFixture);
+      tagsCollection.insert(tagFixture, function(err, result) {
+        assert.equal(null, err);
+      });
       tags.init(db);
       done();
     });
   });
   after(function() {
-    tagsCollection.remove();
+    tagsCollection.remove(function(err, numberOfRemovedDocs) {
+      assert.equal(null, err);
+    });
     db.db.close();
     db.db = null;
   });
