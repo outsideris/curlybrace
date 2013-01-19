@@ -23,6 +23,8 @@
   }
 , "devDependencies": {
     "should": "~0.6.0"
+  , "mocha": "*"
+  , "grunt-simple-mocha": "0.2.x"
   }
 , "scripts": {
     "start": "node app.js"

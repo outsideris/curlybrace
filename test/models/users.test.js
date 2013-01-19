@@ -103,7 +103,6 @@ describe('users', function() {
           //then
           should.not.exist(err);
           should.exist(user);
-          console.log(user);
           user.should.have.property('authInfo')
             .have.property(authProvider.facebook.name)
             .have.property('name', fixture.facebookInfo._json.name);
