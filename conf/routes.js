@@ -1,9 +1,9 @@
 "use strict";
 
-var qna = require('../app/controllers/qna')
-  , users = require('../app/controllers/users')
-  , apiV1 = require('../app/controllers/v1')
-  , help = require('../app/controllers/help');
+var qna = require('../app/controllers/qnaController')
+  , users = require('../app/controllers/usersController')
+  , apiV1 = require('../app/controllers/v1Controller')
+  , help = require('../app/controllers/helpController');
 
 module.exports = function(app, passport) {
 // confirm authenticated
