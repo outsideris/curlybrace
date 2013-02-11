@@ -22,6 +22,8 @@ app.get('/', qna.index);
 
 app.get('/question/form', ensureAuthenticated, qna.questionForm);
 
+app.post('/question', ensureAuthenticated, qna.registQuestion);
+
 app.get('/question/:id', qna.questionView);
 
 // 회원관련

@@ -30,6 +30,7 @@ module.exports.env = {
   , MONGODB_DB: 'curlybrace'
   , MONGODB_COLLECTION_USERS: 'users'
   , MONGODB_COLLECTION_TAGS: 'tags'
+  , MONGODB_COLLECTION_QUESTIONS: 'questions'
 };
 
 module.exports.server = {

@@ -1,6 +1,13 @@
 "use strict";
 
-var env = require('../../conf/config').env;
+var env = require('../../conf/config').env,
+    dbService = require('../models/dbService'),
+    questions = require('../models/qna').questions;
+
+var db = dbService.init();
+db.on('connected', function(err, db) {
+  questions.init(db);
+});
 
 exports.index = function(req, res){
   res.render('index', {
@@ -23,5 +30,13 @@ exports.questionView = function(req, res){
     title: env.SITENAME + ' :: ' + '질문제목',
     siteName: env.SITENAME,
     user: req.user
+  });
+};
+
+exports.registQuestion = function(req, res) {
+  questions.insert(req.body, function(err, insertedQuestion) {
+    if (err) {}
+
+    res.redirect('/question/1');
   });
 };

@@ -12,6 +12,8 @@ module.exports = {
   , event: new EventEmitter()
   , users: null
   , tags: null
+  , questions: null
+  , counters: null
   , init: function() {
     var self = this;
 
@@ -28,6 +30,8 @@ module.exports = {
           self.db = db;
           self.users = db.collection(env.MONGODB_COLLECTION_USERS);
           self.tags = db.collection(env.MONGODB_COLLECTION_TAGS);
+          self.questions = db.collection(env.MONGODB_COLLECTION_QUESTIONS);
+          self.counters = db.collection(env.MONGODB_COLLECTION_COUNTERS);
         }
         self.event.emit('connected', err, self);
       });
@@ -38,5 +42,7 @@ module.exports = {
     this.tags = this.db.collection(collectionName);
   }, setUsers: function(collectionName) {
     this.users = this.db.collection(collectionName);
+  }, setQuestions: function(collectionName) {
+    this.questions = this.db.collection(collectionName);
   }
 };

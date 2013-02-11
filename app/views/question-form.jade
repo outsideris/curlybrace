@@ -7,7 +7,7 @@ block mainContent
   article
     .question-box
       .question-form
-        form
+        form(method='POST', action='/question')
           input(type='text', name='title', id='title', placeholder='제목')
           a(href="/help/markdown", target="_blank").btn.pull-right 마크다운 도움말
           ul.nav.nav-tabs
@@ -17,7 +17,7 @@ block mainContent
               a(href='#preview', data-toggle='tab')#preview-tab Preview
           .tab-content
             .tab-pane#editor.active
-              textarea
+              textarea(name='contents')
             .tab-pane#preview
               #preview-box
           label(for=tags') 태그
