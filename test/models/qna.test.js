@@ -2,18 +2,20 @@
 
 var should = require('should')
   , dbService = require('../../app/models/dbService')
+  , env = require('../../conf/config').env
   , questions = require('../../app/models/qna').questions
   , tags = require('../../app/models/tags')
+  , counters = require('../../app/models/counters')
   , tagFixture = require('./tags.test').tagFixture;
 
 describe('questions', function() {
-  var questionsCollection, tagsCollection;
+  var questionsCollection, tagsCollection, countersCollection;
   var db;
   before(function(done) {
     db = dbService.init();
     db.once('connected', function(err, pdb) {
       db = pdb;
-      db.setUsers('questions_test');
+      db.setUsers(env.MONGODB_COLLECTION_QUESTIONS + '_test');
       questionsCollection = db.questions;
       questions.init(db);
 
@@ -24,6 +26,10 @@ describe('questions', function() {
         should.exist(result);
       });
       tags.init(db);
+
+      db.setCounters(env.MONGODB_COLLECTION_COUNTERS + '_test');
+      countersCollection = db.counters;
+      counters.init(db);
       done();
     });
   });
@@ -39,6 +45,10 @@ describe('questions', function() {
       should.exist(numberOfRemovedDocs);
     });
     tagsCollection.remove(function(err, numberOfRemovedDocs) {
+      should.not.exist(err);
+      should.exist(numberOfRemovedDocs);
+    });
+    countersCollection.remove(function(err, numberOfRemovedDocs) {
       should.not.exist(err);
       should.exist(numberOfRemovedDocs);
     });
@@ -139,9 +149,14 @@ describe('questions', function() {
         done();
       });
     });
-    it('등록된 질문은 글 번호를 반환한다', function(done) {
+    it('질문을 등록하면 글번호가 순차적으로 증가한다', function(done) {
       // given
       var questionFixture = {
+        title: '테스트 제목',
+        contents: '#본문입니다.\r\n\r\n* 질문\r\n* 질문..\r\n\r\n        var a = "tet"',
+        tags: 'scala,javascript'
+      };
+      var questionFixture2 = {
         title: '테스트 제목',
         contents: '#본문입니다.\r\n\r\n* 질문\r\n* 질문..\r\n\r\n        var a = "tet"',
         tags: 'scala,javascript'
@@ -149,10 +164,14 @@ describe('questions', function() {
 
       // when
       questions.insert(questionFixture, function(err, insertedQuestion) {
-        // then
-        should.not.exist(err);
-        should.exist(insertedQuestion);
-        done();
+        var beforeSeq = insertedQuestion[0]._id;
+        questions.insert(questionFixture2, function(err, insertedQuestion) {
+          // then
+          should.not.exist(err);
+          should.exist(insertedQuestion[0]);
+          beforeSeq.should.be.equal(insertedQuestion[0]._id - 1);
+          done();
+        });
       });
     });
     it.skip('질문 내용을 가져올 때 마크다운을 HTML로 렌더링한다', function(done) {

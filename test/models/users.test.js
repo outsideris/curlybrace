@@ -3,6 +3,7 @@
 var should = require('should')
   , authProvider = require('../../conf/config').authProvider
   , dbService = require('../../app/models/dbService')
+  , env = require('../../conf/config').env
   , users = require('../../app/models/users');
 
 var fixture = {
@@ -30,7 +31,7 @@ describe('users', function() {
     db = dbService.init();
     db.once('connected', function(err, pdb) {
       db = pdb;
-      db.setUsers('users_test');
+      db.setUsers(env.MONGODB_COLLECTION_USERS + '_test');
       usersCollection = db.users;
       users.init(db);
       done();

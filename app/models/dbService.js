@@ -44,5 +44,7 @@ module.exports = {
     this.users = this.db.collection(collectionName);
   }, setQuestions: function(collectionName) {
     this.questions = this.db.collection(collectionName);
+  }, setCounters: function(collectionName) {
+    this.counters = this.db.collection(collectionName);
   }
 };

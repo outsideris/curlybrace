@@ -31,6 +31,7 @@ module.exports.env = {
   , MONGODB_COLLECTION_USERS: 'users'
   , MONGODB_COLLECTION_TAGS: 'tags'
   , MONGODB_COLLECTION_QUESTIONS: 'questions'
+  , MONGODB_COLLECTION_COUNTERS: 'counters'
 };
 
 module.exports.server = {

@@ -2,6 +2,7 @@
 
 var should = require('should')
   , dbService = require('../../app/models/dbService')
+  , env = require('../../conf/config').env
   , tags = require('../../app/models/tags');
 
 var tagFixture = module.exports.tagFixture = [
@@ -78,7 +79,7 @@ describe('tags', function() {
     db = dbService.init();
     db.once('connected', function(err, pdb) {
       db = pdb;
-      db.setTags('tags_test');
+      db.setTags(env.MONGODB_COLLECTION_TAGS + '_test');
       tagsCollection = db.tags;
       tagsCollection.insert(tagFixture, function(err, result) {
         should.not.exist(err);

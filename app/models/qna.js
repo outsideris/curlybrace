@@ -1,7 +1,9 @@
 "use strict";
 
 var helpers = require('./helpers')
-  , tags = require('./tags');
+  , env = require('../../conf/config').env
+  , tags = require('./tags')
+  , counters = require('./counters');
 
 module.exports = {
   questions: (function() {
@@ -31,10 +33,14 @@ module.exports = {
         tags.isAllExistInTags(question.tags, function(err, isExist) {
           if (err) { callback(new Error(err)); }
 
-          if (!isExist) {
-            callback(new Error('tags is something wrong!'));
+          if (isExist) {
+            counters.getNextSequence(env.MONGODB_COLLECTION_QUESTIONS, function(err, seq) {
+              if (err) { return callback(err); }
+              question._id = seq;
+              questions.insert(question, callback);
+            });
           } else {
-            questions.insert(question, callback);
+            callback(new Error('tags is something wrong!'));
           }
         });
 
