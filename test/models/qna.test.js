@@ -69,7 +69,7 @@ describe('questions', function() {
       questions.insert(questionFixture, function(err, insertedQuestion) {
         // then
         should.not.exist(err);
-        should.exist(insertedQuestion);
+        should.exist(insertedQuestion[0]);
         done();
       });
     });
@@ -174,8 +174,28 @@ describe('questions', function() {
         });
       });
     });
-    it.skip('질문 내용을 가져올 때 마크다운을 HTML로 렌더링한다', function(done) {
+    it('질문 본문을 가져올 때 마크다운을 HTML로 렌더링한다', function(done) {
+      // given
+      var questionFixture = {
+        title: '테스트 제목',
+        contents: '#본문입니다.\r\n\r\n* 질문\r\n* 질문..\r\n\r\n        var a = "test"',
+        tags: 'scala,javascript'
+      };
 
+      // when
+      questions.insert(questionFixture, function(err, insertedQuestion) {
+        should.not.exist(err);
+
+        questions.findOneById(insertedQuestion[0]._id, function(err, foundQuestion) {
+          // then
+          should.not.exist(err);
+
+          var expectHTML = '<h1>본문입니다.</h1><ul><li>질문</li><li><p>질문..</p><pre><code>var a = &quot;test&quot;</code></pre></li></ul>';
+          var actualHTML = foundQuestion.renderedContents.replace(/\n|\r/g, '');
+          actualHTML.should.be.equal(expectHTML);
+          done();
+        });
+      });
     });
   });
 });

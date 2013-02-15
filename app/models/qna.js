@@ -3,7 +3,8 @@
 var helpers = require('./helpers')
   , env = require('../../conf/config').env
   , tags = require('./tags')
-  , counters = require('./counters');
+  , counters = require('./counters')
+  , markdown = require('markdown').markdown;
 
 module.exports = {
   questions: (function() {
@@ -31,7 +32,7 @@ module.exports = {
         }
         question.tags = question.tags.split(',');
         tags.isAllExistInTags(question.tags, function(err, isExist) {
-          if (err) { callback(new Error(err)); }
+          if (err) { callback(new Error(err)); return false;}
 
           if (isExist) {
             counters.getNextSequence(env.MONGODB_COLLECTION_QUESTIONS, function(err, seq) {
@@ -43,7 +44,17 @@ module.exports = {
             callback(new Error('tags is something wrong!'));
           }
         });
+      },
+      findOneById: function(id, callback) {
+        if (!isInited(callback)) { return false; }
 
+        var criteria = {'_id':id};
+        questions.findOne(criteria, function(err, question) {
+          if (err) { callback(new Error(err)); return false;}
+          // render markdown to HTML
+          question.renderedContents = markdown.toHTML(question.contents);
+          callback(err, question);
+        });
       }
     };
   })(),
