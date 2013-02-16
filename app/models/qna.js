@@ -48,10 +48,11 @@ module.exports = {
       findOneById: function(id, callback) {
         if (!isInited(callback)) { return false; }
 
-        var criteria = {'_id':id};
+        var criteria = {'_id': parseInt(id, 10)};
         questions.findOne(criteria, function(err, question) {
           if (err) { callback(new Error(err)); return false;}
           // render markdown to HTML
+          if (!question) { callback(new Error('Question is not found.')); return;}
           question.renderedContents = markdown.toHTML(question.contents);
           callback(err, question);
         });

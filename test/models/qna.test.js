@@ -15,7 +15,7 @@ describe('questions', function() {
     db = dbService.init();
     db.once('connected', function(err, pdb) {
       db = pdb;
-      db.setUsers(env.MONGODB_COLLECTION_QUESTIONS + '_test');
+      db.setQuestions(env.MONGODB_COLLECTION_QUESTIONS + '_test');
       questionsCollection = db.questions;
       questions.init(db);
 

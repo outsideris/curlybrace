@@ -1,27 +1,30 @@
 "use strict";
 
-var logger = require('../../conf/config').logger;
-
 module.exports = (function() {
   var counters = null;
+  var isInited = function(callback) {
+    if (counters) {
+      return true;
+    } else {
+      callback(new Error('counters collection should not be null.'));
+      return false;
+    }
+  };
+
   return {
     init: function(db) {
       counters = db.counters;
     },
-    isInited: function(callback) {
-      if (counters) {
-        return true;
-      } else {
-        callback(new Error('counters collection should not be null.'));
-        return false;
-      }
-    },
     insert: function(name, callback) {
+      if (!isInited(callback)) { return false; }
+
       counters.insert({ _id: name, seq: 1 }, callback);
     },
     // name의 다음 시퀀스 번호를 반환한다.
     // name의 시퀀스가 존재하지 않으면 새로 생성해서 반환한다.
     getNextSequence: function(name, callback) {
+      if (!isInited(callback)) { return false; }
+
       var _self = this;
       counters.findAndModify(
         { _id: name },

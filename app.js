@@ -77,7 +77,7 @@ require('./app/models/authentication')(passport);
 require('./conf/routes')(app, passport);
 
 // Binding Server
-var server = app.listen(env.PORT);
+var server = module.exports.httpd = app.listen(env.PORT);
 logger.info("Express server listening", {port: server.address().port, mode: app.get('env')});
 
 // error handling
