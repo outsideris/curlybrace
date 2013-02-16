@@ -31,21 +31,9 @@ module.exports = function(grunt) {
         expr: true,
         es5: true,
         //envir
-        browser: true,
-        jquery: true,
         node: true
       },
       globals: {
-        // clinet
-        markdown: true,
-        FB: true,
-        // mocha
-        describe: true,
-        it: true,
-        before: true,
-        beforeEach: true,
-        after: true,
-        afterEach: true
       }
     },
     watch: {

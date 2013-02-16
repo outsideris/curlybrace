@@ -1,3 +1,4 @@
+/*global describe:true, it:true */
 "use strict";
 
 var helpers = require('../../app/models/helpers');

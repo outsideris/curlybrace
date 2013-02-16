@@ -1,4 +1,6 @@
 // # 공통 자바스크립트
+/*global FB:true, markdown:true */
+/*jshint browser:true, jquery:true */
 $(document).ready(function() {
   "use strict";
 
