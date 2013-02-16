@@ -4,9 +4,9 @@ block mainContent
   article
     .question-box
       .question-vote.row
-        span.votecount(title='투표 수') 20
-          span.voteplus(title='+ 수') +30
-          span.voteminus(title='- 수') -10
+        - var voteup = question.voteup ? question.voteup : 0
+        - var votedown = question.votedown ? question.votedown : 0
+        span.votecount(title='투표 수') #{voteup - votedown}
         form
           button.btn.btn-small.btn-success
            i.icon-plus
@@ -92,8 +92,6 @@ block mainContent
         .voting-box.pull-right
           .answer-vote
             span.votecount(title='투표 수') 20
-              span.voteplus(title='+ 수') +30
-              span.voteminus(title='- 수') -10
             form
               button.btn.btn-small.btn-success
                 i.icon-plus
