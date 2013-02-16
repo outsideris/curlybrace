@@ -1,4 +1,6 @@
 "use strict";
+/*global isDev:true */
+
 /**
  * Module dependencies.
  */
@@ -14,6 +16,12 @@ dbService.init();
 
 var app = module.exports = express();
 
+// set env Mode
+var isDev = false;
+if (app.get('env') === 'development') {
+  isDev = true;
+}
+
 // Configuration
 app.configure(function() {
   app.set('views', __dirname + '/app/views');
@@ -27,6 +35,29 @@ app.configure(function() {
   app.use(express.session());
   app.use(passport.initialize());
   app.use(passport.session());
+  if (isDev) {
+    var mockLogin = function(req, res, next) {
+      if (req.isAuthenticated()) { return next(); }
+      var user = { nickname: 'Outsider',
+        defaultProvider: 'twitter',
+        authInfo:
+        { twitter:
+        { id: 7932892,
+          nickname: 'Outsider',
+          url: 'http://twitter.com/Outsideris',
+          profile_image: 'http://a0.twimg.com/profile_images/1646891342/image_normal.jpg',
+          description: 'Programmer / Hacker',
+          email: null } },
+        regDate: '',
+        _id: '5087f03698ec321f28000001'
+      };
+      req.login(user, function(err) {
+        next(err);
+      });
+    };
+
+    app.use(mockLogin);
+  }
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
