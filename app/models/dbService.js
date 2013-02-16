@@ -1,5 +1,7 @@
+// # 디비를 관리하는 서비스
 "use strict";
 
+// Module dependencies.
 var mongo = require('mongodb')
   , Db = mongo.Db
   , Server = mongo.Server
@@ -10,10 +12,12 @@ var mongo = require('mongodb')
 module.exports = {
   db: null
   , event: new EventEmitter()
+  // 사용하는 컬렉션
   , users: null
   , tags: null
   , questions: null
   , counters: null
+  // 전체 컬렉션 인스턴스 초기화
   , init: function() {
     var self = this;
 
@@ -38,13 +42,18 @@ module.exports = {
     }
 
     return this.event;
-  }, setTags: function(collectionName) {
+  },
+  // 테스트 등에서 컬렉션을 주입하기 위한 setter
+  setTags: function(collectionName) {
     this.tags = this.db.collection(collectionName);
-  }, setUsers: function(collectionName) {
+  },
+  setUsers: function(collectionName) {
     this.users = this.db.collection(collectionName);
-  }, setQuestions: function(collectionName) {
+  },
+  setQuestions: function(collectionName) {
     this.questions = this.db.collection(collectionName);
-  }, setCounters: function(collectionName) {
+  },
+  setCounters: function(collectionName) {
     this.counters = this.db.collection(collectionName);
   }
 };

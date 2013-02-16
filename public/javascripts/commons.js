@@ -1,6 +1,8 @@
+// # 공통 자바스크립트
 $(document).ready(function() {
   "use strict";
 
+  // 툴팁 설정
   var tooltipOpt = {
     placement: 'bottom'
   };
@@ -11,6 +13,7 @@ $(document).ready(function() {
     $('.answercount').tooltip(tooltipOpt);
   }
 
+  // SNS 버튼
   if ($('.socialbox').length) {
     //Twitter Button
     (function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs"));
@@ -47,6 +50,7 @@ $(document).ready(function() {
     })();
   }
 
+  // 질문 등록 폼 관련 스크립트
   if ($('.question-form').length) {
     var editor = $('#editor').find('textarea');
     var preview = $('#preview-box');
@@ -63,6 +67,7 @@ $(document).ready(function() {
     });
   }
 
+  // 질문 등록화면에서 태그 조회 스크립트
   if ($('#tags').length) {
     var opt = {
       jsonContainer: 'results',

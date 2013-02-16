@@ -1,7 +1,9 @@
+// 공통 상수 및 로거 설정
 "use strict";
-
+// Module dependencies.
 var winston = require('winston');
 
+// 사용하는 SNS 관련 상수
 module.exports.authProvider = {
   facebook: {
     name: 'facebook'
@@ -21,6 +23,7 @@ module.exports.authProvider = {
   }
 };
 
+// 웹서버 및 디비관련 상수
 module.exports.env = {
   HOST: 'http://curlybrace.dev'
   , PORT: 3000
@@ -38,6 +41,7 @@ module.exports.server = {
 
 };
 
+// SNS 인증 토큰
 module.exports.authToken = {
   facebook: {
     appId: '176737185714840'
@@ -61,6 +65,7 @@ module.exports.authToken = {
   }
 };
 
+// 로거
 module.exports.logger = new (winston.Logger)({
   transports: [
     new (winston.transports.Console)({

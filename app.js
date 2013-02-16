@@ -12,6 +12,7 @@ var express = require('express')
   , passport = require('passport')
   , dbService = require('./app/models/dbService');
 
+// 디비 초기화
 dbService.init();
 
 var app = module.exports = express();

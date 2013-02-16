@@ -1,23 +1,24 @@
+// # URL 라우팅
 "use strict";
-
+// Module dependencies.
 var qna = require('../app/controllers/qnaController')
   , users = require('../app/controllers/usersController')
   , apiV1 = require('../app/controllers/v1Controller')
   , help = require('../app/controllers/helpController');
 
 module.exports = function(app, passport) {
-// confirm authenticated
+// 인증된 사용자만 통과시키는 미들웨어
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login');
 }
-
+// 미인증된 사용자만 통과시키는 미들웨어
 function ensureUnauthenticated(req, res, next) {
   if (req.isUnauthenticated()) { return next(); }
   res.redirect('/');
 }
 
-// 질문&답변 관련
+// 질문 관련 라우팅
 app.get('/', qna.index);
 
 app.get('/question/form', ensureAuthenticated, qna.questionForm);
@@ -26,7 +27,7 @@ app.post('/question', ensureAuthenticated, qna.registQuestion);
 
 app.get('/question/:id', qna.questionView);
 
-// 회원관련
+// 인증관련 라우팅
 app.get('/login', ensureUnauthenticated, users.loginForm);
 
 app.get('/logout', function(req, res){
@@ -34,6 +35,7 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+// SNS 인증관련 페이지
 app.get('/auth/twitter', ensureUnauthenticated, passport.authenticate('twitter'));
 
 app.get('/auth/facebook', ensureUnauthenticated, passport.authenticate('facebook'));
@@ -51,6 +53,7 @@ app.get('/auth/github', ensureUnauthenticated, passport.authenticate('github'));
 
 app.get('/auth/me2day', ensureUnauthenticated, passport.authenticate('me2day'));
 
+// SNS 인증 콜백 페이지
 app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/login' }),
   function(req, res) {
@@ -81,10 +84,10 @@ app.get('/auth/me2day/callback',
     res.redirect('/');
 });
 
-// 도움말
+// 도움말관련 라우팅
 app.get('/help/markdown', help.markdown);
 
-// API V1
+// API v1 관련 라우팅
 app.get('/v1/tags', apiV1.findTags);
 };
 

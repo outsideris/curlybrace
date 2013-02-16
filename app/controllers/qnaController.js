@@ -1,17 +1,21 @@
+// # 질문/답변 관련 라우팅
 "use strict";
 
+// Module dependencies.
 var env = require('../../conf/config').env,
     logger = require('../../conf/config').logger,
     dbService = require('../models/dbService'),
     questions = require('../models/qna').questions,
     counters = require('../models/counters');
 
+// 디비설정 초기화
 var db = dbService.init();
 db.on('connected', function(err, db) {
   questions.init(db);
   counters.init(db);
 });
 
+// 인덱스 페이지
 exports.index = function(req, res){
   res.render('index', {
     title: env.SITENAME,
@@ -20,6 +24,7 @@ exports.index = function(req, res){
   });
 };
 
+// 질문등록 폼 페이지
 exports.questionForm = function(req, res){
   res.render('question-form', {
     title: env.SITENAME + ' :: ' + '질문하기',
@@ -28,6 +33,7 @@ exports.questionForm = function(req, res){
   });
 };
 
+// id의 질문 내용 보기 페이지
 exports.questionView = function(req, res) {
   questions.findOneById(req.params.id, function(err, question) {
     res.render('question', {
@@ -39,6 +45,7 @@ exports.questionView = function(req, res) {
   });
 };
 
+// 질문 등록 처리
 exports.registQuestion = function(req, res) {
   questions.insert(req.body, function(err, insertedQuestion) {
     if (err) { logger.error('Error Occured during querying MongoDB', {error: err}); return false;}

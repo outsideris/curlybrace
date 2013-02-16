@@ -1,9 +1,11 @@
+// # 디비 초기 데이터를 추가하는 스크립트
 var dbService = require('../app/models/dbService');
 
 dbService.init(function(err, db) {
   db.tags.insert(defaultTags);
 });
 
+// 태그 리스트
 var defaultTags = [
   {name: 'java'}
   , {name: 'scala'}

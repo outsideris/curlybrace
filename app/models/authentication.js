@@ -1,5 +1,7 @@
+// # 인증관련 모델
 "use strict";
 
+// Module dependencies.
 var authToken = require('../../conf/config').authToken
   , authProvider = require('../../conf/config').authProvider
   , env = require('../../conf/config').env
@@ -11,17 +13,19 @@ var authToken = require('../../conf/config').authToken
   , Me2dayStrategy = require('passport-me2day').Strategy;
 
 module.exports = function(passport) {
+  // 세션 저장을 위한 로그인한 사용자 정보 직렬화
   passport.serializeUser(function(user, done) {
     var id = user._id || user[0]._id;
     done(null, id);
   });
-
+  // 세션 저장을 위한 로그인한 사용자 정보 역직렬화
   passport.deserializeUser(function(id, done) {
     users.findOneByObjectId(id, function (err, user) {
       done(err, user);
     });
   });
 
+  // passport 트위터 전략
   passport.use(new TwitterStrategy({
       consumerKey: authToken.twitter.consumerKey,
       consumerSecret: authToken.twitter.consumerSecret,
@@ -41,6 +45,7 @@ module.exports = function(passport) {
     }
   ));
 
+  // passport 페이스북 전략
   passport.use(new FacebookStrategy({
       clientID: authToken.facebook.appId,
       clientSecret: authToken.facebook.appSecret,
@@ -60,10 +65,11 @@ module.exports = function(passport) {
     }
   ));
 
+  // passport 구글 전략
   passport.use(new GoogleStrategy({
       clientID: authToken.google.clientId,
       clientSecret: authToken.google.clientSecret,
-//      callbackURL: env.HOST + "/auth/google/callback"
+      /* callbackURL: env.HOST + "/auth/google/callback" */
       callbackURL: "http://localhost:3000/auth/google/callback"
     },
     function(accessToken, refreshToken, profile, done) {
@@ -81,6 +87,7 @@ module.exports = function(passport) {
     }
   ));
 
+  // passport Github 전략
   passport.use(new GitHubStrategy({
       clientID: authToken.github.clientId,
       clientSecret: authToken.github.clientSecret,
@@ -100,6 +107,7 @@ module.exports = function(passport) {
     }
   ));
 
+  // passport 미투데이 전략
   passport.use(new Me2dayStrategy({
       userKey: authToken.me2day.key
       , nonce: authToken.me2day.nonce
