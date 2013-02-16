@@ -1,0 +1,15 @@
+{
+  "glob": [
+    "README.md",
+    "./*.js", 
+    "app/**/*.js",
+    "conf/**/*.js",
+    "docs/*.js",
+    "public/javascripts/*.js",
+    "test/**/*.js"
+  ],
+  "except": [
+  ],
+  "github": false,
+  "out": "./docs/groc"
+}
