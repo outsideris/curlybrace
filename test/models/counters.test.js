@@ -2,9 +2,9 @@
 "use strict";
 
 var should = require('should')
-  , dbService = require('../../app/models/dbService')
-  , env = require('../../conf/config').env
-  , counters = require('../../app/models/counters');
+  , dbService = require('../../src/models/dbService')
+  , env = require('../../src/conf/config').env
+  , counters = require('../../src/models/counters');
 
 
 describe('counters', function() {

@@ -2,9 +2,9 @@
 "use strict";
 
 var should = require('should')
-  , dbService = require('../../app/models/dbService')
-  , env = require('../../conf/config').env
-  , tags = require('../../app/models/tags');
+  , dbService = require('../../src/models/dbService')
+  , env = require('../../src/conf/config').env
+  , tags = require('../../src/models/tags');
 
 var tagFixture = module.exports.tagFixture = [
   {name: 'java'}

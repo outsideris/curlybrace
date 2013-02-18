@@ -2,10 +2,10 @@
 "use strict";
 
 var should = require('should')
-  , authProvider = require('../../conf/config').authProvider
-  , dbService = require('../../app/models/dbService')
-  , env = require('../../conf/config').env
-  , users = require('../../app/models/users');
+  , authProvider = require('../../src/conf/config').authProvider
+  , dbService = require('../../src/models/dbService')
+  , env = require('../../src/conf/config').env
+  , users = require('../../src/models/users');
 
 var fixture = {
   facebookInfo: {

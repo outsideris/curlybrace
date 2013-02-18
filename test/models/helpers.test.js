@@ -1,7 +1,7 @@
 /*global describe:true, it:true */
 "use strict";
 
-var helpers = require('../../app/models/helpers');
+var helpers = require('../../src/models/helpers');
 
 describe('helpers', function() {
   describe('isEmpty', function() {

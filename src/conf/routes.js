@@ -1,10 +1,10 @@
 // # URL 라우팅
 "use strict";
 // Module dependencies.
-var qna = require('../app/controllers/qnaController')
-  , users = require('../app/controllers/usersController')
-  , apiV1 = require('../app/controllers/v1Controller')
-  , help = require('../app/controllers/helpController');
+var qna = require('../controllers/qnaController')
+  , users = require('../controllers/usersController')
+  , apiV1 = require('../controllers/v1Controller')
+  , help = require('../controllers/helpController');
 
 module.exports = function(app, passport) {
 // 인증된 사용자만 통과시키는 미들웨어

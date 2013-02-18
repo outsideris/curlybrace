@@ -2,11 +2,11 @@
 "use strict";
 
 var should = require('should')
-  , dbService = require('../../app/models/dbService')
-  , env = require('../../conf/config').env
-  , questions = require('../../app/models/qna').questions
-  , tags = require('../../app/models/tags')
-  , counters = require('../../app/models/counters')
+  , dbService = require('../../src/models/dbService')
+  , env = require('../../src/conf/config').env
+  , questions = require('../../src/models/qna').questions
+  , tags = require('../../src/models/tags')
+  , counters = require('../../src/models/counters')
   , tagFixture = require('./tags.test').tagFixture;
 
 describe('questions', function() {

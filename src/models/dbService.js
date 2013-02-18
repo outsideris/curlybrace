@@ -5,8 +5,8 @@
 var mongo = require('mongodb')
   , Db = mongo.Db
   , Server = mongo.Server
-  , env = require('../../conf/config').env
-  , logger = require('../../conf/config').logger
+  , env = require('../../src/conf/config').env
+  , logger = require('../../src/conf/config').logger
   , EventEmitter = require('events').EventEmitter;
 
 module.exports = {

@@ -2,9 +2,9 @@
 "use strict";
 
 // Module dependencies.
-var authToken = require('../../conf/config').authToken
-  , authProvider = require('../../conf/config').authProvider
-  , env = require('../../conf/config').env
+var authToken = require('../../src/conf/config').authToken
+  , authProvider = require('../../src/conf/config').authProvider
+  , env = require('../../src/conf/config').env
   , users = require('./users')
   , TwitterStrategy = require('passport-twitter').Strategy
   , FacebookStrategy = require('passport-facebook').Strategy

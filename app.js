@@ -7,10 +7,10 @@
 
 var express = require('express')
   , path = require('path')
-  , env = require('./conf/config').env
-  , logger = require('./conf/config').logger
+  , env = require('./src/conf/config').env
+  , logger = require('./src/conf/config').logger
   , passport = require('passport')
-  , dbService = require('./app/models/dbService');
+  , dbService = require('./src/models/dbService');
 
 // 디비 초기화
 dbService.init();
@@ -25,7 +25,7 @@ if (app.get('env') === 'development') {
 
 // Configuration
 app.configure(function() {
-  app.set('views', __dirname + '/app/views');
+  app.set('views', __dirname + '/src/views');
   app.set('view engine', 'jade');
   app.use(require('stylus').middleware(__dirname + '/public'));
   app.use(express.favicon());
@@ -72,10 +72,10 @@ app.configure('production', function(){
 });
 
 // autentication
-require('./app/models/authentication')(passport);
+require('./src/models/authentication')(passport);
 
 // routes
-require('./conf/routes')(app, passport);
+require('./src/conf/routes')(app, passport);
 
 // Binding Server
 var server = module.exports.httpd = app.listen(env.PORT);

@@ -2,7 +2,7 @@
 "use strict";
 // Module dependencies.
 var ObjectID = require('mongodb').ObjectID
-  , authProvider = require('../../conf/config').authProvider;
+  , authProvider = require('../../src/conf/config').authProvider;
 
 module.exports = (function() {
   var users = null;

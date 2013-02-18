@@ -2,7 +2,7 @@
 "use strict";
 // Module dependencies.
 var helpers = require('./helpers')
-  , env = require('../../conf/config').env
+  , env = require('../../src/conf/config').env
   , tags = require('./tags')
   , counters = require('./counters')
   , markdown = require('markdown').markdown;

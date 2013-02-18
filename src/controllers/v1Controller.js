@@ -4,7 +4,7 @@
 // Module dependencies.
 var dbService = require('../models/dbService')
   , tagService = require('../models/tags')
-  , logger = require('../../conf/config').logger;
+  , logger = require('../../src/conf/config').logger;
 
 // 디비설정 초기화
 var db = dbService.init();

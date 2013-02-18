@@ -1,7 +1,7 @@
 // # 태그관련 모델
 "use strict";
 // Module dependencies.
-var logger = require('../../conf/config').logger;
+var logger = require('../../src/conf/config').logger;
 
 module.exports = (function() {
   var tags = null;

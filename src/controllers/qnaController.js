@@ -2,8 +2,8 @@
 "use strict";
 
 // Module dependencies.
-var env = require('../../conf/config').env,
-    logger = require('../../conf/config').logger,
+var env = require('../../src/conf/config').env,
+    logger = require('../../src/conf/config').logger,
     dbService = require('../models/dbService'),
     questions = require('../models/qna').questions,
     counters = require('../models/counters');

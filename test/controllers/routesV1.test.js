@@ -2,8 +2,8 @@
 "use strict";
 
 var http = require('http')
-  , env = require('../../conf/config').env
-  , dbService = require('../../app/models/dbService');
+  , env = require('../../src/conf/config').env
+  , dbService = require('../../src/models/dbService');
 
 describe('API V1', function() {
   var server;
