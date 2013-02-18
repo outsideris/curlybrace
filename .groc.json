@@ -2,11 +2,11 @@
   "glob": [
     "README.md",
     "./*.js", 
-    "app/**/*.js",
-    "conf/**/*.js",
+    "src/**/*.js",
     "docs/*.js",
     "public/javascripts/*.js",
-    "test/**/*.js"
+    "test/**/*.js",
+    "src/views/**/*.jade"
   ],
   "except": [
   ],
