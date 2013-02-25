@@ -19,10 +19,10 @@ module.exports = function(grunt) {
         globals: {}
       },
       server: [
-        'grunt.js', 
-        'app.js', 
-        'src/**/*.js', 
-        'conf/**/*.js', 
+        'Gruntfile.js',
+        'app.js',
+        'src/**/*.js',
+        'conf/**/*.js',
         'docs/*.js',
         'test/**/*.js'
       ],
@@ -75,6 +75,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-simple-mocha');
 
   // default tasks
-  grunt.registerTask('default', 'jshint simplemocha');
-  grunt.registerTask('test', 'simplemocha');
+  grunt.registerTask('default', ['jshint', 'simplemocha']);
+  grunt.registerTask('test', ['simplemocha']);
 };

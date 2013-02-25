@@ -3,7 +3,7 @@ node_js:
   - 0.8
 before_install:
   - npm install mocha -g
-  - npm install grunt -g
+  - npm install grunt-cli -g
 services:
   - mongodb
 branches:
