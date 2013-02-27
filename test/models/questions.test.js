@@ -4,7 +4,7 @@
 var should = require('should')
   , dbService = require('../../src/models/dbService')
   , env = require('../../src/conf/config').env
-  , questions = require('../../src/models/qna').questions
+  , questions = require('../../src/models/questions')
   , tags = require('../../src/models/tags')
   , counters = require('../../src/models/counters')
   , tagFixture = require('./tags.test').tagFixture;

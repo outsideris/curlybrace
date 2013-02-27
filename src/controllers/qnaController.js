@@ -5,7 +5,7 @@
 var env = require('../../src/conf/config').env,
     logger = require('../../src/conf/config').logger,
     dbService = require('../models/dbService'),
-    questions = require('../models/qna').questions,
+    questions = require('../models/questions'),
     counters = require('../models/counters');
 
 // 디비설정 초기화
