@@ -1,3 +1,8 @@
+// # API v1 라우팅 테스트
+//
+// Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
+// Licensed under the MIT license.
+// <http://outsider.mit-license.org/>
 /*global describe:true, it:true, before:true, after:true */
 "use strict";
 

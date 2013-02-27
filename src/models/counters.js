@@ -1,7 +1,11 @@
 // # 카운터 관리 모델
-//
 // MongoDB에서 `_id`를 순차적 증가값으로 관리할 수 있도록
 // 컬렉션 이름별 순차장가값을 관리하는 컬렉션
+//
+// Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
+// Licensed under the MIT license.
+// <http://outsider.mit-license.org/>
+
 "use strict";
 
 module.exports = (function() {
