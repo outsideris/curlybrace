@@ -44,7 +44,12 @@ module.exports = {
           if (isExist) {
             counters.getNextSequence(env.MONGODB_COLLECTION_QUESTIONS, function(err, seq) {
               if (err) { return callback(err); }
+
               question._id = seq;
+              question.voteUp = 0;
+              question.voteDown = 0;
+              question.viewCount = 0;
+
               questions.insert(question, callback);
             });
           } else {

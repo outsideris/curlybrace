@@ -198,6 +198,25 @@ describe('questions', function() {
         });
       });
     });
+    it('질문을 등록했을 때 투표수/조회수를 초기화한다', function(done) {
+      // given
+      var questionFixture = {
+        title: '테스트 제목',
+        contents: '#본문입니다.\r\n\r\n* 질문\r\n* 질문..\r\n\r\n        var a = "tet"',
+        tags: 'scala,javascript'
+      };
+
+      // when
+      questions.insert(questionFixture, function(err, insertedQuestion) {
+        // then
+        should.not.exist(err);
+        insertedQuestion[0].voteUp.should.equal(0);
+        insertedQuestion[0].voteDown.should.equal(0);
+        insertedQuestion[0].viewCount.should.equal(0);
+
+        done();
+      });
+    });
   });
 });
 

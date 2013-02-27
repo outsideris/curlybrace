@@ -4,9 +4,9 @@ block mainContent
   article
     .question-box
       .question-vote.row
-        - var voteup = question.voteup ? question.voteup : 0
-        - var votedown = question.votedown ? question.votedown : 0
-        span.votecount(title='투표 수') #{voteup - votedown}
+        - var voteUp = question.voteUp ? question.voteUp : 0
+        - var voteDown = question.voteDown ? question.voteDown : 0
+        span.votecount(title='투표 수') #{voteUp - voteDown}
         form
           button.btn.btn-small.btn-success
            i.icon-plus
