@@ -10,6 +10,7 @@
 var authToken = require('../../src/conf/config').authToken
   , authProvider = require('../../src/conf/config').authProvider
   , env = require('../../src/conf/config').env
+  , logger = require('../../src/conf/config').logger
   , users = require('./users')
   , TwitterStrategy = require('passport-twitter').Strategy
   , FacebookStrategy = require('passport-facebook').Strategy
@@ -20,11 +21,13 @@ var authToken = require('../../src/conf/config').authToken
 module.exports = function(passport) {
   // 세션 저장을 위한 로그인한 사용자 정보 직렬화
   passport.serializeUser(function(user, done) {
+    logger.debug('authentication:passport.serializeUser', {user: user});
     var id = user._id || user[0]._id;
     done(null, id);
   });
   // 세션 저장을 위한 로그인한 사용자 정보 역직렬화
   passport.deserializeUser(function(id, done) {
+    logger.debug('authentication:passport.deserializeUser', {id: id});
     users.findOneByObjectId(id, function (err, user) {
       done(err, user);
     });
@@ -37,6 +40,7 @@ module.exports = function(passport) {
       callbackURL: env.HOST + "/auth/twitter/callback"
     },
     function(token, tokenSecret, profile, done) {
+      logger.debug('authentication:passport.twitter', {token: token, token_secret: tokenSecret, profile: profile});
       users.findOneBy(profile.id, authProvider.twitter.name, function (err, user) {
         if (err)  { return done(err, null); }
         if (user) {
@@ -57,6 +61,7 @@ module.exports = function(passport) {
       callbackURL: env.HOST + "/auth/facebook/callback"
     },
     function(accessToken, refreshToken, profile, done) {
+      logger.debug('authentication:passport.facebook', {accessToken: accessToken, refreshToken: refreshToken, profile: profile});
       users.findOneBy(profile.id, authProvider.facebook.name, function(err, user) {
         if (err)  { return done(err, null); }
         if (user) {
@@ -79,6 +84,7 @@ module.exports = function(passport) {
     },
     function(accessToken, refreshToken, profile, done) {
       profile = JSON.parse(profile._raw);
+      logger.debug('authentication:passport.google', {accessToken: accessToken, refreshToken: refreshToken, profile: profile});
       users.findOneBy(profile.id, authProvider.google.name, function(err, user) {
         if (err) { return done(err, null); }
         if (user) {
@@ -99,6 +105,7 @@ module.exports = function(passport) {
       callbackURL: env.HOST + "/auth/github/callback"
     },
     function(accessToken, refreshToken, profile, done) {
+      logger.debug('authentication:passport.github', {accessToken: accessToken, refreshToken: refreshToken, profile: profile});
       users.findOneBy(profile.id, authProvider.github.name, function(err, user) {
         if (err) { return done(err, null); }
         if (user) {
@@ -119,6 +126,7 @@ module.exports = function(passport) {
       , callbackURL: env.HOST + "/auth/me2day/callback"
     },
     function(userKey, profile, done) {
+      logger.debug('authentication:passport.me2day', {userKey: userKey, profile: profile});
       users.findOneBy(profile.id, authProvider.me2day.name, function(err, user) {
         if (err)  { return done(err, null); }
         if (user) {

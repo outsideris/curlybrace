@@ -9,7 +9,8 @@
 // Module dependencies.
 var env = require('../../src/conf/config').env
   , dbService = require('../models/dbService')
-  , users = require('../models/users');
+  , users = require('../models/users')
+  , logger = require('../../src/conf/config').logger;
 
 // 디비설정 초기화
 var db = dbService.init();

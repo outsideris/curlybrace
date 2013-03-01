@@ -8,6 +8,7 @@
 // Module dependencies.
 var helpers = require('./helpers')
   , env = require('../../src/conf/config').env
+  , logger = require('../../src/conf/config').logger
   , tags = require('./tags')
   , counters = require('./counters')
   , markdown = require('markdown').markdown;
@@ -17,6 +18,7 @@ module.exports = (function() {
 
   // 컬렉션 인스턴스 할당 여부
   var isInited = function(callback) {
+    logger.debug('questions.isInited');
     if (questions) {
       return true;
     } else {
@@ -28,10 +30,12 @@ module.exports = (function() {
   return {
     // 컬렉션 인스턴스 할당
     init: function(db) {
+      logger.debug('questions.init');
       questions = db.questions;
     },
     // 질문을 컬렉션에 추가한다.
     insert: function(question, callback) {
+      logger.debug('questions.insert', {question: question});
       if (!isInited(callback)) { return false; }
       // validation
       // * 제목/내용/태그가 모두 있어야 한다.

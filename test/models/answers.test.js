@@ -55,7 +55,7 @@ describe('answers', function() {
       title: '테스트 제목',
       contents: '#본문입니다.\r\n\r\n* 질문\r\n* 질문..\r\n\r\n        var a = "tet"',
       tags: 'scala,javascript'
-    }
+    };
   });
   after(function() {
     questionsCollection.remove(function(err, numberOfRemovedDocs) {

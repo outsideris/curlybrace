@@ -43,6 +43,7 @@ app.configure(function() {
   app.use(passport.initialize());
   app.use(passport.session());
   if (isDev) {
+    // 개발용 로그인 모킹
     var mockLogin = function(req, res, next) {
       if (req.isAuthenticated()) { return next(); }
       var user = { nickname: 'Outsider',
@@ -64,6 +65,11 @@ app.configure(function() {
     };
 
     app.use(mockLogin);
+    // 개발용 디버그 로깅
+    app.use(function(req, res, next) {
+      logger.debug('requestInfo: ', {'req.params': req.params, 'req.query': req.query, 'req.body': req.body});
+      next();
+    });
   }
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));

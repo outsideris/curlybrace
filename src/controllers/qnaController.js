@@ -32,7 +32,7 @@ exports.index = function(req, res){
 };
 
 // 질문등록 폼 페이지
-exports.questionForm = function(req, res){
+exports.questionForm = function(req, res) {
   res.render('question-form', {
     title: env.SITENAME + ' :: ' + '질문하기',
     siteName: env.SITENAME,

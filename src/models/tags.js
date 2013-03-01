@@ -12,6 +12,7 @@ module.exports = (function() {
   var tags = null;
   // 컬렉션 할당 여부
   var isInited = function(callback) {
+    logger.debug('tags.isInited');
     if (tags) {
       return true;
     } else {
@@ -23,10 +24,12 @@ module.exports = (function() {
   return {
     // 컬렉션 할당
     init: function(db) {
+      logger.debug('tags.init');
       tags = db.tags;
     },
     // 주어진 검색어로 시작하는 태그를 조회한다.
     findTagsStartWith: function(tag, callback) {
+      logger.debug('tags.findTagsStartWith', {tag: tag});
       //TODO: 별칭도 검사하기
       if (!isInited(callback)) { return false; }
 
@@ -35,6 +38,7 @@ module.exports = (function() {
     },
     // 주어진 태그와 일치하는 태그를 조회한다.
     findOne: function(tag, callback) {
+      logger.debug('tags.findOne', {tag: tag});
       if (!isInited(callback)) { return false; }
 
       //TODO: 별칭도 검사하기
@@ -42,12 +46,14 @@ module.exports = (function() {
     },
     // 전체 태그를 조회한다.
     getAll: function(callback) {
+      logger.debug('tags.getAll');
       if (!isInited(callback)) { return false; }
 
       tags.find().toArray(callback);
     },
     // 전달한 태그 리스트가 모두 전체 태그에 포함되는지 검사한다.
     isAllExistInTags: function(tagList, callback) {
+      logger.debug('tags.isAllExistInTags', {tagList: tagList});
       if (!isInited(callback)) { return false; }
 
       this.getAll(function(err, allTags) {

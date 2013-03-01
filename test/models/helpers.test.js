@@ -67,12 +67,16 @@ describe('helpers', function() {
 
       // then
       caseA.should.not.equal(caseB);
-    })
+    });
   });
   describe('logger', function() {
-    it('로깅', function() {
+    it('로깅 테스트 1', function() {
       var err = new Error('questions collection should not be null.');
       logger.error('Error Occured during querying MongoDB', {error: err.stack});
+    });
+    it('로깅 테스트 2', function() {
+      var err = new Error('questions collection should not be null.');
+      logger.error('Error Occured during querying MongoDB', {error: err});
     });
   });
 });

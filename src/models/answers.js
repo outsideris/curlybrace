@@ -18,6 +18,7 @@ module.exports = (function() {
 
   // 컬렉션 인스턴스 할당 여부
   var isInited = function(callback) {
+    logger.debug('answers.isInited');
     if (questions) {
       return true;
     } else {
@@ -29,6 +30,7 @@ module.exports = (function() {
   return {
     // 컬렉션 인스턴스 할당
     init: function(db) {
+      logger.debug('answers.init');
       questions = db.questions;
     },
     // 질문에 답변을 추가한다.
@@ -37,7 +39,7 @@ module.exports = (function() {
 
       // validation
       // * questionId는 숫자타입이어야 한다
-      questionId = parseInt(questionId);
+      questionId = parseInt(questionId, 10);
       if (isNaN(questionId)) {
         callback(new Error('questionId must be number or convertable to number'));
         return;
@@ -48,7 +50,7 @@ module.exports = (function() {
       answer.voteUp = 0;
       answer.voteDown = 0;
 
-      logger.debug('answers.insert', {question: questionId, answer: answer});
+      logger.debug('answers.insert', {questionId: questionId, answer: answer});
       questions.update(
         {_id: questionId},
         {$push: {answers: answer}},

@@ -8,10 +8,13 @@
 
 "use strict";
 
+var logger = require('../../src/conf/config').logger;
+
 module.exports = (function() {
   var counters = null;
   // 컬렉션 인스턴스 할당 여부
   var isInited = function(callback) {
+    logger.debug('counters.inInited');
     if (counters) {
       return true;
     } else {
@@ -23,11 +26,13 @@ module.exports = (function() {
   return {
     // 컬렉션 인스턴스 할당
     init: function(db) {
+      logger.debug('counters.init');
       counters = db.counters;
     },
     // 컬렉션 이름으로 새로운 카운터를 추가한다
     // 컬렉션명을 키로 사용한다
     insert: function(name, callback) {
+      logger.debug('counters.name', {name: name});
       if (!isInited(callback)) { return false; }
 
       counters.insert({ _id: name, seq: 1 }, callback);
@@ -35,6 +40,7 @@ module.exports = (function() {
     // 컬렉션이름으로 다음 카운터 번호를 반환한다.
     // 해당 컬렉션에 대한 카운터가 존재하지 않으면 새로 생성해서 반환한다.
     getNextSequence: function(name, callback) {
+      logger.debug('counters.getNextSequence', {name: name});
       if (!isInited(callback)) { return false; }
 
       var _self = this;

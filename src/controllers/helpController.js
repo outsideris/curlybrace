@@ -7,7 +7,8 @@
 "use strict";
 
 // Module dependencies.
-var env = require('../../src/conf/config').env;
+var env = require('../../src/conf/config').env
+  , logger = require('../../src/conf/config').logger;
 
 // 마크다운 사용법 가이드
 exports.markdown = function(req, res) {

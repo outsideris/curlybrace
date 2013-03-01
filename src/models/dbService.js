@@ -24,6 +24,7 @@ module.exports = {
   , counters: null
   // 전체 컬렉션 인스턴스 초기화
   , init: function() {
+    logger.debug('dbService.init');
     var self = this;
 
     if (!this.db) {
@@ -50,15 +51,19 @@ module.exports = {
   },
   // 테스트 등에서 컬렉션을 주입하기 위한 setter
   setTags: function(collectionName) {
+    logger.debug('dbService.setTags', {collectionName: collectionName});
     this.tags = this.db.collection(collectionName);
   },
   setUsers: function(collectionName) {
+    logger.debug('dbService.setUsers', {collectionName: collectionName});
     this.users = this.db.collection(collectionName);
   },
   setQuestions: function(collectionName) {
+    logger.debug('dbService.setQuestions', {collectionName: collectionName});
     this.questions = this.db.collection(collectionName);
   },
   setCounters: function(collectionName) {
+    logger.debug('dbService.setCounters', {collectionName: collectionName});
     this.counters = this.db.collection(collectionName);
   }
 };
