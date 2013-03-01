@@ -32,6 +32,9 @@ app.post('/question', ensureAuthenticated, qna.registQuestion);
 
 app.get('/question/:id', qna.questionView);
 
+// 답변 관련 라우팅
+app.post('/question/:id/answer', qna.registAnswer);
+
 // 인증관련 라우팅
 app.get('/login', ensureUnauthenticated, users.loginForm);
 

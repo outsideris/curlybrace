@@ -6,7 +6,8 @@
 /*global describe:true, it:true */
 "use strict";
 
-var helpers = require('../../src/models/helpers');
+var helpers = require('../../src/models/helpers'),
+    logger = require('../../src/conf/config').logger;
 
 describe('helpers', function() {
   describe('isEmpty', function() {
@@ -57,6 +58,21 @@ describe('helpers', function() {
       var result = helpers.isEmpty(t);
       // then
       result.should.be.false;
+    });
+    it('타임스탬프 기반으로 UUID를 획득한다', function() {
+      // given
+      // when
+      var caseA = helpers.generateUUID();
+      var caseB = helpers.generateUUID();
+
+      // then
+      caseA.should.not.equal(caseB);
+    })
+  });
+  describe('logger', function() {
+    it('로깅', function() {
+      var err = new Error('questions collection should not be null.');
+      logger.error('Error Occured during querying MongoDB', {error: err.stack});
     });
   });
 });

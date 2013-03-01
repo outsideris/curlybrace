@@ -86,93 +86,73 @@ block mainContent
             form
               textarea.input-xlarge(rows='2')
               input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn.pull-right
-    - var answers = [1,2,3]
-    each c in answers
-      .answer-box
-        .voting-box.pull-right
-          .answer-vote
-            span.votecount(title='투표 수') 20
-            form
-              button.btn.btn-small.btn-success
-                i.icon-plus
-                | &nbsp;
-                i.icon-plus
-                span ;
-              button.btn.btn-small.btn-danger
-                i.icon-minus
-                | &nbsp;
-                i.icon-minus
-                span ;
-          .socialbox
+    - if (question.answers)
+      each answer in question.answers
+        .answer-box
+          .row
+            .voting-box.pull-right
+              .answer-vote
+                - var voteUp = answer.voteUp ? answer.voteUp : 0
+                - var voteDown = answer.voteDown ? answer.voteDown : 0
+                span.votecount(title='투표 수') #{voteUp - voteDown}
+                form
+                  button.btn.btn-small.btn-success
+                    i.icon-plus
+                    | &nbsp;
+                    i.icon-plus
+                    span ;
+                  button.btn.btn-small.btn-danger
+                    i.icon-minus
+                    | &nbsp;
+                    i.icon-minus
+                    span ;
+              .socialbox
+                ul.unstyled
+                  li
+                    a(href='https://twitter.com/share', data-hashtags='curlybrace').twitter-share-button.social Tweet
+                  li
+                    .fb-like(data-layout='button_count', data-send='false', data-width='200', data-show-faces='false').social
+                  li
+                    g:plusone(size='medium').social
+            .answer-text !{answer.contents}
+          .row
+            .author
+              a(href='/')
+                img(src='https://convore2.s3.amazonaws.com/userpics/3795/1297298357.jpg', alt='Avatar for tbeseda', title='tbeseda', width='40', height='40')
+              a(href='/') Outsider
+              time 2일 전
+          .submenu.row
             ul.unstyled
               li
-                a(href='https://twitter.com/share', data-hashtags='curlybrace').twitter-share-button.social Tweet
+                a(href='#').btn.btn-info.btn-mini
+                  i.icon-share
+                  |  퍼머링크: http://curlybrace.com:3000/394893#123
               li
-                .fb-like(data-layout='button_count', data-send='false', data-width='200', data-show-faces='false').social
-              li
-                g:plusone(size='medium').social
-        .answer-text
-          p 형사피고인은 유죄의 판결이 확정될 때까지는 무죄로 추정된다. 신체장애자 및 질병·노령 기타의 사유로 생활능력이 없는 국민은 법률이 정하는 바에 의하여 국가의 보호를 받는다. 국가는 사회보장·사회복지의 증진에 노력할 의무를 진다. 모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을 박탈당하지 아니한다. 형사피고인은 상당한 이유가 없는 한 지체없이 공개재판을 받을 권리를 가진다. 교육의 자주성·전문성·정치적 중립성 및 대학의 자율성은 법률이 정하는 바에 의하여 보장된다. 국가는 개인이 가지는 불가침의 기본적 인권을 확인하고 이를 보장할 의무를 진다. 대한민국은 민주공화국이다. 사회적 특수계급의 제도는 인정되지 아니하며, 어떠한 형태로도 이를 창설할 수 없다.
-          p 국가는 평생교육을 진흥하여야 한다. 군인 또는 군무원이 아닌 국민은 대한민국의 영역 안에서는 중대한 군사상 기밀, 초병, 초소, 유독음식물공급, 포로, 군용물에 관한 죄 중 법률이 정한 경우와 비상계엄이 선포된 경우를 제외하고는 군사법원의 재판을 받지 아니한다. 모든 국민은 법률이 정하는 바에 의하여 선거권을 가진다. 사회적 특수계급의 제도는 인정되지 아니하며, 어떠한 형태로도 이를 창설할 수 없다. 다만, 현행범인인 경우와 장기 3년 이상의 형에 해당하는 죄를 범하고 도피 또는 증거인멸의 염려가 있을 때에는 사후에 영장을 청구할 수 있다. 국회의원은 법률이 정하는 직을 겸할 수 없다. 사회적 특수계급의 제도는 인정되지 아니하며, 어떠한 형태로도 이를 창설할 수 없다. 모든 국민은 학문과 예술의 자유를 가진다. 근로조건의 기준은 인간의 존엄성을 보장하도록 법률로 정한다.
-        .row
-          ul.unstyled.tags
-            li.tag
-              a(href="#").btn.btn-mini
-                i.icon-tag
-                |  python
-            li.tag
-              a(href="#").btn.btn-mini
-                i.icon-tag
-                |  scala
-            li.tag
-              a(href="#").btn.btn-mini
-                i.icon-tag
-                |  node.js
-            li.tag
-              a(href="#").btn.btn-mini
-                i.icon-tag
-                |  ruby
-            li.tag
-              a(href="#").btn.btn-mini
-                i.icon-tag
-                |  java
-          .author
-            a(href='/')
-              img(src='https://convore2.s3.amazonaws.com/userpics/3795/1297298357.jpg', alt='Avatar for tbeseda', title='tbeseda', width='40', height='40')
-            a(href='/') Outsider
-            time 2일 전
-        .submenu.row
-          ul.unstyled
-            li
-              a(href='#').btn.btn-info.btn-mini
-                i.icon-share
-                |  퍼머링크: http://curlybrace.com:3000/394893#123
-            li
-              a(href='#').btn.btn-info.btn-mini
-                i.icon-edit
-                |  수정
-        .comments-list.row
-          - var comments = [1,2,3,4,5]
-          each c in comments
-            .comment
+                a(href='#').btn.btn-info.btn-mini
+                  i.icon-edit
+                  |  수정
+          .comments-list.row
+            - var comments = [1,2,3,4,5]
+            each c in comments
+              .comment
+                .profile
+                  a(href='/')
+                    img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
+                span
+                  b.author
+                    a(href='#') Outsider
+                  | 교육의 자주성·전문성·정치적 중립성 및 대학의 자율성은 법률이 정하는 바에 의하여 보장된다. 정당은 그 목적, 조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에 참여하는 데 필요한 조직을 가져야 한다. 모든 국민의 재산권은 보장된다. 그 내용과 한계는 법률로 정한다. 국회의원은 국가이익을 우선하여 양심에 따라 직무를 행한다.
+                  time 2일 전
+            .comment.comment-write
               .profile
                 a(href='/')
                   img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
-              span
-                b.author
-                  a(href='#') Outsider
-                | 교육의 자주성·전문성·정치적 중립성 및 대학의 자율성은 법률이 정하는 바에 의하여 보장된다. 정당은 그 목적, 조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에 참여하는 데 필요한 조직을 가져야 한다. 모든 국민의 재산권은 보장된다. 그 내용과 한계는 법률로 정한다. 국회의원은 국가이익을 우선하여 양심에 따라 직무를 행한다.
-                time 2일 전
-          .comment.comment-write
-            .profile
-              a(href='/')
-                img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
-            form
-              textarea.input-xlarge(rows='2')
-              input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn.pull-right
+              form
+                textarea.input-xlarge(rows='2')
+                input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn.pull-right
     .answer-write-box
       .answer-write
         .alert.alert-info 이 질문에 답변해 주세요.
-        form
-          textarea
+        form(method='POST', action='/question/#{question._id}/answer')
+          textarea(name='contents')
           input(type='submit', value='답변 작성').btn.btn-primary.submit-btn.pull-right

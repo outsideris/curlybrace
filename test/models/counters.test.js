@@ -13,8 +13,9 @@ var should = require('should')
 
 
 describe('counters', function() {
-  var countersCollection;
-  var db;
+  var countersCollection,
+      db;
+
   before(function(done) {
     db = dbService.init();
     db.once('connected', function(err, pdb) {

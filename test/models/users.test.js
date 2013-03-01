@@ -31,8 +31,9 @@ var fixture = {
 };
 
 describe('users', function() {
-  var usersCollection;
-  var db;
+  var usersCollection,
+      db;
+
   before(function(done) {
     db = dbService.init();
     db.once('connected', function(err, pdb) {

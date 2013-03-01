@@ -11,12 +11,14 @@ var env = require('../../src/conf/config').env,
     logger = require('../../src/conf/config').logger,
     dbService = require('../models/dbService'),
     questions = require('../models/questions'),
+    answers = require('../models/answers'),
     counters = require('../models/counters');
 
 // 디비설정 초기화
 var db = dbService.init();
 db.on('connected', function(err, db) {
   questions.init(db);
+  answers.init(db);
   counters.init(db);
 });
 
@@ -53,8 +55,17 @@ exports.questionView = function(req, res) {
 // 질문 등록 처리
 exports.registQuestion = function(req, res) {
   questions.insert(req.body, function(err, insertedQuestion) {
-    if (err) { logger.error('Error Occured during querying MongoDB', {error: err}); return false;}
+    if (err) { logger.error('Error Occured during querying MongoDB', {error: err.stack}); return false;}
 
     res.redirect('/question/' + insertedQuestion[0]._id);
+  });
+};
+
+// 질문 등록 처리
+exports.registAnswer = function(req, res) {
+  answers.insert(req.params.id, req.body, function(err, count) {
+    if (err) { logger.error('Error Occured during querying MongoDB', {error: err.stack}); return false;}
+
+    res.redirect('/question/' + req.params.id);
   });
 };

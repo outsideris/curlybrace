@@ -21,6 +21,7 @@
   , "mongodb": "~1.2.0"
   , "markdown": "~0.4.0"
   , "winston": "~0.6.0"
+  , "hat": "*"
   }
 , "devDependencies": {
     "should": "~1.2.0"

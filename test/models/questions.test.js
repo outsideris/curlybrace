@@ -15,8 +15,11 @@ var should = require('should')
   , tagFixture = require('./tags.test').tagFixture;
 
 describe('questions', function() {
-  var questionsCollection, tagsCollection, countersCollection;
-  var db;
+  var questionsCollection,
+      tagsCollection,
+      countersCollection,
+      db;
+
   before(function(done) {
     db = dbService.init();
     db.once('connected', function(err, pdb) {
@@ -25,7 +28,7 @@ describe('questions', function() {
       questionsCollection = db.questions;
       questions.init(db);
 
-      db.setTags('tags_test');
+      db.setTags(env.MONGODB_COLLECTION_TAGS + '_test');
       tagsCollection = db.tags;
       tagsCollection.insert(tagFixture, function(err, result) {
         should.not.exist(err);
@@ -201,6 +204,21 @@ describe('questions', function() {
           actualHTML.should.be.equal(expectHTML);
           done();
         });
+      });
+    });
+    it('id로 질문을 가져올 때 id가 숫자 타입이 아니면 오류를 발생한다', function(done) {
+      // given
+      var questionFixture = {
+        title: '테스트 제목',
+        contents: '#본문입니다.\r\n\r\n* 질문\r\n* 질문..\r\n\r\n        var a = "test"',
+        tags: 'scala,javascript'
+      };
+
+      // when
+      questions.findOneById('test', function(err) {
+        // then
+        should.exist(err);
+        done();
       });
     });
     it('질문을 등록했을 때 투표수/조회수를 초기화한다', function(done) {

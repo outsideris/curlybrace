@@ -79,8 +79,9 @@ var tagFixture = module.exports.tagFixture = [
 ];
 
 describe('tags', function() {
-  var tagsCollection;
-  var db;
+  var tagsCollection,
+      db;
+
   before(function(done) {
     db = dbService.init();
     db.once('connected', function(err, pdb) {
