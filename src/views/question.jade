@@ -62,7 +62,7 @@ block mainContent
           li
             a(href='#').btn.btn-info.btn-mini
               i.icon-share
-              |  퍼머링크: http://curlybrace.com:3000/394893
+              |  퍼머링크: #{url}/question/#{question._id}
           li
             a(href='#').btn.btn-info.btn-mini
               i.icon-edit
@@ -88,8 +88,8 @@ block mainContent
               input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn.pull-right
     - if (question.answers)
       each answer in question.answers
-        .answer-box
-          .row
+        section.answer-box(id=answer.id)
+          .row.answer-contents
             .voting-box.pull-right
               .answer-vote
                 - var voteUp = answer.voteUp ? answer.voteUp : 0
@@ -124,9 +124,9 @@ block mainContent
           .submenu.row
             ul.unstyled
               li
-                a(href='#').btn.btn-info.btn-mini
+                a(href='##{answer.id}').btn.btn-info.btn-mini
                   i.icon-share
-                  |  퍼머링크: http://curlybrace.com:3000/394893#123
+                  |  퍼머링크: #{url}/question/#{question._id}##{answer.id}
               li
                 a(href='#').btn.btn-info.btn-mini
                   i.icon-edit

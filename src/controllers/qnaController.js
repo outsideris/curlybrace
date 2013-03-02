@@ -46,6 +46,7 @@ exports.questionView = function(req, res) {
     res.render('question', {
       title: question.title + ' :: ' + env.SITENAME,
       siteName: env.SITENAME,
+      url: env.HOST + (env.PORT ? ':' + env.PORT : ''),
       user: req.user,
       question: question
     });
