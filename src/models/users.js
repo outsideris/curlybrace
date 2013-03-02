@@ -8,7 +8,9 @@
 // Module dependencies.
 var ObjectID = require('mongodb').ObjectID
   , authProvider = require('../../src/conf/config').authProvider
-  , logger = require('../../src/conf/config').logger;
+  , logger = require('../../src/conf/config').logger
+  , env = require('../../src/conf/config').env
+  , counters = require('./counters');
 
 module.exports = (function() {
   var users = null;
@@ -21,7 +23,7 @@ module.exports = (function() {
   // SNS 별로 닉네임 필드가 다르기 때문에 별도의 함수를 사용한다.
   // (닉네임필드는 `config.js`에서 지정)
   var getNickName = function(profile, provider) {
-    logger.debug('users.getNickName', {profile: profile});
+    logger.debug('users.getNickName', {profile: profile, provider: provider});
     return profile[authProvider[provider].nickNameField];
   };
   // 컬렉션 할당 여부
@@ -90,8 +92,13 @@ module.exports = (function() {
       };
       user.authInfo[provider] = normalizeProfile(profile, provider);
 
+      counters.getNextSequence(env.MONGODB_COLLECTION_USERS, function(err, seq) {
+        if (err) { return callback(err); }
 
-      users.insert(user, {safe:true}, callback);
+        user._id = seq;
+
+        users.insert(user, callback);
+      });
     },
     // 사용자 ID와 SNS 종류로 사용자를 조회한다.
     findOneBy: function(id, provider, callback) {

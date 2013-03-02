@@ -9,25 +9,51 @@
 var should = require('should')
   , dbService = require('../../src/models/dbService')
   , env = require('../../src/conf/config').env
+  , authProvider = require('../../src/conf/config').authProvider
   , questions = require('../../src/models/questions')
   , tags = require('../../src/models/tags')
   , counters = require('../../src/models/counters')
-  , tagFixture = require('./tags.test').tagFixture;
+  , tagFixture = require('./tags.test').tagFixture
+  , users = require('../../src/models/users');
+
+var userFixture = {
+  facebookInfo: {
+    _json:  { id: '123456789',
+      name: 'Test User',
+      first_name: 'Test',
+      last_name: 'User',
+      displayName: 'Test User',
+      link: 'http://www.facebook.com/',
+      username: 'testuser',
+      location: { id: '108259475871818', name: 'Seoul, Korea' },
+      gender: 'male',
+      timezone: 9,
+      locale: 'ko_KR',
+      verified: true,
+      updated_time: '2011-06-09T04:22:15+0000'
+    },
+    displayName: 'Test User'
+  }
+};
 
 describe('questions', function() {
   var questionsCollection,
       tagsCollection,
       countersCollection,
+      usersCollection,
+      currentUser,
       db;
 
   before(function(done) {
     db = dbService.init();
     db.once('connected', function(err, pdb) {
       db = pdb;
+      // 질문 컬렉션 설정
       db.setQuestions(env.MONGODB_COLLECTION_QUESTIONS + '_test');
       questionsCollection = db.questions;
       questions.init(db);
 
+      // 태그 컬렉션 설정
       db.setTags(env.MONGODB_COLLECTION_TAGS + '_test');
       tagsCollection = db.tags;
       tagsCollection.insert(tagFixture, function(err, result) {
@@ -36,10 +62,22 @@ describe('questions', function() {
       });
       tags.init(db);
 
+      // 카운터 컬렉션 설정
       db.setCounters(env.MONGODB_COLLECTION_COUNTERS + '_test');
       countersCollection = db.counters;
       counters.init(db);
-      done();
+
+      // 사용자 컬렉션 설정
+      db.setUsers(env.MONGODB_COLLECTION_USERS + '_test');
+      usersCollection = db.users;
+      users.init(db);
+      // 픽스처 사용자 데이터 추가
+      users.insert(userFixture.facebookInfo, authProvider.facebook.name, function(err, user) {
+        should.not.exist(err);
+        should.exist(user[0]);
+        currentUser = user[0];
+        done();
+      });
     });
   });
   beforeEach(function() {
@@ -61,6 +99,10 @@ describe('questions', function() {
       should.not.exist(err);
       should.exist(numberOfRemovedDocs);
     });
+    usersCollection.remove(function(err, numberOfRemovedDocs) {
+      should.not.exist(err);
+      should.exist(numberOfRemovedDocs);
+    });
     db.db.close();
     db.db = null;
   });
@@ -75,11 +117,33 @@ describe('questions', function() {
       };
 
       // when
-      questions.insert(questionFixture, function(err, insertedQuestion) {
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
         // then
         should.not.exist(err);
         should.exist(insertedQuestion[0]);
         done();
+      });
+    });
+    it('질문 등록시 사용자 정보를 저장한다', function(done) {
+      // given
+      var questionFixture = {
+        title: '테스트 제목',
+        contents: '#본문입니다.\r\n\r\n* 질문\r\n* 질문..\r\n\r\n        var a = "tet"',
+        tags: 'scala,javascript'
+      };
+
+      // when
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
+        should.not.exist(err);
+        should.exist(insertedQuestion[0]);
+        questionsCollection.findOne({_id: insertedQuestion[0]._id}, function(err, question) {
+          // then
+          should.not.exist(err);
+          question.author.nickname.should.equal(currentUser.nickname);
+          question.author.id.should.equal(currentUser._id);
+          done();
+        });
+
       });
     });
     it('제목이 없는 경우 등록할 수 없다', function(done){
@@ -91,7 +155,7 @@ describe('questions', function() {
       };
 
       // when
-      questions.insert(questionFixture, function(err) {
+      questions.insert(questionFixture, currentUser, function(err) {
         // then
         should.exist(err);
         done();
@@ -106,7 +170,7 @@ describe('questions', function() {
       };
 
       // when
-      questions.insert(questionFixture, function(err) {
+      questions.insert(questionFixture, currentUser, function(err) {
         // then
         should.exist(err);
         done();
@@ -121,7 +185,7 @@ describe('questions', function() {
       };
 
       // when
-      questions.insert(questionFixture, function(err) {
+      questions.insert(questionFixture, currentUser, function(err) {
         // then
         should.exist(err);
         done();
@@ -136,7 +200,7 @@ describe('questions', function() {
       };
       var originTags = questionFixture.tags;
       // when
-      questions.insert(questionFixture, function(err, insertedQuestion) {
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
         // then
         should.not.exist(err);
         insertedQuestion[0].tags.should.eql(originTags.split(','));
@@ -152,7 +216,7 @@ describe('questions', function() {
       };
 
       // when
-      questions.insert(questionFixture, function(err) {
+      questions.insert(questionFixture, currentUser, function(err) {
         // then
         should.exist(err);
         done();
@@ -172,9 +236,9 @@ describe('questions', function() {
       };
 
       // when
-      questions.insert(questionFixture, function(err, insertedQuestion) {
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
         var beforeSeq = insertedQuestion[0]._id;
-        questions.insert(questionFixture2, function(err, insertedQuestion) {
+        questions.insert(questionFixture2, currentUser, function(err, insertedQuestion) {
           // then
           should.not.exist(err);
           should.exist(insertedQuestion[0]);
@@ -192,7 +256,7 @@ describe('questions', function() {
       };
 
       // when
-      questions.insert(questionFixture, function(err, insertedQuestion) {
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
         should.not.exist(err);
 
         questions.findOneById(insertedQuestion[0]._id, function(err, foundQuestion) {
@@ -230,7 +294,7 @@ describe('questions', function() {
       };
 
       // when
-      questions.insert(questionFixture, function(err, insertedQuestion) {
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
         // then
         should.not.exist(err);
         insertedQuestion[0].voteUp.should.equal(0);

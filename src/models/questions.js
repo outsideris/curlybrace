@@ -34,11 +34,14 @@ module.exports = (function() {
       questions = db.questions;
     },
     // 질문을 컬렉션에 추가한다.
-    insert: function(question, callback) {
-      logger.debug('questions.insert', {question: question});
+    insert: function(question, user, callback) {
+      logger.debug('questions.insert', {question: question, user: user});
       if (!isInited(callback)) { return false; }
       // validation
       // * 제목/내용/태그가 모두 있어야 한다.
+      // * 태그는 디비의 태그리스트에 존재하는 태그여야 한다.
+      // * 사용자 정보가 존재해야 한다.
+      if (!user) { callback(new Error('user must be exist.')); return; }
       if (helpers.isEmpty(question) || helpers.isEmpty(question.title) ||
           helpers.isEmpty(question.contents) || helpers.isEmpty(question.tags)) {
             callback(new Error('question is something wrong!'));
@@ -56,6 +59,9 @@ module.exports = (function() {
             question.voteUp = 0;
             question.voteDown = 0;
             question.viewCount = 0;
+            question.author = {};
+            question.author.id = user._id;
+            question.author.nickname = user.nickname;
 
             questions.insert(question, callback);
           });

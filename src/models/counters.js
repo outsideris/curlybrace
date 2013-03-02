@@ -50,13 +50,13 @@ module.exports = (function() {
         { $inc: { seq: 1 } },
         { new: true },
         function(err, counter) {
-          if (err) { callback(new Error('Error Occured during querying counter')); }
+          if (err) { callback(new Error('Error Occured during querying counter')); return;}
 
           if (counter) {
             callback(err, counter.seq);
           } else {
            _self.insert(name, function(err, counter) {
-             if (err) { callback(new Error('Error Occured during creating Counter')); }
+             if (err) { callback(new Error('Error Occured during creating Counter')); return;}
              callback(err, counter[0].seq);
            });
           }
