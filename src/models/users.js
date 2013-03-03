@@ -52,7 +52,7 @@ module.exports = (function() {
 
     if (provider === authProvider.facebook.name) {
       profile = profile._json;
-      var photo = profile.picture.data ? profile.picture.data.url : null;
+      var photo = profile.picture ? (profile.picture.data ? profile.picture.data.url : null) : null;
       return _normalize(profile.id, profile.name, profile.link, photo, null, profile.email);
     } else if (provider === authProvider.twitter.name) {
       profile = profile._json;

@@ -7,7 +7,11 @@
 "use strict";
 
 var hat = require('hat')
+  , moment = require('moment')
   , logger = require('../../src/conf/config').logger;
+
+// moment의 언어 설정
+moment.lang('ko');
 
 module.exports = {
   // 전달한 객체가 빈 객체인지 검사한다
@@ -22,5 +26,14 @@ module.exports = {
   generateUUID: function() {
     logger.debug('helpers.generateUUID');
     return hat(32, 16);
+  },
+  // 시간 포매팅
+  getTimeFromNow: function(time) {
+    logger.debug('helpers.getTimeFromNow', {time: time});
+    return moment(time).fromNow();
+  },
+  formatDate: function(time) {
+    logger.debug('helpers.formatDate', {time: time});
+    return moment(time).format('YYYY-MM-DD hh:mm:ss A');
   }
 };

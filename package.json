@@ -22,6 +22,7 @@
   , "markdown": "~0.4.0"
   , "winston": "~0.6.0"
   , "hat": "*"
+  , "moment": "~2.0.0"
   }
 , "devDependencies": {
     "should": "~1.2.0"

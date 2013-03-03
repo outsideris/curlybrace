@@ -79,5 +79,28 @@ describe('helpers', function() {
       logger.error('Error Occured during querying MongoDB', {error: err});
     });
   });
+  describe('time conversion', function() {
+    it('현재부터 어느정도 전인지 문자로 나타낼 수 있어야 한다', function() {
+      // given
+      var time = new Date();
+      time.setDate(time.getDate() - 2);
+
+      // when
+      var formattedTime = helpers.getTimeFromNow(time);
+
+      // then
+      formattedTime.should.equal('2일 전');
+    });
+    it('시간을 휴먼리더블하게 포매팅한다', function() {
+      // given
+      var time = new Date('2013-03-04');
+
+      // when
+      var formattedTime = helpers.formatDate(time);
+
+      // then
+      formattedTime.should.equal('2013-03-04 09:00:00 오전');
+    });
+  });
 });
 

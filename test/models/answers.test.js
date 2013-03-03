@@ -31,7 +31,12 @@ var userFixture = {
       timezone: 9,
       locale: 'ko_KR',
       verified: true,
-      updated_time: '2011-06-09T04:22:15+0000'
+      updated_time: '2011-06-09T04:22:15+0000',
+      picture: {
+        data: {
+          url: ''
+        }
+      }
     },
     displayName: 'Test User'
   }

@@ -11,10 +11,12 @@ var should = require('should')
   , env = require('../../src/conf/config').env
   , authProvider = require('../../src/conf/config').authProvider
   , questions = require('../../src/models/questions')
+  , answers = require('../../src/models/answers')
   , tags = require('../../src/models/tags')
   , counters = require('../../src/models/counters')
   , tagFixture = require('./tags.test').tagFixture
-  , users = require('../../src/models/users');
+  , users = require('../../src/models/users')
+  , moment = require('moment');
 
 var userFixture = {
   facebookInfo: {
@@ -30,7 +32,12 @@ var userFixture = {
       timezone: 9,
       locale: 'ko_KR',
       verified: true,
-      updated_time: '2011-06-09T04:22:15+0000'
+      updated_time: '2011-06-09T04:22:15+0000',
+      picture: {
+        data: {
+          url: ''
+        }
+      }
     },
     displayName: 'Test User'
   }
@@ -52,6 +59,7 @@ describe('questions', function() {
       db.setQuestions(env.MONGODB_COLLECTION_QUESTIONS + '_test');
       questionsCollection = db.questions;
       questions.init(db);
+      answers.init(db);
 
       // 태그 컬렉션 설정
       db.setTags(env.MONGODB_COLLECTION_TAGS + '_test');
@@ -265,7 +273,7 @@ describe('questions', function() {
 
           var expectHTML = '<h1>본문입니다.</h1><ul><li>질문</li><li><p>질문..</p><pre><code>var a = &quot;test&quot;</code></pre></li></ul>';
           var actualHTML = foundQuestion.renderedContents.replace(/\n|\r/g, '');
-          actualHTML.should.be.equal(expectHTML);
+          actualHTML.should.equal(expectHTML);
           done();
         });
       });
@@ -302,6 +310,61 @@ describe('questions', function() {
         insertedQuestion[0].viewCount.should.equal(0);
 
         done();
+      });
+    });
+    it('질문을 가져올 때 뷰에서 필요한 날짜형식으로 포매팅해서 반환한다', function(done) {
+      // given
+      var questionFixture = {
+        title: '테스트 제목',
+        contents: '#본문입니다.\r\n\r\n* 질문\r\n* 질문..\r\n\r\n        var a = "test"',
+        tags: 'scala,javascript'
+      };
+
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
+        should.not.exist(err);
+
+        // when
+        questions.findOneById(insertedQuestion[0]._id, function(err, foundQuestion) {
+          // then
+          should.not.exist(err);
+
+          should.exist(foundQuestion.regDate);
+          should.exist(foundQuestion.regDateFromNow);
+          should.exist(foundQuestion.regDateformatted);
+          done();
+        });
+      });
+    });
+    it('질문을 가져올 때 답변의 날짜도 뷰에 필요한 형식으로 포매팅한다', function(done) {
+      var questionFixture = {
+        title: '테스트 제목',
+        contents: '#본문입니다.\r\n\r\n* 질문\r\n* 질문..\r\n\r\n        var a = "test"',
+        tags: 'scala,javascript'
+      };
+      var answerFixture = {
+        contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
+      };
+
+      // given
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
+        should.not.exist(err);
+
+        answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
+          should.not.exist(err);
+          updatedCount.should.equal(1);
+
+          // when
+          questions.findOneById(insertedQuestion[0]._id, function(err, foundQuestion) {
+            // then
+            should.not.exist(err);
+
+            foundQuestion.answers.length.should.equal(1);
+            should.exist(foundQuestion.answers[0].regDate);
+            should.exist(foundQuestion.answers[0].regDateFromNow);
+            should.exist(foundQuestion.answers[0].regDateformatted);
+            done();
+          });
+        });
       });
     });
   });

@@ -32,31 +32,16 @@ block mainContent
       .question-text !{question.renderedContents}
       .row
         ul.unstyled.tags
-          li.tag
-            a(href="#").btn.btn-mini
-              i.icon-tag
-              |  python
-          li.tag
-            a(href="#").btn.btn-mini
-              i.icon-tag
-              |  scala
-          li.tag
-            a(href="#").btn.btn-mini
-              i.icon-tag
-              |  node.js
-          li.tag
-            a(href="#").btn.btn-mini
-              i.icon-tag
-              |  ruby
-          li.tag
-            a(href="#").btn.btn-mini
-              i.icon-tag
-              |  java
+          each tag in question.tags
+            li.tag
+              a(href="/tags/#{tag}").btn.btn-mini
+                i.icon-tag
+                |  #{tag}
         .author
           a(href='/users/#{question.author.id}')
             img.profile(src='#{question.author.profileImage}', alt='profile image for #{question.author.nickname}', title='profile image for #{question.author.nickname}', width='40', height='40')
           a(href='/users/#{question.author.id}') #{question.author.nickname}
-          time 2일 전
+          time(title="#{question.regDateformatted}") #{question.regDateFromNow}
       .submenu.row
         ul.unstyled
           li
@@ -120,7 +105,7 @@ block mainContent
               a(href='/users/#{answer.author.id}')
                 img.profile(src='#{question.author.profileImage}', alt='profile image for #{answer.author.nickname}', title='profile image for #{answer.author.nickname}', width='40', height='40')
               a(href='/users/#{answer.author.id}') #{answer.author.nickname}
-              time 2일 전
+              time(title="#{answer.regDateformatted}") #{answer.regDateFromNow}
           .submenu.row
             ul.unstyled
               li

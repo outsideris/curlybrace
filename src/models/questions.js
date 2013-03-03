@@ -56,6 +56,7 @@ module.exports = (function() {
             if (err) { return callback(err); }
 
             question._id = seq;
+            question.regDate = new Date();
             question.voteUp = 0;
             question.voteDown = 0;
             question.viewCount = 0;
@@ -87,9 +88,20 @@ module.exports = (function() {
       var criteria = {'_id': id};
       questions.findOne(criteria, function(err, question) {
         if (err) { callback(new Error(err)); return false;}
-        // render markdown to HTML
         if (!question) { callback(new Error('Question is not found.')); return;}
+
+        // render markdown to HTML
         question.renderedContents = markdown.toHTML(question.contents);
+        // format date
+        question.regDateFromNow = helpers.getTimeFromNow(question.regDate);
+        question.regDateformatted = helpers.formatDate(question.regDate);
+        if (question.answers) {
+          question.answers.forEach(function(answer) {
+            answer.regDateFromNow = helpers.getTimeFromNow(answer.regDate);
+            answer.regDateformatted = helpers.formatDate(answer.regDate);
+          });
+        }
+
         callback(err, question);
       });
     }

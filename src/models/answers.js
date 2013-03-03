@@ -50,6 +50,7 @@ module.exports = (function() {
 
       // 답변에 필요한 필드 생성
       answer.id = helpers.generateUUID();
+      answer.regDate = new Date();
       answer.voteUp = 0;
       answer.voteDown = 0;
       // 사용자 정보 복사
