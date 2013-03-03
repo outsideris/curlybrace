@@ -58,7 +58,17 @@ module.exports = function(passport) {
   passport.use(new FacebookStrategy({
       clientID: authToken.facebook.appId,
       clientSecret: authToken.facebook.appSecret,
-      callbackURL: env.HOST + "/auth/facebook/callback"
+      callbackURL: env.HOST + "/auth/facebook/callback",
+      profileFields: [
+        'id',
+        'username',
+        'displayName',
+        'name',
+        'gender',
+        'profileUrl',
+        'emails',
+        'photos'
+      ]
     },
     function(accessToken, refreshToken, profile, done) {
       logger.debug('authentication:passport.facebook', {accessToken: accessToken, refreshToken: refreshToken, profile: profile});
