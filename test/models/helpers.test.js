@@ -93,13 +93,13 @@ describe('helpers', function() {
     });
     it('시간을 휴먼리더블하게 포매팅한다', function() {
       // given
-      var time = new Date('2013-03-04');
+      var time = new Date('2013-03-04 11:00:00');
 
       // when
       var formattedTime = helpers.formatDate(time);
 
       // then
-      formattedTime.should.equal('2013-03-04 09:00:00 오전');
+      formattedTime.should.equal('2013-03-04 11:00:00 오전');
     });
   });
 });
