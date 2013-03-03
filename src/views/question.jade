@@ -53,9 +53,9 @@ block mainContent
               i.icon-tag
               |  java
         .author
-          a(href='/')
-            img(src='https://convore2.s3.amazonaws.com/userpics/3795/1297298357.jpg', alt='Avatar for tbeseda', title='tbeseda', width='40', height='40')
-          a(href='/') Outsider
+          a(href='/users/#{question.author.id}')
+            img.profile(src='#{question.author.profileImage}', alt='profile image for #{question.author.nickname}', title='profile image for #{question.author.nickname}', width='40', height='40')
+          a(href='/users/#{question.author.id}') #{question.author.nickname}
           time 2일 전
       .submenu.row
         ul.unstyled
@@ -117,9 +117,9 @@ block mainContent
             .answer-text !{answer.contents}
           .row
             .author
-              a(href='/')
-                img(src='https://convore2.s3.amazonaws.com/userpics/3795/1297298357.jpg', alt='Avatar for tbeseda', title='tbeseda', width='40', height='40')
-              a(href='/') Outsider
+              a(href='/users/#{answer.author.id}')
+                img.profile(src='#{question.author.profileImage}', alt='profile image for #{answer.author.nickname}', title='profile image for #{answer.author.nickname}', width='40', height='40')
+              a(href='/users/#{answer.author.id}') #{answer.author.nickname}
               time 2일 전
           .submenu.row
             ul.unstyled

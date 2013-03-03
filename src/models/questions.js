@@ -62,6 +62,7 @@ module.exports = (function() {
             question.author = {};
             question.author.id = user._id;
             question.author.nickname = user.nickname;
+            question.author.profileImage = user.authInfo[user.defaultProvider].profileImage;
 
             questions.insert(question, callback);
           });

@@ -18,7 +18,7 @@ html
                   if !user
                     a(href='/login') Login
                   else
-                    a(href='/user') #{user.nickname}
+                    a(href='/users/#{user._id}') #{user.nickname}
               form.navbar-form.pull-right
                 input.search-query(type='txt', placeholder="Search")
               ul.nav.unstyled

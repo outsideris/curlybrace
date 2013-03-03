@@ -53,7 +53,7 @@ app.configure(function() {
         { id: 7932892,
           nickname: 'Outsider',
           url: 'http://twitter.com/Outsideris',
-          profile_image: 'http://a0.twimg.com/profile_images/1646891342/image_normal.jpg',
+          profileImage: 'http://a0.twimg.com/profile_images/1646891342/image_normal.jpg',
           description: 'Programmer / Hacker',
           email: null } },
         regDate: '',

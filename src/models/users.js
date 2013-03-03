@@ -44,7 +44,7 @@ module.exports = (function() {
           "id": id
         , "nickname": nickname
         , "url": url
-        , "profile_image": profile_image
+        , "profileImage": profile_image
         , "description": description
         , "email": email
       };

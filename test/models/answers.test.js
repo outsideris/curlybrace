@@ -128,7 +128,7 @@ describe('answers', function() {
         should.not.exist(err);
 
         // when
-        answers.insert(insertedQuestion[0]._id, answerFixture, function(err, updatedCount) {
+        answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
           // then
           should.not.exist(err);
           updatedCount.should.equal(1);
@@ -154,8 +154,8 @@ describe('answers', function() {
         should.not.exist(err);
 
         // when
-        answers.insert(insertedQuestion[0]._id, answerFixture, function(err, updatedCount) {
-          answers.insert(insertedQuestion[0]._id, answerFixture2, function(err, updatedCount) {
+        answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
+          answers.insert(insertedQuestion[0]._id, answerFixture2, currentUser, function(err, updatedCount) {
             // then
             should.not.exist(err);
             updatedCount.should.equal(1);
@@ -180,7 +180,7 @@ describe('answers', function() {
         should.not.exist(err);
 
         // when
-        answers.insert(insertedQuestion[0]._id, answerFixture, function(err, updatedCount) {
+        answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
           // then
           should.not.exist(err);
           updatedCount.should.equal(1);
@@ -202,7 +202,7 @@ describe('answers', function() {
         should.not.exist(err);
 
         // when
-        answers.insert(insertedQuestion[0]._id + "", answerFixture, function(err, updatedCount) {
+        answers.insert(insertedQuestion[0]._id + "", answerFixture, currentUser, function(err, updatedCount) {
           // then
           should.not.exist(err);
           updatedCount.should.equal(1);
@@ -225,10 +225,34 @@ describe('answers', function() {
         should.not.exist(err);
 
         // when
-        answers.insert('notNumber', answerFixture, function(err, updatedCount) {
+        answers.insert('notNumber', answerFixture, currentUser, function(err, updatedCount) {
           // then
           should.exist(err);
           done();
+        });
+      });
+    });
+    it('답변이 등록시 사용자 정보를 저장한다', function(done) {
+      var answerFixture = {
+        contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
+      };
+
+      // given
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
+        should.not.exist(err);
+
+        // when
+        answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
+          // then
+          should.not.exist(err);
+          updatedCount.should.equal(1);
+
+          questionsCollection.findOne({'_id': insertedQuestion[0]._id}, function(err, question) {
+            question.answers.length.should.equal(1);
+            question.answers[0].author.nickname.should.equal(currentUser.nickname);
+            question.answers[0].author.id.should.equal(currentUser._id);
+            done();
+          });
         });
       });
     });

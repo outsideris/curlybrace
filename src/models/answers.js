@@ -34,11 +34,14 @@ module.exports = (function() {
       questions = db.questions;
     },
     // 질문에 답변을 추가한다.
-    insert: function(questionId, answer, callback) {
+    insert: function(questionId, answer, user, callback) {
+      logger.debug('answers.insert', {questionId: questionId, answer: answer, user: user});
       if (!isInited(callback)) { return false; }
 
       // validation
+      // * 사용자 정보가 존재해야 한다.
       // * questionId는 숫자타입이어야 한다
+      if (!user) { callback(new Error('user must be exist.')); return; }
       questionId = parseInt(questionId, 10);
       if (isNaN(questionId)) {
         callback(new Error('questionId must be number or convertable to number'));
@@ -49,8 +52,13 @@ module.exports = (function() {
       answer.id = helpers.generateUUID();
       answer.voteUp = 0;
       answer.voteDown = 0;
+      // 사용자 정보 복사
+      answer.author = {};
+      answer.author.id = user._id;
+      answer.author.nickname = user.nickname;
+      answer.author.profileImage = user.profileImage;
+      answer.author.profileImage = user.authInfo[user.defaultProvider].profileImage;
 
-      logger.debug('answers.insert', {questionId: questionId, answer: answer});
       questions.update(
         {_id: questionId},
         {$push: {answers: answer}},

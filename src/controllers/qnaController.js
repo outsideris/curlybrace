@@ -55,16 +55,16 @@ exports.questionView = function(req, res) {
 
 // 질문 등록 처리
 exports.registQuestion = function(req, res) {
-  questions.insert(req.body, function(err, insertedQuestion) {
+  questions.insert(req.body, req.user, function(err, insertedQuestion) {
     if (err) { logger.error('Error Occured during querying MongoDB', {error: err.stack}); return false;}
 
     res.redirect('/question/' + insertedQuestion[0]._id);
   });
 };
 
-// 질문 등록 처리
+// 답변 등록 처리
 exports.registAnswer = function(req, res) {
-  answers.insert(req.params.id, req.body, function(err, count) {
+  answers.insert(req.params.id, req.body, req.user, function(err, count) {
     if (err) { logger.error('Error Occured during querying MongoDB', {error: err.stack}); return false;}
 
     res.redirect('/question/' + req.params.id);
