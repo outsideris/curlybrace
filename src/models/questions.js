@@ -52,7 +52,7 @@ module.exports = (function() {
         if (err) { callback(new Error(err)); return false;}
 
         if (isExist) {
-          counters.getNextSequence(env.MONGODB_COLLECTION_QUESTIONS, function(err, seq) {
+          counters.getNextSequence(questions.collectionName, function(err, seq) {
             if (err) { return callback(err); }
 
             question._id = seq;

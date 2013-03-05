@@ -33,7 +33,7 @@ module.exports = {
 
       this.db.open(function(err, db) {
         if(err) {
-          logger.error('Error Occured during connecting MongoDB', {error: err});
+          logger.error('Error Occured during connecting MongoDB', {error: err.stack});
         } else {
           logger.info('MongoDB is connected!');
 

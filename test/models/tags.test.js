@@ -85,6 +85,7 @@ describe('tags', function() {
   before(function(done) {
     db = dbService.init();
     db.once('connected', function(err, pdb) {
+      should.not.exist(err);
       db = pdb;
       db.setTags(env.MONGODB_COLLECTION_TAGS + '_test');
       tagsCollection = db.tags;

@@ -57,7 +57,6 @@ module.exports = (function() {
       answer.author = {};
       answer.author.id = user._id;
       answer.author.nickname = user.nickname;
-      answer.author.profileImage = user.profileImage;
       answer.author.profileImage = user.authInfo[user.defaultProvider].profileImage;
 
       questions.update(

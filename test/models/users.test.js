@@ -41,6 +41,7 @@ describe('users', function() {
   before(function(done) {
     db = dbService.init();
     db.once('connected', function(err, pdb) {
+      should.not.exist(err);
       db = pdb;
       // 사용자 컬렉션 설정
       db.setUsers(env.MONGODB_COLLECTION_USERS + '_test');

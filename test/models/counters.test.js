@@ -19,6 +19,7 @@ describe('counters', function() {
   before(function(done) {
     db = dbService.init();
     db.once('connected', function(err, pdb) {
+      should.not.exist(err);
       db = pdb;
       db.setCounters(env.MONGODB_COLLECTION_COUNTERS + '_test');
       countersCollection = db.counters;

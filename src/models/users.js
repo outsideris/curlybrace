@@ -93,7 +93,7 @@ module.exports = (function() {
       };
       user.authInfo[provider] = normalizeProfile(profile, provider);
 
-      counters.getNextSequence(env.MONGODB_COLLECTION_USERS, function(err, seq) {
+      counters.getNextSequence(users.collectionName, function(err, seq) {
         if (err) { return callback(err); }
 
         user._id = seq;

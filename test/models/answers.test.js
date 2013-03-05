@@ -54,6 +54,7 @@ describe('answers', function() {
   before(function(done) {
     db = dbService.init();
     db.once('connected', function(err, pdb) {
+      should.not.exist(err);
       db = pdb;
       // 질문 컬렉션 설정
       db.setQuestions(env.MONGODB_COLLECTION_QUESTIONS + '_test');
