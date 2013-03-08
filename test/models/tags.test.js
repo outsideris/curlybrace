@@ -3,7 +3,7 @@
 // Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
 // Licensed under the MIT license.
 // <http://outsider.mit-license.org/>
-/*global describe:true, it:true, before:true, after:true */
+/*global describe, it, before, after */
 "use strict";
 
 var should = require('should')

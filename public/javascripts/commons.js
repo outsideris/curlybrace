@@ -85,4 +85,32 @@ $(document).ready(function() {
     };
     $('#tags').tokenInput('/v1/tags?how=startWith', opt);
   }
+
+  // 질문 보기 화면일 경우
+  if ($('#qid').length) {
+    var questionId = $('#qid').val();
+    $('form.commentForm').submit(function(event) {
+      event.preventDefault();
+
+      var comment = {
+        contents: $(this).find('textarea').val()
+      };
+      var answerId = $(this).find('input.aid').val();
+      if (questionId && !answerId) {
+        $.post('/question/' + questionId + '/comments',
+          comment,
+          function(data) {
+            console.log(data);
+          });
+      } else if (questionId) {
+        $.post('/question/' + questionId + '/answer/' + answerId + '/comments',
+          comment,
+          function(data) {
+            console.log(data);
+          });
+      } else {
+        //TODO: do notification
+      }
+    });
+  }
 });

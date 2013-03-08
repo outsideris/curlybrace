@@ -2,6 +2,7 @@ extends layout
 
 block mainContent
   article
+    input#qid(type='hidden', value='#{question._id}')
     .question-box
       .question-vote.row
         - var voteUp = question.voteUp ? question.voteUp : 0
@@ -53,88 +54,89 @@ block mainContent
               i.icon-edit
               |  수정
       .comments-list.row
-          - var comments = [1,2,3,4,5]
-          each c in comments
+          - if (question.comments)
+          each comment in question.comments
             .comment
               .profile
-                a(href='/')
-                  img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
+                a(href='/users/#{comment.author.id}')
+                  img(src='#{comment.author.profileImage}', alt='profile image for #{comment.author.nickname}', title='profile image for #{comment.author.nickname}', width='35', height='35')
               span
                 b.author
-                  a(href='#') Outsider
-                | 사회적 특수계급의 제도는 인정되지 아니하며, 어떠한 형태로도 이를 창설할 수 없다. 대한민국의 주권은 국민에게 있고, 모든 권력은 국민으로부터 나온다. 피고인의 자백이 고문·폭행·협박·구속의 부당한 장기화 또는 기망 기타의 방법에 의하여 자의로 진술된 것이 아니라고 인정될 때 또는 정식재판에 있어서 피고인의 자백이 그에게 불리한 유일한 증거일 때에는 이를 유죄의 증거로 삼거나 이를 이유로 처벌할 수 없다. 정당의 설립은 자유이며, 복수정당제는 보장된다. 모든 국민은 법률이 정하는 바에 의하여 국방의 의무를 진다.
+                  a(href='/users/#{comment.author.id}') #{comment.author.nickname}
+                | !{comment.contents}
                 time 2일 전
           .comment.comment-write
             .profile
-              a(href='/')
-                img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
-            form
+              a(href='/users/#{user.id}')
+                img(src='#{user.authInfo[user.defaultProvider].profileImage}', alt='profile image for #{user.nickname}', title='profile image for #{user.nickname}', width='35', height='35')
+            form.commentForm
               textarea.input-xlarge(rows='2')
               input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn.pull-right
     - if (question.answers)
-      each answer in question.answers
-        section.answer-box(id=answer.id)
-          .row.answer-contents
-            .voting-box.pull-right
-              .answer-vote
-                - var voteUp = answer.voteUp ? answer.voteUp : 0
-                - var voteDown = answer.voteDown ? answer.voteDown : 0
-                span.votecount(title='투표 수') #{voteUp - voteDown}
-                form
-                  button.btn.btn-small.btn-success
-                    i.icon-plus
-                    | &nbsp;
-                    i.icon-plus
-                    span ;
-                  button.btn.btn-small.btn-danger
-                    i.icon-minus
-                    | &nbsp;
-                    i.icon-minus
-                    span ;
-              .socialbox
-                ul.unstyled
-                  li
-                    a(href='https://twitter.com/share', data-hashtags='curlybrace').twitter-share-button.social Tweet
-                  li
-                    .fb-like(data-layout='button_count', data-send='false', data-width='200', data-show-faces='false').social
-                  li
-                    g:plusone(size='medium').social
-            .answer-text !{answer.contents}
-          .row
-            .author
-              a(href='/users/#{answer.author.id}')
-                img.profile(src='#{question.author.profileImage}', alt='profile image for #{answer.author.nickname}', title='profile image for #{answer.author.nickname}', width='40', height='40')
-              a(href='/users/#{answer.author.id}') #{answer.author.nickname}
-              time(title="#{answer.regDateformatted}") #{answer.regDateFromNow}
-          .submenu.row
-            ul.unstyled
-              li
-                a(href='##{answer.id}').btn.btn-info.btn-mini
-                  i.icon-share
-                  |  퍼머링크: #{url}/question/#{question._id}##{answer.id}
-              li
-                a(href='#').btn.btn-info.btn-mini
-                  i.icon-edit
-                  |  수정
-          .comments-list.row
-            - var comments = [1,2,3,4,5]
-            each c in comments
-              .comment
-                .profile
-                  a(href='/')
-                    img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
-                span
-                  b.author
-                    a(href='#') Outsider
-                  | 교육의 자주성·전문성·정치적 중립성 및 대학의 자율성은 법률이 정하는 바에 의하여 보장된다. 정당은 그 목적, 조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에 참여하는 데 필요한 조직을 가져야 한다. 모든 국민의 재산권은 보장된다. 그 내용과 한계는 법률로 정한다. 국회의원은 국가이익을 우선하여 양심에 따라 직무를 행한다.
-                  time 2일 전
-            .comment.comment-write
-              .profile
-                a(href='/')
-                  img(src='https://convore2.s3.amazonaws.com/userpics/000000/000000/000218/1296348099.jpg', alt='Avatar for tbeseda', title='tbeseda', width='35', height='35')
+    each answer in question.answers
+      section.answer-box(id=answer.id)
+        .row.answer-contents
+          .voting-box.pull-right
+            .answer-vote
+              - var voteUp = answer.voteUp ? answer.voteUp : 0
+              - var voteDown = answer.voteDown ? answer.voteDown : 0
+              span.votecount(title='투표 수') #{voteUp - voteDown}
               form
-                textarea.input-xlarge(rows='2')
-                input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn.pull-right
+                button.btn.btn-small.btn-success
+                  i.icon-plus
+                  | &nbsp;
+                  i.icon-plus
+                  span ;
+                button.btn.btn-small.btn-danger
+                  i.icon-minus
+                  | &nbsp;
+                  i.icon-minus
+                  span ;
+            .socialbox
+              ul.unstyled
+                li
+                  a(href='https://twitter.com/share', data-hashtags='curlybrace').twitter-share-button.social Tweet
+                li
+                  .fb-like(data-layout='button_count', data-send='false', data-width='200', data-show-faces='false').social
+                li
+                  g:plusone(size='medium').social
+          .answer-text !{answer.contents}
+        .row
+          .author
+            a(href='/users/#{answer.author.id}')
+              img.profile(src='#{question.author.profileImage}', alt='profile image for #{answer.author.nickname}', title='profile image for #{answer.author.nickname}', width='40', height='40')
+            a(href='/users/#{answer.author.id}') #{answer.author.nickname}
+            time(title="#{answer.regDateformatted}") #{answer.regDateFromNow}
+        .submenu.row
+          ul.unstyled
+            li
+              a(href='##{answer.id}').btn.btn-info.btn-mini
+                i.icon-share
+                |  퍼머링크: #{url}/question/#{question._id}##{answer.id}
+            li
+              a(href='#').btn.btn-info.btn-mini
+                i.icon-edit
+                |  수정
+        .comments-list.row
+          - if (answer.comments)
+          each comment in answer.comments
+            .comment
+              .profile
+                a(href='/users/#{comment.author.id}')
+                  img(src='#{comment.author.profileImage}', alt='profile image for #{comment.author.nickname}', title='profile image for #{comment.author.nickname}', width='35', height='35')
+              span
+                b.author
+                  a(href='/users/#{comment.author.id}') #{comment.author.nickname}
+                | !{comment.contents}
+                time 2일 전
+          .comment.comment-write
+            .profile
+              a(href='/users/#{user.id}')
+                img(src='#{user.authInfo[user.defaultProvider].profileImage}', alt='profile image for #{user.nickname}', title='profile image for #{user.nickname}', width='35', height='35')
+            form.commentForm
+              input.aid(type='hidden', value='#{answer.id}')
+              textarea.input-xlarge(rows='2')
+              input(type='submit', value='댓글 작성').btn.btn-primary.submit-btn.pull-right
     .answer-write-box
       .answer-write
         .alert.alert-info 이 질문에 답변해 주세요.

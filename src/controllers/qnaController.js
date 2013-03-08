@@ -12,7 +12,8 @@ var env = require('../../src/conf/config').env,
     dbService = require('../models/dbService'),
     questions = require('../models/questions'),
     answers = require('../models/answers'),
-    counters = require('../models/counters');
+    counters = require('../models/counters'),
+    comments = require('../models/comments');
 
 // 디비설정 초기화
 var db = dbService.init();
@@ -20,6 +21,7 @@ db.on('connected', function(err, db) {
   questions.init(db);
   answers.init(db);
   counters.init(db);
+  comments.init(db);
 });
 
 // 인덱스 페이지
@@ -64,9 +66,26 @@ exports.registQuestion = function(req, res) {
 
 // 답변 등록 처리
 exports.registAnswer = function(req, res) {
-  answers.insert(req.params.id, req.body, req.user, function(err, count) {
+  answers.insert(req.params.id, req.body, req.user, function(err) {
     if (err) { logger.error('Error Occured during querying MongoDB', {error: err.stack}); return false;}
 
     res.redirect('/question/' + req.params.id);
+  });
+};
+
+// 댓글 등록 처리
+exports.registComment = function(req, res) {
+  var idObj = {
+    questionId: req.params.id,
+    answerId: req.params.aid
+  };
+
+  comments.insert(idObj, req.body, req.user, function(err) {
+    if (err) { logger.error('Error Occured during querying MongoDB', {error: err.stack}); return false;}
+
+    res.send({
+      success: true
+    });
+    //res.redirect('/question/' + req.params.id);
   });
 };

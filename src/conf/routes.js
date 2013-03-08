@@ -35,6 +35,10 @@ app.get('/question/:id', qna.questionView);
 // 답변 관련 라우팅
 app.post('/question/:id/answer', qna.registAnswer);
 
+// 댓글 관련 라우팅
+app.post('/question/:id/comments', qna.registComment);
+app.post('/question/:id/answer/:aid/comments', qna.registComment);
+
 // 인증관련 라우팅
 app.get('/login', ensureUnauthenticated, users.loginForm);
 

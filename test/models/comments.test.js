@@ -3,7 +3,7 @@
 // Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
 // Licensed under the MIT license.
 // <http://outsider.mit-license.org/>
-/*global describe, it, before, after, beforeEach*/
+/*global describe, it, before, after, beforeEach */
 "use strict";
 
 var should = require('should')
@@ -12,6 +12,7 @@ var should = require('should')
   , authProvider = require('../../src/conf/config').authProvider
   , questions = require('../../src/models/questions')
   , answers = require('../../src/models/answers')
+  , comments = require('../../src/models/comments')
   , tags = require('../../src/models/tags')
   , counters = require('../../src/models/counters')
   , users = require('../../src/models/users')
@@ -42,14 +43,15 @@ var userFixture = {
   }
 };
 
-describe('answers', function() {
+describe('comments', function() {
   var questionsCollection,
       tagsCollection,
       countersCollection,
       usersCollection,
       currentUser,
       db,
-      questionFixture;
+      questionFixture,
+      answerFixture;
 
   before(function(done) {
     db = dbService.init();
@@ -61,6 +63,7 @@ describe('answers', function() {
       questionsCollection = db.questions;
       questions.init(db);
       answers.init(db);
+      comments.init(db);
 
       // 태그 컬렉션 설정
       db.setTags(env.MONGODB_COLLECTION_TAGS + '_test');
@@ -100,6 +103,9 @@ describe('answers', function() {
       contents: '#본문입니다.\r\n\r\n* 질문\r\n* 질문..\r\n\r\n        var a = "tet"',
       tags: 'scala,javascript'
     };
+    answerFixture = {
+      contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
+    };
   });
   // 테스트 데이터 삭제
   after(function() {
@@ -123,141 +129,108 @@ describe('answers', function() {
     db.db = null;
   });
 
-  describe('답변 등록', function() {
-    it('답변이 안달린 질문에 답변을 등록한다', function(done) {
-      var answerFixture = {
-        contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
+  describe('질문 댓글 등록', function() {
+    it('댓글이 안달린 질문에 댓글을 등록한다', function(done) {
+      // given
+      var comment = {
+        contents: '좋은 질문이네요.'
       };
 
-      // given
       questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
         should.not.exist(err);
+        should.exist(insertedQuestion[0]);
 
         // when
-        answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
+        comments.insert({questionId: insertedQuestion[0]._id}, comment, currentUser, function(err) {
           // then
           should.not.exist(err);
-          updatedCount.should.equal(1);
-
-          questionsCollection.findOne({'_id': insertedQuestion[0]._id}, function(err, question) {
-            question.answers.length.should.equal(1);
-            question.answers[0].contents.should.equal(answerFixture.contents);
+          questionsCollection.findOne({_id: insertedQuestion[0]._id}, function(err, foundQuestion) {
+            should.not.exist(err);
+            foundQuestion.comments.length.should.equal(1);
+            foundQuestion.comments[0].contents.should.equal(comment.contents);
             done();
           });
         });
       });
     });
-    it('답변이 달린 질문에 답변을 추가로 등록한다', function(done) {
-      var answerFixture = {
-        contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
-      };
-      var answerFixture2 = {
-        contents: '#답변내용2 입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
+  });
+  describe('답변 댓글 등록', function() {
+    it('댓글이 안달린 답변에 댓글을 등록한다', function(done) {
+      // given
+      var comment = {
+        contents: '좋은 답변이네요.'
       };
 
-      // given
       questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
         should.not.exist(err);
+        should.exist(insertedQuestion[0]);
 
-        // when
         answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
-          answers.insert(insertedQuestion[0]._id, answerFixture2, currentUser, function(err, updatedCount) {
-            // then
-            should.not.exist(err);
-            updatedCount.should.equal(1);
+          should.not.exist(err);
+          updatedCount.should.equal(1);
 
-            questionsCollection.findOne({'_id': insertedQuestion[0]._id}, function(err, question) {
-              question.answers.length.should.equal(2);
-              question.answers[0].contents.should.equal(answerFixture.contents);
-              question.answers[1].contents.should.equal(answerFixture2.contents);
-              done();
+          questionsCollection.findOne({_id: insertedQuestion[0]._id}, function(err, foundQuestion) {
+            should.not.exist(err);
+            foundQuestion.answers.length.should.equal(1);
+
+            // when
+            comments.insert({
+              questionId: insertedQuestion[0]._id,
+              answerId: foundQuestion.answers[0].id
+            }, comment, currentUser, function(err) {
+              // then
+              should.not.exist(err);
+              questionsCollection.findOne({_id: insertedQuestion[0]._id}, function(err, foundQuestion) {
+                should.not.exist(err);
+                foundQuestion.answers[0].comments.length.should.equal(1);
+                foundQuestion.answers[0].comments[0].contents.should.equal(comment.contents);
+                done();
+              });
             });
           });
         });
       });
     });
-    it('각 답변은 유일한 ID를 가진다', function(done) {
-      var answerFixture = {
-        contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
+    it('답변이 2개일때 특정 답변에 댓글을 등록한다', function(done) {
+      // given
+      var comment = {
+        contents: '좋은 답변이네요.'
       };
 
-      // given
       questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
         should.not.exist(err);
+        should.exist(insertedQuestion[0]);
 
-        // when
         answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
-          // then
           should.not.exist(err);
           updatedCount.should.equal(1);
 
-          questionsCollection.findOne({'_id': insertedQuestion[0]._id}, function(err, question) {
-            should.exist(question.answers[0].id);
-            done();
-          });
-        });
-      });
-    });
-    it('질문 ID를 문자열로 전달해도 등록할 수 있어야 한다', function(done) {
-      var answerFixture = {
-        contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
-      };
+          answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
+            should.not.exist(err);
+            updatedCount.should.equal(1);
 
-      // given
-      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
-        should.not.exist(err);
+            questionsCollection.findOne({_id: insertedQuestion[0]._id}, function(err, foundQuestion) {
+              should.not.exist(err);
+              foundQuestion.answers.length.should.equal(2);
+              var expectedAnswerId = foundQuestion.answers[0].id;
 
-        // when
-        answers.insert(insertedQuestion[0]._id + "", answerFixture, currentUser, function(err, updatedCount) {
-          // then
-          should.not.exist(err);
-          updatedCount.should.equal(1);
-
-          questionsCollection.findOne({'_id': insertedQuestion[0]._id}, function(err, question) {
-            question.answers.length.should.equal(1);
-            question.answers[0].contents.should.equal(answerFixture.contents);
-            done();
-          });
-        });
-      });
-    });
-    it('질문 ID를 숫자가 아닌 경우에는 오류를 반환한다', function(done) {
-      var answerFixture = {
-        contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
-      };
-
-      // given
-      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
-        should.not.exist(err);
-
-        // when
-        answers.insert('notNumber', answerFixture, currentUser, function(err, updatedCount) {
-          // then
-          should.exist(err);
-          done();
-        });
-      });
-    });
-    it('답변이 등록시 사용자 정보를 저장한다', function(done) {
-      var answerFixture = {
-        contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
-      };
-
-      // given
-      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
-        should.not.exist(err);
-
-        // when
-        answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
-          // then
-          should.not.exist(err);
-          updatedCount.should.equal(1);
-
-          questionsCollection.findOne({'_id': insertedQuestion[0]._id}, function(err, question) {
-            question.answers.length.should.equal(1);
-            question.answers[0].author.nickname.should.equal(currentUser.nickname);
-            question.answers[0].author.id.should.equal(currentUser._id);
-            done();
+              // when
+              comments.insert({
+                questionId: insertedQuestion[0]._id,
+                answerId: expectedAnswerId
+              }, comment, currentUser, function(err) {
+                // then
+                should.not.exist(err);
+                questionsCollection.findOne({_id: insertedQuestion[0]._id}, function(err, foundQuestion) {
+                  should.not.exist(err);
+                  foundQuestion.answers[0].id.should.equal(expectedAnswerId);
+                  foundQuestion.answers[0].comments.length.should.equal(1);
+                  foundQuestion.answers[0].comments[0].contents.should.equal(comment.contents);
+                  should.not.exist(foundQuestion.answers[1].comments);
+                  done();
+                });
+              });
+            });
           });
         });
       });
