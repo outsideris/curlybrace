@@ -22,6 +22,7 @@ module.exports = {
   , tags: null
   , questions: null
   , counters: null
+  , comments: null
   // 전체 컬렉션 인스턴스 초기화
   , init: function() {
     logger.debug('dbService.init');
@@ -42,6 +43,7 @@ module.exports = {
           self.tags = db.collection(env.MONGODB_COLLECTION_TAGS);
           self.questions = db.collection(env.MONGODB_COLLECTION_QUESTIONS);
           self.counters = db.collection(env.MONGODB_COLLECTION_COUNTERS);
+          self.comments = db.collection(env.MONGODB_COLLECTION_COMMENTS);
         }
         self.event.emit('connected', err, self);
       });
@@ -65,5 +67,9 @@ module.exports = {
   setCounters: function(collectionName) {
     logger.debug('dbService.setCounters', {collectionName: collectionName});
     this.counters = this.db.collection(collectionName);
+  },
+  setComments: function(collectionName) {
+    logger.debug('dbService.setComments', {collectionName: collectionName});
+    this.comments = this.db.collection(collectionName);
   }
 };

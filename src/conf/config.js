@@ -40,6 +40,7 @@ module.exports.env = {
   , MONGODB_COLLECTION_TAGS: 'tags'
   , MONGODB_COLLECTION_QUESTIONS: 'questions'
   , MONGODB_COLLECTION_COUNTERS: 'counters'
+  , MONGODB_COLLECTION_COMMENTS: 'comments'
 };
 
 module.exports.server = {

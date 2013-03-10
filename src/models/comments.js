@@ -13,16 +13,15 @@ var helpers = require('./helpers')
   , logger = require('../../src/conf/config').logger;
 
 module.exports = (function() {
-  // 댓글은 질문/답변에 임베딩하므로 questions 컬렉션을 사용한다.
-  var questions = null;
+  var comments = null;
 
   // 컬렉션 인스턴스 할당 여부
   var isInited = function(callback) {
     logger.debug('comments.isInited');
-    if (questions) {
+    if (comments) {
       return true;
     } else {
-      callback(new Error('questions collection should not be null.'));
+      callback(new Error('comments collection should not be null.'));
       return false;
     }
   };
@@ -31,7 +30,7 @@ module.exports = (function() {
     // 컬렉션 인스턴스 할당
     init: function(db) {
       logger.debug('comments.init');
-      questions = db.questions;
+      comments = db.comments;
     },
     // 질문에 답변을 추가한다.
     // * idObj -> { questionId: questionId, answerId: answerId }
@@ -60,21 +59,43 @@ module.exports = (function() {
 
       // 답변에 대한 댓글
       if (idObj.answerId) {
-        questions.update(
-          {
-            '_id': idObj.questionId,
-            'answers.id': idObj.answerId
-          },
-          {$push: { 'answers.$.comments': comment}},
-          callback
-        );
+        comments.findOne({
+          _id: idObj.questionId,
+          answerId: idObj.answerId
+        }, function(err, foundQuestion) {
+          if (err) { callback(new Error(err)); return false;}
+
+          if (foundQuestion) {
+            comments.update({
+              _id: idObj.questionId,
+              answerId: idObj.answerId
+            }, {$push: {comments: comment}}, callback);
+          } else {
+            comments.insert({
+              _id: idObj.questionId,
+              answerId: idObj.answerId,
+              comments: [comment]
+            }, callback);
+          }
+        });
         // 질문에 대한 댓글
       } else {
-        questions.update(
-          {_id: idObj.questionId},
-          {$push: {comments: comment}},
-          callback
-        );
+        comments.findOne({_id: idObj.questionId, answerId: null}, function(err, foundQuestion) {
+          if (err) { callback(new Error(err)); return false;}
+
+          if (foundQuestion) {
+            comments.update(
+              {_id: idObj.questionId},
+              {$push: {comments: comment}},
+              callback
+            );
+          } else {
+            comments.insert({
+              _id: idObj.questionId,
+              comments: [comment]
+            }, callback);
+          }
+        });
       }
 
     }

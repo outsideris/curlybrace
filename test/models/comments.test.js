@@ -45,13 +45,16 @@ var userFixture = {
 
 describe('comments', function() {
   var questionsCollection,
+      commentsCollection,
       tagsCollection,
       countersCollection,
       usersCollection,
       currentUser,
       db,
       questionFixture,
-      answerFixture;
+      answerFixture,
+      questionId,
+      answerId;
 
   before(function(done) {
     db = dbService.init();
@@ -63,6 +66,8 @@ describe('comments', function() {
       questionsCollection = db.questions;
       questions.init(db);
       answers.init(db);
+      db.setComments(env.MONGODB_COLLECTION_COMMENTS + '_test');
+      commentsCollection = db.comments;
       comments.init(db);
 
       // 태그 컬렉션 설정
@@ -92,8 +97,8 @@ describe('comments', function() {
       });
     });
   });
-  beforeEach(function() {
-    questionsCollection.remove(function(err, numberOfRemovedDocs) {
+  beforeEach(function(done) {
+    commentsCollection.remove(function(err, numberOfRemovedDocs) {
       should.not.exist(err);
       should.exist(numberOfRemovedDocs);
     });
@@ -106,6 +111,21 @@ describe('comments', function() {
     answerFixture = {
       contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
     };
+
+    questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
+      should.not.exist(err);
+      should.exist(insertedQuestion[0]);
+      questionId = insertedQuestion[0]._id;
+
+      answers.insert(questionId, answerFixture, currentUser, function(err, updatedCount) {
+        should.not.exist(err);
+        questionsCollection.findOne({_id: questionId}, function(err, foundQuestion) {
+          should.not.exist(err);
+          answerId = foundQuestion.answers[0].id;
+          done();
+        });
+      });
+    });
   });
   // 테스트 데이터 삭제
   after(function() {
@@ -136,18 +156,39 @@ describe('comments', function() {
         contents: '좋은 질문이네요.'
       };
 
-      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
+      // when
+      comments.insert({questionId: questionId}, comment, currentUser, function(err, insertedComment) {
         should.not.exist(err);
-        should.exist(insertedQuestion[0]);
 
-        // when
-        comments.insert({questionId: insertedQuestion[0]._id}, comment, currentUser, function(err) {
+        commentsCollection.findOne({_id: questionId}, function(err, foundComments) {
           // then
           should.not.exist(err);
-          questionsCollection.findOne({_id: insertedQuestion[0]._id}, function(err, foundQuestion) {
+          should.exist(foundComments);
+          foundComments.comments.length.should.equal(1);
+          foundComments.comments[0].contents.should.equal(comment.contents);
+          done();
+        });
+      });
+    });
+    it('댓글이 달린 질문에 댓글을 추가로 등록한다', function(done) {
+      // given
+      var comment = {
+        contents: '좋은 질문이네요.'
+      };
+
+      // when
+      comments.insert({questionId: questionId}, comment, currentUser, function(err, insertedComment) {
+        should.not.exist(err);
+        comment.contents = comment.contents + '2';
+        comments.insert({questionId: questionId}, comment, currentUser, function(err, insertedComment) {
+          should.not.exist(err);
+
+          commentsCollection.findOne({_id: questionId}, function(err, foundComments) {
+            // then
             should.not.exist(err);
-            foundQuestion.comments.length.should.equal(1);
-            foundQuestion.comments[0].contents.should.equal(comment.contents);
+            should.exist(foundComments);
+            foundComments.comments.length.should.equal(2);
+            foundComments.comments[1].contents.should.equal(comment.contents);
             done();
           });
         });
@@ -160,77 +201,49 @@ describe('comments', function() {
       var comment = {
         contents: '좋은 답변이네요.'
       };
-
-      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
-        should.not.exist(err);
-        should.exist(insertedQuestion[0]);
-
-        answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
-          should.not.exist(err);
-          updatedCount.should.equal(1);
-
-          questionsCollection.findOne({_id: insertedQuestion[0]._id}, function(err, foundQuestion) {
-            should.not.exist(err);
-            foundQuestion.answers.length.should.equal(1);
-
             // when
-            comments.insert({
-              questionId: insertedQuestion[0]._id,
-              answerId: foundQuestion.answers[0].id
-            }, comment, currentUser, function(err) {
-              // then
-              should.not.exist(err);
-              questionsCollection.findOne({_id: insertedQuestion[0]._id}, function(err, foundQuestion) {
-                should.not.exist(err);
-                foundQuestion.answers[0].comments.length.should.equal(1);
-                foundQuestion.answers[0].comments[0].contents.should.equal(comment.contents);
-                done();
-              });
-            });
-          });
+      comments.insert({
+        questionId: questionId,
+        answerId: answerId
+      }, comment, currentUser, function(err) {
+        should.not.exist(err);
+
+        // then
+        commentsCollection.findOne({_id: questionId, answerId: answerId}, function(err, foundComments) {
+          should.not.exist(err);
+          should.exist(foundComments);
+          foundComments.comments.length.should.equal(1);
+          foundComments.comments[0].contents.should.equal(comment.contents);
+          done();
         });
       });
     });
-    it('답변이 2개일때 특정 답변에 댓글을 등록한다', function(done) {
+    it('댓글이 달린 답변에 추가로 댓글을 등록한다', function(done) {
       // given
       var comment = {
         contents: '좋은 답변이네요.'
       };
-
-      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
+      // when
+      comments.insert({
+        questionId: questionId,
+        answerId: answerId
+      }, comment, currentUser, function(err) {
         should.not.exist(err);
-        should.exist(insertedQuestion[0]);
 
-        answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
+        comment.contents = comment.contents + '2';
+        comments.insert({
+          questionId: questionId,
+          answerId: answerId
+        }, comment, currentUser, function(err) {
           should.not.exist(err);
-          updatedCount.should.equal(1);
 
-          answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
+          // then
+          commentsCollection.findOne({_id: questionId, answerId: answerId}, function(err, foundComments) {
             should.not.exist(err);
-            updatedCount.should.equal(1);
-
-            questionsCollection.findOne({_id: insertedQuestion[0]._id}, function(err, foundQuestion) {
-              should.not.exist(err);
-              foundQuestion.answers.length.should.equal(2);
-              var expectedAnswerId = foundQuestion.answers[0].id;
-
-              // when
-              comments.insert({
-                questionId: insertedQuestion[0]._id,
-                answerId: expectedAnswerId
-              }, comment, currentUser, function(err) {
-                // then
-                should.not.exist(err);
-                questionsCollection.findOne({_id: insertedQuestion[0]._id}, function(err, foundQuestion) {
-                  should.not.exist(err);
-                  foundQuestion.answers[0].id.should.equal(expectedAnswerId);
-                  foundQuestion.answers[0].comments.length.should.equal(1);
-                  foundQuestion.answers[0].comments[0].contents.should.equal(comment.contents);
-                  should.not.exist(foundQuestion.answers[1].comments);
-                  done();
-                });
-              });
-            });
+            should.exist(foundComments);
+            foundComments.comments.length.should.equal(2);
+            foundComments.comments[1].contents.should.equal(comment.contents);
+            done();
           });
         });
       });
