@@ -12,7 +12,7 @@ module.exports = (function() {
   var tags = null;
   // 컬렉션 할당 여부
   var isInited = function(callback) {
-    logger.debug('tags.isInited');
+    logger.debug('tags.isInited', {collectionName: tags.collectionName});
     if (tags) {
       return true;
     } else {
@@ -57,7 +57,7 @@ module.exports = (function() {
       if (!isInited(callback)) { return false; }
 
       this.getAll(function(err, allTags) {
-        if (err) { logger.error('Error Occured during querying MongoDB', {error: err}); }
+        if (err) { logger.error('Error Occured during querying MongoDB', {error: err.stack}); }
 
         var isExist = tagList.every(function(elem) {
           return allTags.some(function(el) {

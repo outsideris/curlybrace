@@ -18,7 +18,7 @@ module.exports = (function() {
 
   // 컬렉션 인스턴스 할당 여부
   var isInited = function(callback) {
-    logger.debug('questions.isInited');
+    logger.debug('questions.isInited', {collectionName: questions.collectionName});
     if (questions) {
       return true;
     } else {
@@ -68,7 +68,7 @@ module.exports = (function() {
             questions.insert(question, callback);
           });
         } else {
-          callback(new Error('tags is something wrong!'));
+          callback(new Error('tags must exist in tag collection'));
         }
       });
     },

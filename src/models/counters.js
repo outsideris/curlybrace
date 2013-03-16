@@ -14,7 +14,7 @@ module.exports = (function() {
   var counters = null;
   // 컬렉션 인스턴스 할당 여부
   var isInited = function(callback) {
-    logger.debug('counters.inInited');
+    logger.debug('counters.inInited', {collectionName: counters.collectionName});
     if (counters) {
       return true;
     } else {

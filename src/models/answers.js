@@ -18,7 +18,7 @@ module.exports = (function() {
 
   // 컬렉션 인스턴스 할당 여부
   var isInited = function(callback) {
-    logger.debug('answers.isInited');
+    logger.debug('questions.isInited', {collectionName: questions.collectionName});
     if (questions) {
       return true;
     } else {

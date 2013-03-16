@@ -28,7 +28,7 @@ module.exports = (function() {
   };
   // 컬렉션 할당 여부
   var isInited = function(callback) {
-    logger.debug('users.isInited');
+    logger.debug('users.isInited', {collectionName: users.collectionName});
     if (users) {
       return true;
     } else {

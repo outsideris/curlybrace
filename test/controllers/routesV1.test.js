@@ -15,7 +15,9 @@ var should = require('should')
   , answers = require('../../src/models/answers')
   , comments = require('../../src/models/comments')
   , counters = require('../../src/models/counters')
-  , users = require('../../src/models/users');
+  , tags = require('../../src/models/tags')
+  , users = require('../../src/models/users')
+  , tagFixture = require('../models/tags.test').tagFixture;
 
 var userFixture = {
   facebookInfo: {
@@ -88,6 +90,7 @@ describe('API V1 >', function() {
         questionsCollection,
         commentsCollection,
         countersCollection,
+        tagsCollection,
         usersCollection,
         currentUser;
 
@@ -108,6 +111,15 @@ describe('API V1 >', function() {
         db.setCounters(env.MONGODB_COLLECTION_COUNTERS + '_test');
         countersCollection = db.counters;
         counters.init(db);
+
+        // 태그 컬렉션 설정
+        db.setTags(env.MONGODB_COLLECTION_TAGS + '_test');
+        tagsCollection = db.tags;
+        tagsCollection.insert(tagFixture, function(err, result) {
+          should.not.exist(err);
+          should.exist(result);
+        });
+        tags.init(db);
 
         // 사용자 컬렉션 설정
         db.setUsers(env.MONGODB_COLLECTION_USERS + '_test');
@@ -130,6 +142,10 @@ describe('API V1 >', function() {
         should.exist(numberOfRemovedDocs);
       });
       countersCollection.remove(function(err, numberOfRemovedDocs) {
+        should.not.exist(err);
+        should.exist(numberOfRemovedDocs);
+      });
+      tagsCollection.remove(function(err, numberOfRemovedDocs) {
         should.not.exist(err);
         should.exist(numberOfRemovedDocs);
       });
