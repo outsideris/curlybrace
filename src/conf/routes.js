@@ -101,6 +101,8 @@ app.get('/help/markdown', help.markdown);
 
 // API v1 관련 라우팅
 app.get('/v1/tags', apiV1.findTags);
+app.get('/v1/question/:id/comments', apiV1.findComments);
+app.get('/v1/question/:id/answer/:aid/comments', apiV1.findComments);
 };
 
 

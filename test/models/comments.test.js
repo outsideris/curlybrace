@@ -43,7 +43,7 @@ var userFixture = {
   }
 };
 
-describe('comments', function() {
+describe('comments >', function() {
   var questionsCollection,
       commentsCollection,
       tagsCollection,
@@ -149,7 +149,7 @@ describe('comments', function() {
     db.db = null;
   });
 
-  describe('질문 댓글 등록', function() {
+  describe('댓글 등록 >', function() {
     it('댓글이 안달린 질문에 댓글을 등록한다', function(done) {
       // given
       var comment = {
@@ -160,7 +160,7 @@ describe('comments', function() {
       comments.insert({questionId: questionId}, comment, currentUser, function(err, insertedComment) {
         should.not.exist(err);
 
-        commentsCollection.findOne({_id: questionId}, function(err, foundComments) {
+        commentsCollection.findOne({_id: {questionId: questionId }}, function(err, foundComments) {
           // then
           should.not.exist(err);
           should.exist(foundComments);
@@ -183,7 +183,7 @@ describe('comments', function() {
         comments.insert({questionId: questionId}, comment, currentUser, function(err, insertedComment) {
           should.not.exist(err);
 
-          commentsCollection.findOne({_id: questionId}, function(err, foundComments) {
+          commentsCollection.findOne({_id: { questionId: questionId }}, function(err, foundComments) {
             // then
             should.not.exist(err);
             should.exist(foundComments);
@@ -194,14 +194,13 @@ describe('comments', function() {
         });
       });
     });
-  });
-  describe('답변 댓글 등록', function() {
     it('댓글이 안달린 답변에 댓글을 등록한다', function(done) {
       // given
       var comment = {
         contents: '좋은 답변이네요.'
       };
-            // when
+
+      // when
       comments.insert({
         questionId: questionId,
         answerId: answerId
@@ -209,7 +208,7 @@ describe('comments', function() {
         should.not.exist(err);
 
         // then
-        commentsCollection.findOne({_id: questionId, answerId: answerId}, function(err, foundComments) {
+        commentsCollection.findOne({_id: {questionId: questionId, answerId: answerId}}, function(err, foundComments) {
           should.not.exist(err);
           should.exist(foundComments);
           foundComments.comments.length.should.equal(1);
@@ -238,12 +237,188 @@ describe('comments', function() {
           should.not.exist(err);
 
           // then
-          commentsCollection.findOne({_id: questionId, answerId: answerId}, function(err, foundComments) {
+          commentsCollection.findOne({_id: {questionId: questionId, answerId: answerId}}, function(err, foundComments) {
             should.not.exist(err);
             should.exist(foundComments);
             foundComments.comments.length.should.equal(2);
             foundComments.comments[1].contents.should.equal(comment.contents);
             done();
+          });
+        });
+      });
+    });
+    it('댓글이 있는 질문에 대한 답변에 댓글을 달 수 있어야 한다', function(done) {
+      // given
+      var comment = {
+        contents: '좋은 답변이네요.'
+      };
+      // when
+      comments.insert({
+        questionId: questionId
+      }, comment, currentUser, function(err) {
+        should.not.exist(err);
+
+        comments.insert({
+          questionId: questionId,
+          answerId: answerId
+        }, comment, currentUser, function(err) {
+          should.not.exist(err);
+
+          // then
+          commentsCollection.findOne({_id: {questionId: questionId, answerId: answerId}}, function(err, foundComments) {
+            should.not.exist(err);
+            should.exist(foundComments);
+            foundComments.comments.length.should.equal(1);
+            foundComments.comments[0].contents.should.equal(comment.contents);
+            done();
+          });
+        });
+      });
+    });
+  });
+  describe('댓글 조회', function() {
+    it('질문에 달린 댓글을 조회한다', function(done) {
+      // given
+      var comment = {
+        contents: '좋은 질문이네요.'
+      };
+
+      comments.insert({questionId: questionId}, comment, currentUser, function(err, insertedComment) {
+        should.not.exist(err);
+        comments.insert({questionId: questionId}, comment, currentUser, function(err, insertedComment) {
+          should.not.exist(err);
+
+          // when
+          comments.findById(
+            {
+              questionId: questionId
+            }, function(err, foundComments) {
+              should.not.exist(err);
+              // then
+              should.exist(foundComments);
+              foundComments.length.should.equal(2);
+              foundComments[0].contents.should.equal(comment.contents);
+              done();
+            });
+        });
+      });
+    });
+    it('질문에 달린 댓글이 없는 경우에는 빈 배열을 반환한다', function(done) {
+      // given
+      // when
+      comments.findById(
+        {
+          questionId: questionId
+        }, function(err, foundComments) {
+          should.not.exist(err);
+          // then
+          should.exist(foundComments);
+          foundComments.length.should.equal(0);
+          done();
+        });
+    });
+    it('답변에 달린 댓글을 조회한다', function(done) {
+      // given
+      var comment = {
+        contents: '좋은 질문이네요.'
+      };
+
+      comments.insert({questionId: questionId}, comment, currentUser, function(err) {
+        should.not.exist(err);
+        comments.insert({questionId: questionId}, comment, currentUser, function(err) {
+          should.not.exist(err);
+          comments.insert({questionId: questionId}, comment, currentUser, function(err) {
+            should.not.exist(err);
+
+            // when
+            comments.findById(
+              {
+                questionId: questionId
+              }, function(err, foundComments) {
+                should.not.exist(err);
+                // then
+                should.exist(foundComments);
+                foundComments.length.should.equal(3);
+                foundComments[0].contents.should.equal(comment.contents);
+                done();
+              });
+          });
+        });
+      });
+    });
+    it('답변에 달린 댓글이 없는 경우에는 빈 배열을 반환한다', function(done) {
+      // given
+      // when
+      comments.findById(
+        {
+          questionId: questionId
+        }, function(err, foundComments) {
+          should.not.exist(err);
+          // then
+          should.exist(foundComments);
+          foundComments.length.should.equal(0);
+          done();
+        });
+    });
+    it('질문에 달린 댓글의 날짜는 포매팅해야 한다', function(done) {
+      // given
+      var comment = {
+        contents: '좋은 질문이네요.'
+      };
+
+      comments.insert({questionId: questionId}, comment, currentUser, function(err, insertedComment) {
+        should.not.exist(err);
+        comments.insert({questionId: questionId}, comment, currentUser, function(err, insertedComment) {
+          should.not.exist(err);
+
+          // when
+          comments.findById(
+            {
+              questionId: questionId
+            }, function(err, foundComments) {
+              should.not.exist(err);
+              // then
+              should.exist(foundComments);
+              foundComments.length.should.equal(2);
+              foundComments.forEach(function(comment) {
+                should.exist(comment.regDate);
+                should.exist(comment.regDateFromNow);
+                should.exist(comment.regDateformatted);
+              });
+              done();
+            });
+        });
+      });
+    });
+    it('답변에 달린 댓글의 날짜는 포매팅해야 한다', function(done) {
+      // given
+      var comment = {
+        contents: '좋은 질문이네요.'
+      };
+
+      comments.insert({questionId: questionId}, comment, currentUser, function(err) {
+        should.not.exist(err);
+        comments.insert({questionId: questionId}, comment, currentUser, function(err) {
+          should.not.exist(err);
+          comments.insert({questionId: questionId}, comment, currentUser, function(err) {
+            should.not.exist(err);
+
+            // when
+            comments.findById(
+              {
+                questionId: questionId
+              }, function(err, foundComments) {
+                should.not.exist(err);
+                // then
+                should.exist(foundComments);
+                foundComments.length.should.equal(3);
+                foundComments.forEach(function(comment) {
+                  should.exist(comment.regDate);
+                  should.exist(comment.regDateFromNow);
+                  should.exist(comment.regDateformatted);
+                });
+                done();
+              });
           });
         });
       });

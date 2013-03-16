@@ -95,22 +95,10 @@ module.exports = (function() {
         // format date
         question.regDateFromNow = helpers.getTimeFromNow(question.regDate);
         question.regDateformatted = helpers.formatDate(question.regDate);
-        if (question.comments) {
-          question.comments.forEach(function(comment) {
-            comment.regDateFromNow = helpers.getTimeFromNow(comment.regDate);
-            comment.regDateformatted = helpers.formatDate(comment.regDate);
-          });
-        }
         if (question.answers) {
           question.answers.forEach(function(answer) {
             answer.regDateFromNow = helpers.getTimeFromNow(answer.regDate);
             answer.regDateformatted = helpers.formatDate(answer.regDate);
-            if (answer.comments) {
-              answer.comments.forEach(function(comment) {
-                comment.regDateFromNow = helpers.getTimeFromNow(comment.regDate);
-                comment.regDateformatted = helpers.formatDate(comment.regDate);
-              });
-            }
           });
         }
 

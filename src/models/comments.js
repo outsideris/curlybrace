@@ -47,6 +47,7 @@ module.exports = (function() {
         callback(new Error('questionId must be number or convertable to number'));
         return;
       }
+      if (!idObj.answerId) { delete idObj.answerId; }
 
       // 답변에 필요한 필드 생성
       comment.id = helpers.generateUUID();
@@ -57,47 +58,56 @@ module.exports = (function() {
       comment.author.nickname = user.nickname;
       comment.author.profileImage = user.authInfo[user.defaultProvider].profileImage;
 
-      // 답변에 대한 댓글
-      if (idObj.answerId) {
-        comments.findOne({
-          _id: idObj.questionId,
-          answerId: idObj.answerId
-        }, function(err, foundQuestion) {
-          if (err) { callback(new Error(err)); return false;}
+      comments.findOne({_id: idObj}, function(err, foundQuestion) {
+        if (err) { callback(new Error(err)); return false;}
 
-          if (foundQuestion) {
-            comments.update({
-              _id: idObj.questionId,
-              answerId: idObj.answerId
-            }, {$push: {comments: comment}}, callback);
-          } else {
-            comments.insert({
-              _id: idObj.questionId,
-              answerId: idObj.answerId,
-              comments: [comment]
-            }, callback);
-          }
-        });
-        // 질문에 대한 댓글
-      } else {
-        comments.findOne({_id: idObj.questionId, answerId: null}, function(err, foundQuestion) {
-          if (err) { callback(new Error(err)); return false;}
+        if (foundQuestion) {
+          comments.update(
+            {_id: idObj},
+            {$push: {comments: comment}},
+            callback
+          );
+        } else {
+          comments.insert({
+            _id: idObj,
+            comments: [comment]
+          }, callback);
+        }
+      });
+    },
+    // 아이디로 댓글 리스트를 조회한다.
+    // * `idObj` -> `{ questionId: questionId, answerId: answerId }`
+    // * questionId는 필수값이다.
+    // * answerId가 없으면 질문의 댓글을 조회하고 answerId가 있으면 답변의 댓글을 조회한다
+    findById: function(idObj, callback) {
+      logger.debug('comments.findById', {idObj: idObj});
+      if (!isInited(callback)) { return false; }
 
-          if (foundQuestion) {
-            comments.update(
-              {_id: idObj.questionId},
-              {$push: {comments: comment}},
-              callback
-            );
-          } else {
-            comments.insert({
-              _id: idObj.questionId,
-              comments: [comment]
-            }, callback);
-          }
-        });
+      // validation
+      // * questionId는 필수값이다
+      // * questionId는 숫자값이거나 변환가능해야 한다
+      if (!idObj.questionId) { callback(new Error('questionId must be exist.')); return; }
+      idObj.questionId = parseInt(idObj.questionId, 10);
+      if (isNaN(idObj.questionId)) {
+        callback(new Error('questionId must be number or convertable to number'));
+        return;
       }
+      if (!idObj.answerId) { delete idObj.answerId; }
 
+      comments.findOne({_id: idObj}, function(err, foundComment) {
+        if (err) { callback(new Error(err)); return false;}
+
+        var resultComments = [];
+        if (foundComment) {
+          foundComment.comments.forEach(function(comment) {
+            comment.regDateFromNow = helpers.getTimeFromNow(comment.regDate);
+            comment.regDateformatted = helpers.formatDate(comment.regDate);
+            resultComments.push(comment);
+          });
+        }
+
+        callback(err, resultComments);
+      });
     }
   };
 })();

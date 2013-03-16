@@ -1,5 +1,5 @@
 // # 공통 자바스크립트
-/*global FB:true, markdown:true */
+/*global FB, markdown, Handlebars */
 /*jshint browser:true, jquery:true */
 $(document).ready(function() {
   "use strict";
@@ -88,29 +88,75 @@ $(document).ready(function() {
 
   // 질문 보기 화면일 경우
   if ($('#qid').length) {
-    var questionId = $('#qid').val();
+    var questionId = $('#qid').val(),
+        // define templates
+        commentsTemplate = Handlebars.compile($("#commentsTmpl").html());
+
     $('form.commentForm').submit(function(event) {
       event.preventDefault();
 
-      var comment = {
-        contents: $(this).find('textarea').val()
-      };
+      var contents$ = $(this).find('textarea'),
+          commentList$ = $(this).parent().prev(),
+          comment = {
+            contents: contents$.val()
+          };
+
       var answerId = $(this).find('input.aid').val();
       if (questionId && !answerId) {
         $.post('/question/' + questionId + '/comments',
           comment,
           function(data) {
-            console.log(data);
+            contents$.val('');
+            updateComments(commentList$);
           });
       } else if (questionId) {
         $.post('/question/' + questionId + '/answer/' + answerId + '/comments',
           comment,
           function(data) {
-            console.log(data);
+            contents$.val('');
+            updateComments(commentList$, answerId);
           });
       } else {
         //TODO: do notification
       }
     });
+
+    $('.commentMessage').click(function(event) {
+      var commentWrap$ = $(this).parent().next();
+      if (commentWrap$.hasClass('commentsWrap')) {
+        event.preventDefault();
+
+        var answerId = commentWrap$.find('input.aid').val(),
+            commentList$ = commentWrap$.find('.comments-list');
+
+        if (!helper.isVisible(commentList$)) {
+          updateComments(commentList$, answerId);
+        }
+
+        commentWrap$.toggle();
+      }
+    });
+
+    // 댓글 목록을 가져와서 화면에 갱신한다.
+    var updateComments = function(commentList$, answerId) {
+      var url = '/v1/question/' + questionId + '/comments';
+      if (answerId) {
+        url = '/v1/question/' + questionId + '/answer/' + answerId + '/comments';
+      }
+
+      $.get(url, function(data) {
+        if (data.results && data.results.length > 0) {
+          var commentsHTML = commentsTemplate(data);
+          commentList$.html(commentsHTML);
+        }
+      });
+    };
   }
+
+  var helper = {
+    // jQuery 엘리먼트가 visible 상태인지 검사한다.
+    isVisible: function(domElement$) {
+      return domElement$.is(':visible');
+    }
+  };
 });
