@@ -10,10 +10,10 @@ var http = require('http')
   , env = require('../../src/conf/config').env
   , dbService = require('../../src/models/dbService');
 
-describe('routes', function() {
+describe('routes >', function() {
   var server;
   var db;
-  describe('정적페이지 ', function() {
+  describe('정적페이지 >', function() {
     before(function(done) {
       db = dbService.init();
       db.once('connected', function(err, pdb) {
@@ -51,7 +51,7 @@ describe('routes', function() {
     });
   });
 
-  describe('passport', function() {
+  describe('passport >', function() {
     before(function(done) {
       db = dbService.init();
       db.once('connected', function(err, pdb) {

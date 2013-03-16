@@ -78,7 +78,7 @@ var tagFixture = module.exports.tagFixture = [
   , {name: 'shell'}
 ];
 
-describe('tags', function() {
+describe('tags >', function() {
   var tagsCollection,
       db;
 
@@ -105,7 +105,7 @@ describe('tags', function() {
     db.db.close();
     db.db = null;
   });
-  describe('태그 조회', function() {
+  describe('태그 조회 >', function() {
     it('특정 문자열로 시작하는 태그리스트를 조회한다', function(done) {
       // given
       var str = 'jav';

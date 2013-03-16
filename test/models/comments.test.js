@@ -276,7 +276,7 @@ describe('comments >', function() {
       });
     });
   });
-  describe('댓글 조회', function() {
+  describe('댓글 조회 >', function() {
     it('질문에 달린 댓글을 조회한다', function(done) {
       // given
       var comment = {

@@ -42,11 +42,11 @@ var userFixture = {
   }
 };
 
-describe('API V1', function() {
+describe('API V1 >', function() {
   var server;
   var db;
 
-  describe('태그명의 일부로 조회한다', function() {
+  describe('태그명의 일부로 조회한다 >', function() {
     before(function(done) {
       db = dbService.init();
       db.once('connected', function(err, pdb) {
@@ -80,7 +80,7 @@ describe('API V1', function() {
     });
   });
 
-  describe('댓글을 조회한다', function() {
+  describe('댓글을 조회한다 >', function() {
     var questionFixture,
         answerFixture,
         questionId,

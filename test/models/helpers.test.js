@@ -9,8 +9,8 @@
 var helpers = require('../../src/models/helpers'),
     logger = require('../../src/conf/config').logger;
 
-describe('helpers', function() {
-  describe('isEmpty', function() {
+describe('helpers >', function() {
+  describe('isEmpty >', function() {
     it('없는 객체는 true이다', function() {
       // given
       var obj = {};
@@ -69,7 +69,7 @@ describe('helpers', function() {
       caseA.should.not.equal(caseB);
     });
   });
-  describe('logger', function() {
+  describe('logger >', function() {
     it('로깅 테스트 1', function() {
       var err = new Error('questions collection should not be null.');
       logger.error('Error Occured during querying MongoDB', {error: err.stack});
@@ -79,7 +79,7 @@ describe('helpers', function() {
       logger.error('Error Occured during querying MongoDB', {error: err});
     });
   });
-  describe('time conversion', function() {
+  describe('time conversion >', function() {
     it('현재부터 어느정도 전인지 문자로 나타낼 수 있어야 한다', function() {
       // given
       var time = new Date();

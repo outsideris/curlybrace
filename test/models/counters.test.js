@@ -12,7 +12,7 @@ var should = require('should')
   , counters = require('../../src/models/counters');
 
 
-describe('counters', function() {
+describe('counters >', function() {
   var countersCollection,
       db;
 
@@ -35,7 +35,7 @@ describe('counters', function() {
     db.db.close();
     db.db = null;
   });
-  describe('시퀀스 관리', function() {
+  describe('시퀀스 관리 >', function() {
     it('최초 생성시 questionId의 시퀀스 번호는 1 이다', function(done) {
       // given
       // when

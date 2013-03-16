@@ -44,7 +44,7 @@ var userFixture = {
   }
 };
 
-describe('questions', function() {
+describe('questions >', function() {
   var questionsCollection,
       tagsCollection,
       countersCollection,
@@ -118,7 +118,7 @@ describe('questions', function() {
     db.db = null;
   });
 
-  describe('질문 등록', function() {
+  describe('질문 등록 >', function() {
     it('기본적인 질문을 등록한다', function(done) {
       // given
       var questionFixture = {
@@ -259,7 +259,7 @@ describe('questions', function() {
       });
     });
   });
-  describe('질문 조회', function() {
+  describe('질문 조회 >', function() {
     it('질문 본문을 가져올 때 마크다운을 HTML로 렌더링한다', function(done) {
       // given
       var questionFixture = {

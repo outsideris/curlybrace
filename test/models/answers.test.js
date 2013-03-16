@@ -42,7 +42,7 @@ var userFixture = {
   }
 };
 
-describe('answers', function() {
+describe('answers >', function() {
   var questionsCollection,
       tagsCollection,
       countersCollection,
@@ -123,7 +123,7 @@ describe('answers', function() {
     db.db = null;
   });
 
-  describe('답변 등록', function() {
+  describe('답변 등록 >', function() {
     it('답변이 안달린 질문에 답변을 등록한다', function(done) {
       var answerFixture = {
         contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'

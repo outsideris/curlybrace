@@ -33,7 +33,7 @@ var fixture = {
   }
 };
 
-describe('users', function() {
+describe('users >', function() {
   var usersCollection,
       countersCollection,
       db;
@@ -74,7 +74,7 @@ describe('users', function() {
     db.db.close();
     db.db = null;
   });
-  describe('사용자 추가', function() {
+  describe('사용자 추가 >', function() {
     it('페이스북 사용자 추가', function(done) {
       // given
       users.insert(fixture.facebookInfo, authProvider.facebook.name, function(err, user) {
