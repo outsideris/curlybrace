@@ -1,6 +1,7 @@
 language: node_js
 node_js:
   - 0.8
+  - "0.10"
 before_install:
   - npm install mocha -g
   - npm install grunt-cli -g
@@ -9,3 +10,6 @@ services:
 branches:
   only:
     - master
+matrix:
+  allow_failures:
+    - node_js: "0.10"
