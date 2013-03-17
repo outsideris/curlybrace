@@ -201,7 +201,7 @@ describe('API V1 >', function() {
 
         // when
         http.get({
-          path: '/v1/question/' + questionId + '/comments',
+          path: '/v1/questions/' + questionId + '/comments',
           port: env.PORT,
           'Accept': 'application/json'
         }, function(res) {
@@ -231,7 +231,7 @@ describe('API V1 >', function() {
 
           // when
           http.get({
-            path: '/v1/question/' + questionId + '/comments',
+            path: '/v1/questions/' + questionId + '/comments',
             port: env.PORT,
             'Accept': 'application/json'
           }, function(res) {
@@ -252,7 +252,7 @@ describe('API V1 >', function() {
       // given
       // when
       http.get({
-        path: '/v1/question/' + questionId + '/comments',
+        path: '/v1/questions/' + questionId + '/comments',
         port: env.PORT,
         'Accept': 'application/json'
       }, function(res) {
@@ -285,7 +285,7 @@ describe('API V1 >', function() {
 
           // when
           http.get({
-            path: '/v1/question/' + questionId + '/answer/' + answerId + '/comments',
+            path: '/v1/questions/' + questionId + '/answers/' + answerId + '/comments',
             port: env.PORT,
             'Accept': 'application/json'
           }, function(res) {
@@ -306,7 +306,7 @@ describe('API V1 >', function() {
       // given
       // when
       http.get({
-        path: '/v1/question/' + questionId + '/answer/' + answerId + '/comments',
+        path: '/v1/questions/' + questionId + '/answers/' + answerId + '/comments',
         port: env.PORT,
         'Accept': 'application/json'
       }, function(res) {

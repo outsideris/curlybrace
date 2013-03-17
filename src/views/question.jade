@@ -52,7 +52,7 @@ block mainContent
           li
             a(href='#').btn.btn-info.btn-mini
               i.icon-share
-              |  퍼머링크: #{url}/question/#{question._id}
+              |  퍼머링크: #{url}/questions/#{question._id}
           li
             a(href='#').btn.btn-info.btn-mini
               i.icon-edit
@@ -121,7 +121,7 @@ block mainContent
               li
                 a(href='##{answer.id}').btn.btn-info.btn-mini
                   i.icon-share
-                  |  퍼머링크: #{url}/question/#{question._id}##{answer.id}
+                  |  퍼머링크: #{url}/questions/#{question._id}##{answer.id}
               li
                 a(href='#').btn.btn-info.btn-mini
                   i.icon-edit
@@ -150,7 +150,7 @@ block mainContent
     .answer-write-box
       .answer-write
         .alert.alert-info 이 질문에 답변해 주세요.
-        form(method='POST', action='/question/#{question._id}/answer')
+        form(method='POST', action='/questions/#{question._id}/answers')
           textarea(name='contents')
           input(type='submit', value='답변 작성').btn.btn-primary.submit-btn.pull-right
 

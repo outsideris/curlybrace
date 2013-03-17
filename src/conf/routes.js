@@ -26,18 +26,18 @@ function ensureUnauthenticated(req, res, next) {
 // 질문 관련 라우팅
 app.get('/', qna.index);
 
-app.get('/question/form', ensureAuthenticated, qna.questionForm);
+app.get('/questions/form', ensureAuthenticated, qna.questionForm);
 
-app.post('/question', ensureAuthenticated, qna.registQuestion);
+app.post('/questions', ensureAuthenticated, qna.registQuestion);
 
-app.get('/question/:id', qna.questionView);
+app.get('/questions/:id', qna.questionView);
 
 // 답변 관련 라우팅
-app.post('/question/:id/answer', qna.registAnswer);
+app.post('/questions/:id/answers', qna.registAnswer);
 
 // 댓글 관련 라우팅
-app.post('/question/:id/comments', qna.registComment);
-app.post('/question/:id/answer/:aid/comments', qna.registComment);
+app.post('/questions/:id/comments', qna.registComment);
+app.post('/questions/:id/answers/:aid/comments', qna.registComment);
 
 // 인증관련 라우팅
 app.get('/login', ensureUnauthenticated, users.loginForm);
@@ -101,8 +101,8 @@ app.get('/help/markdown', help.markdown);
 
 // API v1 관련 라우팅
 app.get('/v1/tags', apiV1.findTags);
-app.get('/v1/question/:id/comments', apiV1.findComments);
-app.get('/v1/question/:id/answer/:aid/comments', apiV1.findComments);
+app.get('/v1/questions/:id/comments', apiV1.findComments);
+app.get('/v1/questions/:id/answers/:aid/comments', apiV1.findComments);
 };
 
 

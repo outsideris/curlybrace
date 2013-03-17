@@ -103,14 +103,14 @@ $(document).ready(function() {
 
       var answerId = $(this).find('input.aid').val();
       if (questionId && !answerId) {
-        $.post('/question/' + questionId + '/comments',
+        $.post('/questions/' + questionId + '/comments',
           comment,
           function(data) {
             contents$.val('');
             updateComments(commentList$);
           });
       } else if (questionId) {
-        $.post('/question/' + questionId + '/answer/' + answerId + '/comments',
+        $.post('/questions/' + questionId + '/answers/' + answerId + '/comments',
           comment,
           function(data) {
             contents$.val('');
@@ -139,9 +139,9 @@ $(document).ready(function() {
 
     // 댓글 목록을 가져와서 화면에 갱신한다.
     var updateComments = function(commentList$, answerId) {
-      var url = '/v1/question/' + questionId + '/comments';
+      var url = '/v1/questions/' + questionId + '/comments';
       if (answerId) {
-        url = '/v1/question/' + questionId + '/answer/' + answerId + '/comments';
+        url = '/v1/questions/' + questionId + '/answers/' + answerId + '/comments';
       }
 
       $.get(url, function(data) {

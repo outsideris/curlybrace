@@ -60,7 +60,7 @@ exports.registQuestion = function(req, res) {
   questions.insert(req.body, req.user, function(err, insertedQuestion) {
     if (err) { logger.error('Error Occured during querying MongoDB', {error: err.stack}); return false;}
 
-    res.redirect('/question/' + insertedQuestion[0]._id);
+    res.redirect('/questions/' + insertedQuestion[0]._id);
   });
 };
 
@@ -69,7 +69,7 @@ exports.registAnswer = function(req, res) {
   answers.insert(req.params.id, req.body, req.user, function(err) {
     if (err) { logger.error('Error Occured during querying MongoDB', {error: err.stack}); return false;}
 
-    res.redirect('/question/' + req.params.id);
+    res.redirect('/questions/' + req.params.id);
   });
 };
 
@@ -86,6 +86,5 @@ exports.registComment = function(req, res) {
     res.send({
       success: true
     });
-    //res.redirect('/question/' + req.params.id);
   });
 };
