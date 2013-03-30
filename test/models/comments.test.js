@@ -275,6 +275,100 @@ describe('comments >', function() {
         });
       });
     });
+    it('댓글이 안달린 질문에 댓글등록시 질문의 댓글 갯수를 증가시킨다', function(done) {
+      // given
+      var comment = {
+        contents: '좋은 질문이네요.'
+      };
+
+      // when
+      comments.insert({questionId: questionId}, comment, currentUser, function(err, insertedComment) {
+        should.not.exist(err);
+
+        questionsCollection.findOne({_id: questionId}, function(err, question) {
+          // then
+          should.not.exist(err);
+          should.exist(question);
+          question.commentCount.should.equal(1);
+          done();
+        });
+      });
+    });
+    it('댓글이 달린 질문에 댓글등록시 질문의 댓글 갯수를 증가시킨다', function(done) {
+      // given
+      var comment = {
+        contents: '좋은 질문이네요.'
+      };
+
+      // when
+      comments.insert({questionId: questionId}, comment, currentUser, function(err, insertedComment) {
+        should.not.exist(err);
+
+        comments.insert({questionId: questionId}, comment, currentUser, function(err, insertedComment) {
+          should.not.exist(err);
+
+          questionsCollection.findOne({_id: questionId}, function(err, question) {
+            // then
+            should.not.exist(err);
+            should.exist(question);
+            question.commentCount.should.equal(2);
+            done();
+          });
+        });
+      });
+    });
+    it('댓글이 안달린 답변에 댓글등록시 답변의 댓글 갯수를 증가시킨다', function(done) {
+      // given
+      var comment = {
+        contents: '좋은 답변이네요.'
+      };
+
+      // when
+      comments.insert({
+        questionId: questionId,
+        answerId: answerId
+      }, comment, currentUser, function(err) {
+        should.not.exist(err);
+
+        // then
+        questionsCollection.findOne({_id: questionId}, function(err, question) {
+          should.not.exist(err);
+          should.exist(question);
+          question.answers.length.should.equal(1);
+          question.answers[0].commentCount.should.equal(1);
+          done();
+        });
+      });
+    });
+    it('댓글이 달린 답변에 추가로 댓글등록시 답변의 댓글 갯수를 증가시킨다', function(done) {
+      // given
+      var comment = {
+        contents: '좋은 답변이네요.'
+      };
+      // when
+      comments.insert({
+        questionId: questionId,
+        answerId: answerId
+      }, comment, currentUser, function(err) {
+        should.not.exist(err);
+
+        comments.insert({
+          questionId: questionId,
+          answerId: answerId
+        }, comment, currentUser, function(err) {
+          should.not.exist(err);
+
+          // then
+          questionsCollection.findOne({_id: questionId}, function(err, question) {
+            should.not.exist(err);
+            should.exist(question);
+            question.answers.length.should.equal(1);
+            question.answers[0].commentCount.should.equal(2);
+            done();
+          });
+        });
+      });
+    });
   });
   describe('댓글 조회 >', function() {
     it('질문에 달린 댓글을 조회한다', function(done) {

@@ -9,6 +9,8 @@ var helpers = require('./helpers')
   , env = require('../../src/conf/config').env
   , tags = require('./tags')
   , counters = require('./counters')
+  , questions = require('./questions')
+  , answers = require('./answers')
   , markdown = require('markdown').markdown
   , logger = require('../../src/conf/config').logger;
 
@@ -23,6 +25,15 @@ module.exports = (function() {
     } else {
       callback(new Error('comments collection should not be null.'));
       return false;
+    }
+  };
+
+  var updateCommentCount = function(idObj, commentCount, callback) {
+    logger.debug('comments.updateCommentCount', {idObj: idObj, commentCount: commentCount});
+    if (idObj.answerId) {
+      answers.increaseComment(idObj.questionId, idObj.answerId, commentCount, callback);
+    } else {
+      questions.increaseComment(idObj.questionId, commentCount, callback);
     }
   };
 
@@ -58,20 +69,27 @@ module.exports = (function() {
       comment.author.nickname = user.nickname;
       comment.author.profileImage = user.authInfo[user.defaultProvider].profileImage;
 
-      comments.findOne({_id: idObj}, function(err, foundQuestion) {
+      comments.findOne({_id: idObj}, function(err, foundComment) {
         if (err) { callback(new Error(err)); return false;}
 
-        if (foundQuestion) {
+        if (foundComment) {
           comments.update(
             {_id: idObj},
             {$push: {comments: comment}},
-            callback
+            function(err) {
+              if (err) { callback(new Error(err)); return false;}
+              updateCommentCount(idObj, foundComment.comments.length + 1, callback);
+            }
           );
         } else {
           comments.insert({
             _id: idObj,
             comments: [comment]
-          }, callback);
+          }, function(err) {
+            if (err) { callback(new Error(err)); return false;}
+
+            updateCommentCount(idObj, 1, callback);
+          });
         }
       });
     },

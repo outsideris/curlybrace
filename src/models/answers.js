@@ -64,6 +64,35 @@ module.exports = (function() {
         {$push: {answers: answer}},
         callback
       );
+    },
+    increaseComment: function(questionId, answerId, commentCount, callback) {
+      logger.debug('answers.increaseComment', {questionId: questionId, answerId: answerId, commentCount: commentCount});
+      if (!isInited(callback)) { return false; }
+
+      // validation
+      // * questionId는 숫자타입이어야 한다
+      // * answerId가 존재해야 한다.
+      // * commentCount는 숫자타입이어야 한다
+      questionId = parseInt(questionId, 10);
+      if (isNaN(questionId)) {
+        callback(new Error('questionId must be number or convertable to number'));
+        return;
+      }
+      if (!answerId) { callback(new Error('answerId must be exist.')); return; }
+      commentCount = parseInt(commentCount, 10);
+      if (isNaN(commentCount)) {
+        callback(new Error('commentCount must be number or convertable to number'));
+        return;
+      }
+
+      questions.update(
+        {
+          _id: questionId,
+          'answers.id': answerId
+        },
+        { $set: { 'answers.$.commentCount': commentCount }},
+        callback
+      );
     }
   };
 })();

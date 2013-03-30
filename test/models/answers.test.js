@@ -263,4 +263,116 @@ describe('answers >', function() {
       });
     });
   });
+  describe('댓글 갯수 >', function() {
+    it('답변의 댓글 갯수를 1로 갱신한다', function(done) {
+      var answerFixture = {
+        contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
+      };
+
+      // given
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
+        should.not.exist(err);
+
+        answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
+          should.not.exist(err);
+
+          questionsCollection.findOne({'_id': insertedQuestion[0]._id}, function(err, question) {
+            should.not.exist(err);
+            question.answers.length.should.equal(1);
+
+            var answerId = question.answers[0].id;
+
+            // when
+            answers.increaseComment(insertedQuestion[0]._id, answerId, 1, function(err, updatedCount) {
+              should.not.exist(err);
+              question.answers.length.should.equal(1);
+
+              // then
+              questionsCollection.findOne({'_id': insertedQuestion[0]._id}, function(err, question) {
+                should.not.exist(err);
+                question.answers.length.should.equal(1);
+                question.answers[0].commentCount.should.equal(1);
+                done();
+              });
+            });
+          });
+        });
+      });
+    });
+    it('답변의 댓글 갯수를 3으로 갱신한다', function(done) {
+      var answerFixture = {
+        contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
+      };
+
+      // given
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
+        should.not.exist(err);
+
+        answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
+          should.not.exist(err);
+
+          questionsCollection.findOne({'_id': insertedQuestion[0]._id}, function(err, question) {
+            should.not.exist(err);
+            question.answers.length.should.equal(1);
+
+            var answerId = question.answers[0].id;
+
+            // when
+            answers.increaseComment(insertedQuestion[0]._id, answerId, 3, function(err, updatedCount) {
+              should.not.exist(err);
+              question.answers.length.should.equal(1);
+
+              // then
+              questionsCollection.findOne({'_id': insertedQuestion[0]._id}, function(err, question) {
+                should.not.exist(err);
+                question.answers.length.should.equal(1);
+                question.answers[0].commentCount.should.equal(3);
+                done();
+              });
+            });
+          });
+        });
+      });
+    });
+    it('답변이 여러개 있을 경우 특정 답변의 댓글 갯수만 갱신한다', function(done) {
+      var answerFixture = {
+        contents: '#답변내용입니다.\r\n\r\n* 어쩌구\r\n* 저쩌구..\r\n\r\n        var a = "tet"'
+      };
+
+      // given
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
+        should.not.exist(err);
+
+        answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
+          should.not.exist(err);
+
+          answers.insert(insertedQuestion[0]._id, answerFixture, currentUser, function(err, updatedCount) {
+          should.not.exist(err);
+
+            questionsCollection.findOne({'_id': insertedQuestion[0]._id}, function(err, question) {
+              should.not.exist(err);
+              question.answers.length.should.equal(2);
+
+              var answerId = question.answers[1].id;
+
+              // when
+              answers.increaseComment(insertedQuestion[0]._id, answerId, 3, function(err, updatedCount) {
+                should.not.exist(err);
+
+                // then
+                questionsCollection.findOne({'_id': insertedQuestion[0]._id}, function(err, question) {
+                  should.not.exist(err);
+
+                  question.answers.length.should.equal(2);
+                  question.answers[1].commentCount.should.equal(3);
+                  should.not.exist(question.answers[0].commentCount);
+                  done();
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
 });
