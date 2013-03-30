@@ -75,6 +75,7 @@ module.exports = (function() {
     // ID로 해당 질문을 조회한다.
     // 조회한 뒤 내용을 HTML로 렌더링한다.
     findOneById: function(id, callback) {
+      logger.debug('questions.findOneById', {id: id});
       if (!isInited(callback)) { return false; }
 
       // validation
@@ -104,6 +105,30 @@ module.exports = (function() {
 
         callback(err, question);
       });
+    },
+    increaseComment: function(id, commentCount, callback) {
+      logger.debug('questions.increaseComment', {id: id, commentCount: commentCount});
+      if (!isInited(callback)) { return false; }
+
+      // validation
+      // * `id`는 숫자타입이어야 한다
+      // * `commentCount`는 숫자타입이어야 한다.
+      id = parseInt(id, 10);
+      if (isNaN(id)) {
+        callback(new Error('id must be number or convertable to number'));
+        return;
+      }
+      commentCount = parseInt(commentCount, 10);
+      if (isNaN(commentCount)) {
+        callback(new Error('commentCount must be number or convertable to number'));
+        return;
+      }
+
+      questions.update(
+        {'_id': id},
+        {$set: {commentCount: commentCount }},
+        callback
+      );
     }
   };
 })();

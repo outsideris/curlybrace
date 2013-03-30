@@ -373,4 +373,58 @@ describe('questions >', function() {
       });
     });
   });
+  describe('댓글 갯수 >', function() {
+    it('질문의 댓글 갯수를 1로 갱신한다', function(done) {
+      // given
+      var questionFixture = {
+        title: '테스트 제목',
+        contents: '#본문입니다.\r\n\r\n* 질문\r\n* 질문..\r\n\r\n        var a = "test"',
+        tags: 'scala,javascript'
+      };
+
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
+        should.not.exist(err);
+
+        // when
+        questions.increaseComment(insertedQuestion[0]._id, 1, function(err, updatedQuestion) {
+          should.not.exist(err);
+          updatedQuestion.should.be.equal(1);
+
+          questions.findOneById(insertedQuestion[0]._id, function(err, foundQuestion) {
+            // then
+            should.not.exist(err);
+
+            foundQuestion.commentCount.should.be.equal(1);
+            done();
+          });
+        });
+      });
+    });
+    it('질문의 댓글 갯수를 3으로 갱신한다', function(done) {
+      // given
+      var questionFixture = {
+        title: '테스트 제목',
+        contents: '#본문입니다.\r\n\r\n* 질문\r\n* 질문..\r\n\r\n        var a = "test"',
+        tags: 'scala,javascript'
+      };
+
+      questions.insert(questionFixture, currentUser, function(err, insertedQuestion) {
+        should.not.exist(err);
+
+        // when
+        questions.increaseComment(insertedQuestion[0]._id, 3, function(err, updatedQuestion) {
+          should.not.exist(err);
+          updatedQuestion.should.be.equal(1);
+
+          questions.findOneById(insertedQuestion[0]._id, function(err, foundQuestion) {
+            // then
+            should.not.exist(err);
+
+            foundQuestion.commentCount.should.be.equal(3);
+            done();
+          });
+        });
+      });
+    });
+  });
 });
