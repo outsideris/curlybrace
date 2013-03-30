@@ -148,8 +148,18 @@ $(document).ready(function() {
         if (data.results && data.results.length > 0) {
           var commentsHTML = commentsTemplate(data);
           commentList$.html(commentsHTML);
+
+          // 댓글 갯수 표시 갱신
+          updateCommentCount(
+            commentList$.parent().prev().find('.commentMessage').find('span'),
+            data.results.length
+          );
         }
       });
+    };
+
+    var updateCommentCount = function(commentCount$, count) {
+      commentCount$.text(count);
     };
   }
 
