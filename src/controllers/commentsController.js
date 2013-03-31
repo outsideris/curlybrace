@@ -1,4 +1,4 @@
-// # API v1 관련 라우팅
+// # 질문/답변 관련 라우팅
 //
 // Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
 // Licensed under the MIT license.
@@ -7,39 +7,15 @@
 "use strict";
 
 // Module dependencies.
-var dbService = require('../models/dbService')
-  , comments = require('../models/comments')
-  , tagService = require('../models/tags')
-  , logger = require('../../src/conf/config').logger;
+var logger = require('../../src/conf/config').logger,
+    dbService = require('../models/dbService'),
+    comments = require('../models/comments');
 
 // 디비설정 초기화
 var db = dbService.init();
 db.on('connected', function(err, db) {
   comments.init(db);
-  tagService.init(db);
 });
-
-// 검색어(`q`)로 시작하는 태그를 검색한다.
-module.exports.findTags = function(req, res) {
-  if (req.query.how === 'startWith') {
-    tagService.findTagsStartWith(req.query.q, function(err, tags) {
-      if (req.accepts('application/json')) {
-        if (err) {
-          logger.error(err);
-          res.send({
-            success: false
-            , results: []
-          });
-        } else {
-          res.send({
-            success: true
-            , results: tags
-          });
-        }
-      }
-    });
-  }
-};
 
 // 글에 달린 댓글을 조회한다
 // * `id`와 `aid` 필요.
