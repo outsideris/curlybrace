@@ -83,7 +83,7 @@ $(document).ready(function() {
       theme: 'facebook',
       preventDuplicates: true
     };
-    $('#tags').tokenInput('/v1/tags?how=startWith', opt);
+    $('#tags').tokenInput('/tags?how=startWith', opt);
   }
 
   // 질문 보기 화면일 경우
@@ -139,9 +139,9 @@ $(document).ready(function() {
 
     // 댓글 목록을 가져와서 화면에 갱신한다.
     var updateComments = function(commentList$, answerId) {
-      var url = '/v1/questions/' + questionId + '/comments';
+      var url = '/questions/' + questionId + '/comments';
       if (answerId) {
-        url = '/v1/questions/' + questionId + '/answers/' + answerId + '/comments';
+        url = '/questions/' + questionId + '/answers/' + answerId + '/comments';
       }
 
       $.get(url, function(data) {

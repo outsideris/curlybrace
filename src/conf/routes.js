@@ -8,7 +8,8 @@
 // Module dependencies.
 var qna = require('../controllers/qnaController')
   , users = require('../controllers/usersController')
-  , apiV1 = require('../controllers/v1Controller')
+  , comments = require('../controllers/commentsController')
+  , tags = require('../controllers/tagsController')
   , help = require('../controllers/helpController');
 
 module.exports = function(app, passport) {
@@ -26,18 +27,31 @@ function ensureUnauthenticated(req, res, next) {
 // 질문 관련 라우팅
 app.get('/', qna.index);
 
-app.get('/questions/form', ensureAuthenticated, qna.questionForm);
+app.get('/questions/add', ensureAuthenticated, qna.questionForm);
 
+//app.get('/questions', qna.);
 app.post('/questions', ensureAuthenticated, qna.registQuestion);
 
 app.get('/questions/:id', qna.questionView);
+//app.put('/questions/:id', qna.);
+//app.get('/questions/:id/edit', qna.);
 
 // 답변 관련 라우팅
+//app.get('/questions/:id/answers', qna.);
 app.post('/questions/:id/answers', qna.registAnswer);
 
+//app.get('/questions/:id/answers/:id/edit', qna.);
+//app.put('/questions/:id/answers/:id', qna.);
+
 // 댓글 관련 라우팅
+app.get('/questions/:id/comments', comments.findComments);
 app.post('/questions/:id/comments', qna.registComment);
+
+app.get('/questions/:id/answers/:aid/comments', comments.findComments);
 app.post('/questions/:id/answers/:aid/comments', qna.registComment);
+
+// 태그 관련 라우팅
+app.get('/tags', tags.findTags);
 
 // 인증관련 라우팅
 app.get('/login', ensureUnauthenticated, users.loginForm);
@@ -98,11 +112,6 @@ app.get('/auth/me2day/callback',
 
 // 도움말관련 라우팅
 app.get('/help/markdown', help.markdown);
-
-// API v1 관련 라우팅
-app.get('/v1/tags', apiV1.findTags);
-app.get('/v1/questions/:id/comments', apiV1.findComments);
-app.get('/v1/questions/:id/answers/:aid/comments', apiV1.findComments);
 };
 
 
