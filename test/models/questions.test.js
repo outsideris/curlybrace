@@ -386,7 +386,7 @@ describe('questions >', function() {
         should.not.exist(err);
 
         // when
-        questions.increaseComment(insertedQuestion[0]._id, 1, function(err, updatedQuestion) {
+        questions.increaseCommentCount(insertedQuestion[0]._id, 1, function(err, updatedQuestion) {
           should.not.exist(err);
           updatedQuestion.should.be.equal(1);
 
@@ -412,7 +412,7 @@ describe('questions >', function() {
         should.not.exist(err);
 
         // when
-        questions.increaseComment(insertedQuestion[0]._id, 3, function(err, updatedQuestion) {
+        questions.increaseCommentCount(insertedQuestion[0]._id, 3, function(err, updatedQuestion) {
           should.not.exist(err);
           updatedQuestion.should.be.equal(1);
 

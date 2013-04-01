@@ -6,7 +6,8 @@
 /*global describe, it */
 "use strict";
 
-var helpers = require('../../src/models/helpers'),
+var should = require('should'),
+    helpers = require('../../src/models/helpers'),
     logger = require('../../src/conf/config').logger;
 
 describe('helpers >', function() {
@@ -59,6 +60,9 @@ describe('helpers >', function() {
       // then
       result.should.be.false;
     });
+
+  });
+  describe('generateUUID >', function() {
     it('타임스탬프 기반으로 UUID를 획득한다', function() {
       // given
       // when
@@ -100,6 +104,50 @@ describe('helpers >', function() {
 
       // then
       formattedTime.should.equal('2013-03-04 11:00:00 오전');
+    });
+  });
+  describe('validateNumericType >', function() {
+    it('인자가 숫자타입이면 true를 반환한다', function() {
+      // given
+      var id = 1423;
+
+      // when
+      var result = helpers.validateNumericType({id: id}, function() {});
+
+      // then
+      result.should.be.ok;
+    });
+    it('인자를 숫자타입으로 변환할 수 있으면 true를 반환한다', function() {
+      // given
+      var id = '1423';
+
+      // when
+      var result = helpers.validateNumericType({id: id}, function() {});
+
+      // then
+      result.should.be.ok;
+    });
+    it('인자를 숫자타입으로 변환할 수 없으면 콜백으로 오류를 던진다', function() {
+      // given
+      var id = 'test';
+
+      // when
+      var result = helpers.validateNumericType({id: id}, function(err) {
+        // then
+        err.toString().should.equal('Error: id must be number or convertable to number');
+      });
+    });
+  });
+  describe('validateEmpty >', function() {
+    it('null을 전달하면 오류를 콜백으로 반환한다', function(){
+      // given
+      var str = null;
+      // when
+      var result = helpers.validateNotEmpty(str, function(err) {
+        // then
+        should.exist(err);
+        err.toString().should.equal('Error: str shoule be exist');
+      });
     });
   });
 });

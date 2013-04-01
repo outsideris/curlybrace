@@ -31,9 +31,9 @@ module.exports = (function() {
   var updateCommentCount = function(idObj, commentCount, callback) {
     logger.debug('comments.updateCommentCount', {idObj: idObj, commentCount: commentCount});
     if (idObj.answerId) {
-      answers.increaseComment(idObj.questionId, idObj.answerId, commentCount, callback);
+      answers.increaseCommentCount(idObj.questionId, idObj.answerId, commentCount, callback);
     } else {
-      questions.increaseComment(idObj.questionId, commentCount, callback);
+      questions.increaseCommentCount(idObj.questionId, commentCount, callback);
     }
   };
 

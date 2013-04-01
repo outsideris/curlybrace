@@ -283,7 +283,7 @@ describe('answers >', function() {
             var answerId = question.answers[0].id;
 
             // when
-            answers.increaseComment(insertedQuestion[0]._id, answerId, 1, function(err, updatedCount) {
+            answers.increaseCommentCount(insertedQuestion[0]._id, answerId, 1, function(err, updatedCount) {
               should.not.exist(err);
               question.answers.length.should.equal(1);
 
@@ -318,7 +318,7 @@ describe('answers >', function() {
             var answerId = question.answers[0].id;
 
             // when
-            answers.increaseComment(insertedQuestion[0]._id, answerId, 3, function(err, updatedCount) {
+            answers.increaseCommentCount(insertedQuestion[0]._id, answerId, 3, function(err, updatedCount) {
               should.not.exist(err);
               question.answers.length.should.equal(1);
 
@@ -356,7 +356,7 @@ describe('answers >', function() {
               var answerId = question.answers[1].id;
 
               // when
-              answers.increaseComment(insertedQuestion[0]._id, answerId, 3, function(err, updatedCount) {
+              answers.increaseCommentCount(insertedQuestion[0]._id, answerId, 3, function(err, updatedCount) {
                 should.not.exist(err);
 
                 // then

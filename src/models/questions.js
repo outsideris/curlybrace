@@ -38,15 +38,16 @@ module.exports = (function() {
       logger.debug('questions.insert', {question: question, user: user});
       if (!isInited(callback)) { return false; }
       // validation
-      // * 제목/내용/태그가 모두 있어야 한다.
-      // * 태그는 디비의 태그리스트에 존재하는 태그여야 한다.
-      // * 사용자 정보가 존재해야 한다.
-      if (!user) { callback(new Error('user must be exist.')); return; }
-      if (helpers.isEmpty(question) || helpers.isEmpty(question.title) ||
-          helpers.isEmpty(question.contents) || helpers.isEmpty(question.tags)) {
-            callback(new Error('question is something wrong!'));
-            return false;
-      }
+      if(!helpers.validateNotEmpty(
+        {
+          user: user,
+          question: question,
+          'question.title': question.title,
+          'question.contents': question.contents,
+          'question.tags': question.tags
+        }, callback)) {
+          return false;
+        }
       question.tags = question.tags.split(',');
       tags.isAllExistInTags(question.tags, function(err, isExist) {
         if (err) { callback(new Error(err)); return false;}
@@ -79,12 +80,12 @@ module.exports = (function() {
       if (!isInited(callback)) { return false; }
 
       // validation
-      // * id는 숫자타입이어야 한다
-      id = parseInt(id, 10);
-      if (isNaN(id)) {
-        callback(new Error('id must be number or convertable to number'));
-        return;
+      if(!helpers.validateNumericType({id: id}, callback)) {
+        return false;
       }
+
+      // normalize
+      id = parseInt(id, 10);
 
       var criteria = {'_id': id};
       questions.findOne(criteria, function(err, question) {
@@ -106,23 +107,19 @@ module.exports = (function() {
         callback(err, question);
       });
     },
-    increaseComment: function(id, commentCount, callback) {
-      logger.debug('questions.increaseComment', {id: id, commentCount: commentCount});
+    // 댓글 갯수를 증가한다
+    increaseCommentCount: function(id, commentCount, callback) {
+      logger.debug('questions.increaseCommentCountCount', {id: id, commentCount: commentCount});
       if (!isInited(callback)) { return false; }
 
       // validation
-      // * `id`는 숫자타입이어야 한다
-      // * `commentCount`는 숫자타입이어야 한다.
+      if(!helpers.validateNumericType({id: id, commentCount: commentCount}, callback)) {
+        return false;
+      }
+
+      // normalize
       id = parseInt(id, 10);
-      if (isNaN(id)) {
-        callback(new Error('id must be number or convertable to number'));
-        return;
-      }
       commentCount = parseInt(commentCount, 10);
-      if (isNaN(commentCount)) {
-        callback(new Error('commentCount must be number or convertable to number'));
-        return;
-      }
 
       questions.update(
         {'_id': id},

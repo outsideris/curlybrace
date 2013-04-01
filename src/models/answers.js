@@ -39,14 +39,13 @@ module.exports = (function() {
       if (!isInited(callback)) { return false; }
 
       // validation
-      // * 사용자 정보가 존재해야 한다.
-      // * questionId는 숫자타입이어야 한다
-      if (!user) { callback(new Error('user must be exist.')); return; }
-      questionId = parseInt(questionId, 10);
-      if (isNaN(questionId)) {
-        callback(new Error('questionId must be number or convertable to number'));
-        return;
+      if(!helpers.validateNumericType({questionId: questionId}, callback)) {
+        return false;
       }
+      if(!helpers.validateNotEmpty({user: user}, callback)) { return false;}
+
+      // normalize
+      questionId = parseInt(questionId, 10);
 
       // 답변에 필요한 필드 생성
       answer.id = helpers.generateUUID();
@@ -65,25 +64,20 @@ module.exports = (function() {
         callback
       );
     },
-    increaseComment: function(questionId, answerId, commentCount, callback) {
-      logger.debug('answers.increaseComment', {questionId: questionId, answerId: answerId, commentCount: commentCount});
+    // 댓글 갯수를 증가시킨다.
+    increaseCommentCount: function(questionId, answerId, commentCount, callback) {
+      logger.debug('answers.increaseCommentCount', {questionId: questionId, answerId: answerId, commentCount: commentCount});
       if (!isInited(callback)) { return false; }
 
       // validation
-      // * questionId는 숫자타입이어야 한다
-      // * answerId가 존재해야 한다.
-      // * commentCount는 숫자타입이어야 한다
+      if(!helpers.validateNumericType({questionId: questionId, commentCount: commentCount}, callback)) {
+        return false;
+      }
+      if(!helpers.validateNotEmpty({answerId: answerId}, callback)) { return false;}
+
+      // normalize
       questionId = parseInt(questionId, 10);
-      if (isNaN(questionId)) {
-        callback(new Error('questionId must be number or convertable to number'));
-        return;
-      }
-      if (!answerId) { callback(new Error('answerId must be exist.')); return; }
       commentCount = parseInt(commentCount, 10);
-      if (isNaN(commentCount)) {
-        callback(new Error('commentCount must be number or convertable to number'));
-        return;
-      }
 
       questions.update(
         {
