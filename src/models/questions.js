@@ -126,6 +126,18 @@ module.exports = (function() {
         {$set: {commentCount: commentCount }},
         callback
       );
+    },
+    voteUp: function(id, callback) {
+      logger.debug('questions.voteUp', {id: id});
+      if (!isInited(callback)) { return false; }
+
+      // validation
+      if(!helpers.validateNumericType({id: id}, callback)) {
+        return false;
+      }
+
+      // normalize
+      id = parseInt(id, 10);
     }
   };
 })();
