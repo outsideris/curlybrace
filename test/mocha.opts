@@ -1,4 +1,0 @@
---ui bdd
---recursive
---ignore-leaks
---reporter spec
