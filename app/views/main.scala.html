@@ -1,26 +1,83 @@
 @(title: String)(content: Html)
 
+@import helper._
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Curlybrace</title>
-    <link rel='shortcut icon' type='image/png' href='@routes.Assets.at("images/favicon.png")'>
-    <link rel='stylesheet' href='@routes.Assets.at("components/bootstrap/docs/assets/css/bootstrap.css")'>
-    <link rel='stylesheet' href='@routes.Assets.at("stylesheets/index.css")'>
+  <title>{Curlybrace}</title>
+  <link rel='shortcut icon' type='image/png' href='@routes.Assets.at("images/favicon.png")'>
+  <link rel='stylesheet' href='@routes.Assets.at("components/bootstrap/docs/assets/css/bootstrap.css")'>
+  <link rel='stylesheet' href='@routes.Assets.at("components/font-awesome/build/assets/font-awesome/css/font-awesome.css")'>
+  <link rel='stylesheet' href='@routes.Assets.at("stylesheets/index.css")'>
 </head>
 <body>
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container-fluid">
-                <a id="titleLink" class="brand" href="/">@title</a>
-            </div>
+  <div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="/">{curlybrace}<div id="betatag">alpha</div></a>
+        <div class="nav-collapse collapse navbar-inverse-collapse">
+          <ul class="nav unstyled pull-right">
+            <li><a href="/login">Login</a></li>
+          </ul>
+          <form class="navbar-form pull-right" action="">
+            <input class="search-quer" type="text" placeholder="Search"/>
+          </form>
+            <ul class="nav unstyled">
+              <li><a href="#">인기 질문</a></li>
+              <li><a href="#">최근 질문</a></li>
+              <li><a href="#">답변안된 질문</a></li>
+              <li><a href="#">사용자</a></li>
+            </ul>
         </div>
+      </div>
     </div>
-    <div class="container">
+  </div>
+
+  <div class="container-fluid main-wrap">
+    <div class="row-fluid">
+      <div id="contents" class="span9">
         @content
+      </div>
+      <aside class="span3">
+        <a id="postBtn" class="btn btn-large btn-danger" href="">
+          <i class="icon-upload-alt icon-white icon-large"></i> 질문하기
+        </a>
+        <div id="recently-questions" class="labelbox">
+          <h4>최근 질문</h4>
+          <ul class="unstyled">
+            <li><a href="#">질문...</a></li>
+            <li><a href="#">질문...</a></li>
+            <li><a href="#">질문...</a></li>
+          </ul>
+        </div>
+        <div id="recently-answers" class="labelbox">
+          <h4>최근 답변된 질문</h4>
+          <ul class="unstyled">
+            <li><a href="#">질문...</a></li>
+            <li><a href="#">질문...</a></li>
+            <li><a href="#">질문...</a></li>
+          </ul>
+        </div>
+      </aside>
     </div>
-    <script type='text/javascript' src='@routes.Assets.at("components/jquery/jquery.min.js")'></script>
-    <script type="text/javascript" src="@routes.MessageController.javascriptRoutes"></script>
-    <script type='text/javascript' src='@routes.Assets.at("javascripts/index.min.js")'></script>
+
+    <footer class="row">
+      Copyright &copy; 2013
+      <a href="http://sideeffect.kr/" target="_blank">Side Effect Studio</a>
+      | All rights reserved | Sources hosted in
+      <a href="https://github.com/outsideris/curlybrace" target="_blank">Github</a>
+    </footer>
+  </div>
+
+  <a href="https://github.com/outsideris/curlybrace" target="_blank">
+    <img src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" style="position: absolute; top: 0; right: 0; border: 0; z-index:1050;"/>
+  </a>
+  <div id="fb-root"></div>
+
+  <script type='text/javascript' src='@routes.Assets.at("components/jquery/jquery.min.js")'></script>
+  <script type='text/javascript' src='@routes.Assets.at("components/bootstrap/docs/assets/bootstrap.min.js")'></script>
+  <script type='text/javascript' src='@routes.Assets.at("components/handlebars.js/dist/handlebars.js")'></script>
+  <script type='text/javascript' src='@routes.Assets.at("javascripts/main.js")'></script>
 </body>
 </html>

@@ -15,15 +15,15 @@ object ApplicationBuild extends Build {
     //javaEbean, // Java Ebean plugin
     //javaJpa,   // Java JPA plugin
     //filters,   // A set of built-in filters
-    javaCore  // The core Java API
-  
+    //javaCore  // The core Java API
+
     // Add your own project dependencies in the form:
     // "group" % "artifact" % "version"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
     scalaVersion := "2.10.1"
-    // Add your own project settings here      
+    // Add your own project settings here
   )
 
 }

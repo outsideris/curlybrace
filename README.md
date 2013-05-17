@@ -4,3 +4,14 @@ Code name : Curlybrace
 
 ## Description
 Not Yet....
+
+## Requirements
+
+* Scala 2.10.x
+* SBT
+
+## Getting started
+
+    $ bower install
+    $ sbt
+    > run
