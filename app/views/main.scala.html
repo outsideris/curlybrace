@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(sidebar: Html = commons.sidebar())(content: Html)
 
 @import helper._
 
@@ -40,25 +40,7 @@
         @content
       </div>
       <aside class="span3">
-        <a id="postBtn" class="btn btn-large btn-danger" href="">
-          <i class="icon-upload-alt icon-white icon-large"></i> 질문하기
-        </a>
-        <div id="recently-questions" class="labelbox">
-          <h4>최근 질문</h4>
-          <ul class="unstyled">
-            <li><a href="#">질문...</a></li>
-            <li><a href="#">질문...</a></li>
-            <li><a href="#">질문...</a></li>
-          </ul>
-        </div>
-        <div id="recently-answers" class="labelbox">
-          <h4>최근 답변된 질문</h4>
-          <ul class="unstyled">
-            <li><a href="#">질문...</a></li>
-            <li><a href="#">질문...</a></li>
-            <li><a href="#">질문...</a></li>
-          </ul>
-        </div>
+          @sidebar
       </aside>
     </div>
 
