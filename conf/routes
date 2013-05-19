@@ -12,5 +12,9 @@ GET     /login                      controllers.UserController.login()
 
 GET     /questions/add              controllers.QuestionController.addFrom()
 
+# Help
+
+GET     /help/markdown              controllers.HelpController.markdown()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
