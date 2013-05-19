@@ -4,6 +4,10 @@
 
 GET     /                           controllers.IndexController.index()
 
+# Users
+
+GET     /login                      controllers.UserController.login()
+
 # Questions
 
 GET     /questions/add              controllers.QuestionController.addFrom()
