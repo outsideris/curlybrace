@@ -1,0 +1,84 @@
+@sidebar = {
+  <div class="labelbox">
+    <h4>제목</h4>
+    <ul class="unstyled">
+      <li># 제목</li>
+      <li>## 제목</li>
+      <li>### 제목</li>
+      <li>#### 제목</li>
+      <li>##### 제목</li>
+      <li>###### 제목</li>
+    </ul>
+    <h4>코드</h4>
+    <ul class="unstyled">
+      <li>`코드`</li>
+      <li>``코드``</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;코드블록(공백 4칸 후)</li>
+    </ul>
+    <h4>리스트</h4>
+    <ul class="unstyled">
+      <li>- 리스트</li>
+      <li>* 리스트</li>
+      <li>+ 리스트</li>
+      <li>1. 리스트</li>
+    </ul>
+    <h4>링크</h4>
+    <ul class="unstyled">
+      <li>&lt;http://example.com/&gt;</li>
+      <li>[링크](http://example.com/)</li>
+    </ul>
+    <h4>이미지</h4>
+    <ul class="unstyled">
+      <li>![alt](이미지경로)</li>
+    </ul>
+    <h4>이탤릭/볼드</h4>
+    <ul class="unstyled">
+      <li>*이탤릭체*</li>
+      <li>_이탤릭체_</li>
+      <li>**볼드체**</li>
+      <li>__볼드체__</li>
+    </ul>
+    <h4>인용구</h4>
+    <ul class="unstyled">
+      <li>&gt;인용구</li>
+    </ul>
+    <h4>수평선</h4>
+    <ul class="unstyled">
+      <li>* * *</li>
+      <li>***</li>
+      <li>******</li>
+      <li>- - -</li>
+      <li>--------</li>
+    </ul>
+  </div>
+}
+
+@main(sidebar) {
+
+  <article>
+    <div class="question-box">
+      <div class="question-form">
+        <form action="/questions" method="POST">
+          <input type="text" name="title" id="title" placeholder="제목"/>
+          <a class="btn pull-right" href="/help/markdown" target="_blank">마크다운 도움말</a>
+          <ul class="nav nav-tabs">
+            <li><a href="#editor" data-toggle="tab" id="editor-tab" class="active">Editor</a></li>
+            <li><a href="#preview" data-toggle="tab" id="preview-tab">Preview</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="editor">
+              <textarea name="contents"></textarea>
+            </div>
+            <div class="tab-pane" id="preview">
+              <div id="preview-box"></div>
+            </div>
+          </div>
+          <label for="tags">태그</label>
+          <input id="tags" type="text" name="tags"/>
+          <input class="btn btn-primary pull-right submit-btn" type="submit" value="질문하기"/>
+        </form>
+      </div>
+    </div>
+  </article>
+
+}

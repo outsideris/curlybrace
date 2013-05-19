@@ -1,0 +1,35 @@
+@(questions: List[Int])
+
+@main() {
+
+  <ul id="questionLists" class="unstyled">
+    @questions.map { q =>
+      <li class="question">
+        <div class="infomation">
+          <span class="votecount" title="투표 수">20</span>
+          <span class="answercount" title="답변 수">30</span>
+        </div>
+        <a href="#">
+          <h4>모든 국민은 사생활의 비밀과 자유를 침해받지 아니한다. 모든 국민은 사생활의 비밀과 자유를 침해받지 아..</h4>
+        </a>
+        <div class="row">
+          <ul class="unstyled tags">
+            <li class="tag"><a class="btn btn-mini" href="#"><i class="icon-tag"></i>python</a></li>
+            <li class="tag"><a class="btn btn-mini" href="#"><i class="icon-tag"></i>java</a></li>
+            <li class="tag"><a class="btn btn-mini" href="#"><i class="icon-tag"></i>node.js</a></li>
+            <li class="tag"><a class="btn btn-mini" href="#"><i class="icon-tag"></i>ruby</a></li>
+          </ul>
+          <div class="author">
+            <a href="">
+              <img src="https://si0.twimg.com/profile_images/1646891342/image.jpg" alt="Avatar for Outsider" title="Outsider"/>
+            </a>
+            <a href="">Outsider</a>
+            <time>1주일 전</time>
+          </div>
+        </div>
+      </li>
+    }
+
+  </ul>
+
+}
