@@ -18,7 +18,7 @@ class MainControllerSpec extends Specification {
 
   "IndexController" should {
 
-    "index template should contain the correct string" in new WithApplication {
+    "index template should contain the correct string" in new WithApplication(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
       val result = controllers.IndexController.index(FakeRequest())
 
       status(result) must equalTo(OK)
