@@ -1,6 +1,8 @@
 package models
 
-import org.specs2.mutable._
+import org.scalatest.FunSpec
+import org.scalatest.BeforeAndAfter
+import org.scalatest.matchers.ShouldMatchers
 import scala.slick.driver.H2Driver.simple._
 
 import Database.threadLocalSession
@@ -14,7 +16,7 @@ import Database.threadLocalSession
  * Date: 13. 5. 23.
  * Time: 오후 8:32
  */
-class QuestionSpec extends Specification {
+class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
 
   val questionFixture = Question(
     _: Option[Int],
@@ -22,8 +24,8 @@ class QuestionSpec extends Specification {
     "질문 내용"
   )
 
-  "Question" should {
-    "저장할 수 있다" in {
+  describe("add") {
+    it("질문을 저장한다") {
       Database.forURL("jdbc:h2:mem:test1", driver = "org.h2.Driver") withSession {
         // given
         Questions.ddl.create
@@ -31,13 +33,16 @@ class QuestionSpec extends Specification {
         // when
         val q = Questions.findById(Some(2))
         // then
-        q.get.title must beEqualTo(questionFixture(Some(2)).title)
-        q.get.contents must beEqualTo(questionFixture(Some(2)).contents)
-        q.get.voteup must beEqualTo(0)
-        q.get.votedown must beEqualTo(0)
+        q.get.title should equal (questionFixture(Some(2)).title)
+        q.get.contents should equal (questionFixture(Some(2)).contents)
+        q.get.voteup should equal (0)
+        q.get.votedown should equal (0)
       }
     }
-    "없는 질문은 None이 된다" in {
+  }
+
+  describe("findById") {
+    it("존재하지 않는 질문을 조회하면 None이 된다") {
       Database.forURL("jdbc:h2:mem:test1", driver = "org.h2.Driver") withSession {
         // given
         Questions.ddl.create
@@ -45,9 +50,8 @@ class QuestionSpec extends Specification {
         // when
         val q = Questions.findById(Some(10))
         // then
-        q must beEqualTo(None)
+        q should equal (None)
       }
     }
   }
-
 }
