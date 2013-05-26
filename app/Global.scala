@@ -1,9 +1,12 @@
-import models.{Question, DBeable, AppDB}
 import play.api.db.DB
 import play.api.GlobalSettings
 
+import slick.driver.PostgresDriver.simple._
+import Database.threadLocalSession
+
 import play.api.Application
-import slick.session.Session
+import play.api.Play.current
+import models.Questions
 
 /**
  * Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
@@ -14,15 +17,14 @@ import slick.session.Session
  * Date: 13. 5. 21.
  * Time: 오후 10:37
  */
-object Global extends GlobalSettings with DBeable {
+object Global extends GlobalSettings {
 
   override def onStart(app: Application) {
-    implicit val application = app
-    lazy val database = getDb
-    lazy val dal = getDal
-    database.withSession {
-      implicit session: Session =>
-        dal.create
+
+    lazy val database = Database.forDataSource(DB.getDataSource())
+
+    database .withSession {
+      Questions.ddl.create
     }
   }
 
