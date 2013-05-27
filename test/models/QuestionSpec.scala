@@ -27,7 +27,7 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
   )
 
   before {
-    session = Database.forURL("jdbc:h2:mem:test1", driver = "org.h2.Driver").createSession()
+    session = Database.forURL("jdbc:h2:mem:curlytest", driver = "org.h2.Driver").createSession()
     Questions.ddl.create
   }
 

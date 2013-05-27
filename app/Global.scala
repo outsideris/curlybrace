@@ -6,7 +6,7 @@ import Database.threadLocalSession
 
 import play.api.Application
 import play.api.Play.current
-import models.Questions
+import models.{Questions, Tags}
 
 /**
  * Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
@@ -25,6 +25,9 @@ object Global extends GlobalSettings {
 
     database .withSession {
       Questions.ddl.create
+      Tags.ddl.create
+      // insert initial tags
+      Tags.init
     }
   }
 
