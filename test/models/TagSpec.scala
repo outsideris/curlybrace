@@ -59,4 +59,13 @@ class TagSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       tags.forall(_.aliasTo == None) should equal(true)
     }
   }
+  describe("findAllExist") {
+    it("존재하는 태그만 가져온다") {
+      // when
+      val tags = Tags.findAllExist(List("Java", "node", "Scala"))
+      // then
+      tags.size should equal(2)
+      tags.contains("node") should equal(false)
+    }
+  }
 }

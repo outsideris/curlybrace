@@ -14,7 +14,7 @@ import slick.driver.PostgresDriver.simple._
  * Time: 오후 9:57
  */
 case class Question(
-  id: Option[Int],
+  id: Int,
   title: String,
   contents: String,
   regdate: DateTime = DateTime.now,
@@ -34,7 +34,8 @@ object Questions extends Table[Question]("questions") {
   def answerCount = column[Int]("answer_count")
   def commentsCount = column[Int]("comments_count")
   // FIXME: add user, tag, voting
-  def * = id.? ~ title ~ contents ~ regdate ~ voteup ~ votedown ~ answerCount  ~ commentsCount  <> (Question, Question.unapply _)
+  def * = id ~ title ~ contents ~ regdate ~ voteup ~ votedown ~ answerCount  ~ commentsCount  <> (Question, Question.unapply _)
+  def tags = QuestionsToTags.filter(_.questionId === id).flatMap(_.tagFK)
 
   def add(question: Question)(implicit session: Session) = {
     // validation
@@ -42,9 +43,15 @@ object Questions extends Table[Question]("questions") {
     require(question.contents != null && !question.contents.trim.isEmpty, "contents")
 
     Questions.insert(question)
+    question
   }
 
-  def findById(id: Option[Int])(implicit session: Session) = {
+  def addWithTags(question: Question, tags: List[String])(implicit session: Session) = {
+    val q = Questions.add(question)
+    QuestionsToTags.addAll(q.id, tags)
+  }
+
+  def findById(id: Int)(implicit session: Session) = {
     Query(Questions).filter(_.id === id).firstOption
   }
 }

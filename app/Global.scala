@@ -24,8 +24,10 @@ object Global extends GlobalSettings {
     lazy val database = Database.forDataSource(DB.getDataSource())
 
     database .withSession {
-      Questions.ddl.create
-      Tags.ddl.create
+      (
+        Questions.ddl ++
+        Tags.ddl
+      ).create
       // insert initial tags
       Tags.init
     }
