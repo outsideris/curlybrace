@@ -35,6 +35,7 @@ object Answers extends Table[Answer]("answer") {
   def createdAt = column[DateTime]("createdAt", O.NotNull)
   // FIXME: add user, voting
   def * = id ~ questionId ~ contents ~ userId ~ voteup ~ votedown ~ commentsCount ~ createdAt <> (Answer, Answer.unapply _)
+  def idx = index("idx_answer", (questionId))
 
   def add(answer: Answer)(implicit session: Session) = {
     // validation

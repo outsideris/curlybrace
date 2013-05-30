@@ -39,6 +39,7 @@ object Socials extends Table[Social]("socials") {
   def updatedAt = column[DateTime]("updated_at")
   def * = id ~ origin ~ userId ~ token ~ secret ~ name ~ profileImage ~ url ~ createdAt ~ updatedAt <> (Social, Social.unapply _)
   def pk = primaryKey("pk_socials", id ~ origin)
+  def idxUserId = index("idx_socials_userid", (userId))
 
   def add(social: Social)(implicit session: Session) = {
     Socials.insert(social)

@@ -20,6 +20,7 @@ object QuestionsToTags extends Table[QuestionToTag]("question_to_tag") {
   def questionId = column[Int]("question_id")
   def tagName = column[String]("tag_name")
   def * = questionId ~ tagName <> (QuestionToTag, QuestionToTag.unapply _)
+  def idx = index("idx_question_to_tag", (questionId, tagName), unique = true)
 
   def addAll(questionId: Int, tags: List[String])(implicit session: Session) = {
     // validation
