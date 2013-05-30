@@ -42,7 +42,7 @@ class QuestionToTagSpec extends FunSpec with BeforeAndAfter with ShouldMatchers 
       // given
       val id = 1
       val tags = List("Java", "Python", "Ruby")
-      Questions.add(Question(id, "질문", "내용"))
+      Questions.add(Question(id, "질문", "내용", 1))
       // when
       QuestionsToTags.addAll(id, tags)
       // then
@@ -56,7 +56,7 @@ class QuestionToTagSpec extends FunSpec with BeforeAndAfter with ShouldMatchers 
       // given
       val id = 1
       val tags = List("Node.js", "Scala")
-      Questions.add(Question(id, "질문", "내용"))
+      Questions.add(Question(id, "질문", "내용", 1))
       // then
       intercept[IllegalArgumentException] {
         // when
@@ -70,7 +70,7 @@ class QuestionToTagSpec extends FunSpec with BeforeAndAfter with ShouldMatchers 
       // given
       val id = 1
       val tags = List("Java", "Python", "Ruby")
-      Questions.add(Question(id, "질문", "내용"))
+      Questions.add(Question(id, "질문", "내용", 1))
       QuestionsToTags.addAll(id, tags)
       // when
       val resultTags = QuestionsToTags.findByQuestionId(id)

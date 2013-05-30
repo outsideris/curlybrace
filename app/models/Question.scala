@@ -17,6 +17,7 @@ case class Question(
   id: Int,
   title: String,
   contents: String,
+  userId: Int,
   regdate: DateTime = DateTime.now,
   voteup: Int = 0,
   votedown: Int = 0,
@@ -28,13 +29,14 @@ object Questions extends Table[Question]("questions") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
   def title = column[String]("title", O.NotNull)
   def contents = column[String]("contents", O.NotNull)
+  def userId = column[Int]("user_id", O.NotNull)
   def regdate = column[DateTime]("regdate", O.NotNull)
   def voteup = column[Int]("vote_up")
   def votedown = column[Int]("vote_down")
   def answerCount = column[Int]("answer_count")
   def commentsCount = column[Int]("comments_count")
   // FIXME: add user, voting
-  def * = id ~ title ~ contents ~ regdate ~ voteup ~ votedown ~ answerCount  ~ commentsCount  <> (Question, Question.unapply _)
+  def * = id ~ title ~ contents ~ userId ~ regdate ~ voteup ~ votedown ~ answerCount  ~ commentsCount  <> (Question, Question.unapply _)
 
   def add(question: Question)(implicit session: Session) = {
     // validation

@@ -23,7 +23,8 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
   val questionFixture = Question(
     _: Int,
     "질문 제목",
-    "질문 내용"
+    "질문 내용",
+    1
   )
 
   before {
@@ -58,7 +59,7 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("제목이 null 저장되지 않는다") {
       // given
-      val fixture = Question(1, null, "질문 내용")
+      val fixture = Question(1, null, "질문 내용", 1)
       // then
       intercept[IllegalArgumentException] {
         // when
@@ -67,7 +68,7 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("제목이 빈값이면 저장되지 않는다") {
       // given
-      val fixture = Question(1, "", "질문 내용")
+      val fixture = Question(1, "", "질문 내용", 1)
       // then
       intercept[IllegalArgumentException] {
         // when
@@ -76,7 +77,7 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("제목이 공백이면 저장되지 않는다") {
       // given
-      val fixture = Question(1, "   ", "질문 내용")
+      val fixture = Question(1, "   ", "질문 내용", 1)
       // then
       intercept[IllegalArgumentException] {
         // when
@@ -85,7 +86,7 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("내용이 null 저장되지 않는다") {
       // given
-      val fixture = Question(1, "제목", null)
+      val fixture = Question(1, "제목", null, 1)
       // then
       intercept[IllegalArgumentException] {
         // when
@@ -94,7 +95,7 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("내용이 빈값이면 저장되지 않는다") {
       // given
-      val fixture = Question(1, "제목", "")
+      val fixture = Question(1, "제목", "", 1)
       // then
       intercept[IllegalArgumentException] {
         // when
@@ -103,15 +104,12 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("내용이 공백이면 저장되지 않는다") {
       // given
-      val fixture = Question(1, "제목", "  ")
+      val fixture = Question(1, "제목", "  ", 1)
       // then
       intercept[IllegalArgumentException] {
         // when
         Questions.add(fixture)
       }
-    }
-    it("태그를 함께 저장한다") {
-
     }
   }
 
