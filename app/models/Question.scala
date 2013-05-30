@@ -33,9 +33,8 @@ object Questions extends Table[Question]("questions") {
   def votedown = column[Int]("vote_down")
   def answerCount = column[Int]("answer_count")
   def commentsCount = column[Int]("comments_count")
-  // FIXME: add user, tag, voting
+  // FIXME: add user, voting
   def * = id ~ title ~ contents ~ regdate ~ voteup ~ votedown ~ answerCount  ~ commentsCount  <> (Question, Question.unapply _)
-  def tags = QuestionsToTags.filter(_.questionId === id).flatMap(_.tagFK)
 
   def add(question: Question)(implicit session: Session) = {
     // validation
@@ -46,13 +45,13 @@ object Questions extends Table[Question]("questions") {
     question
   }
 
+  def findById(id: Int)(implicit session: Session) = {
+    Query(Questions).filter(_.id === id).firstOption
+  }
+
   def addWithTags(question: Question, tags: List[String])(implicit session: Session) = {
     val q = Questions.add(question)
     QuestionsToTags.addAll(q.id, tags)
-  }
-
-  def findById(id: Int)(implicit session: Session) = {
-    Query(Questions).filter(_.id === id).firstOption
   }
 }
 

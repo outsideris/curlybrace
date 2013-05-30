@@ -20,10 +20,11 @@ object QuestionsToTags extends Table[QuestionToTag]("question_to_tag") {
   def questionId = column[Int]("question_id")
   def tagName = column[String]("tag_name")
   def * = questionId ~ tagName <> (QuestionToTag, QuestionToTag.unapply _)
-  def questionFK = foreignKey("question_fk", questionId, Questions)(question => question.id)
-  def tagFK = foreignKey("tag_fk", tagName, Tags)(tag => tag.name)
 
   def addAll(questionId: Int, tags: List[String])(implicit session: Session) = {
+    // validation
+    require(Tags.findAllExist(tags).size > 0, "tags")
+
     tags.foreach(x => QuestionsToTags.insert(QuestionToTag(questionId, x)))
   }
 

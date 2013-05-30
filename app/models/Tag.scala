@@ -20,7 +20,6 @@ object Tags extends Table[Tag]("tags") {
   def name = column[String]("name", O.PrimaryKey)
   def aliasTo = column[String]("alias_to", O.Nullable)
   def * = name ~ aliasTo.? <> (Tag, Tag.unapply _)
-  def questions = QuestionsToTags.filter(_.tagName === name).flatMap(_.questionFK)
 
   def add(tag: Tag)(implicit session: Session) = {
     Tags.insert(tag)

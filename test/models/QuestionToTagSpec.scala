@@ -4,7 +4,6 @@ import org.scalatest.FunSpec
 import org.scalatest.BeforeAndAfter
 import org.scalatest.matchers.ShouldMatchers
 import scala.slick.driver.H2Driver.simple._
-import org.h2.jdbc.JdbcSQLException
 
 /**
  * Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
@@ -53,13 +52,13 @@ class QuestionToTagSpec extends FunSpec with BeforeAndAfter with ShouldMatchers 
                     } yield q2t).list
       results.size should equal(3)
     }
-    it("태그 테이블에 없는 태그는 저장할 수 없다") {
+    it("태그 테이블에 없는 태그만 있는 저장할 수 없다") {
       // given
       val id = 1
-      val tags = List("Java", "Scala")
+      val tags = List("Node.js", "Scala")
       Questions.add(Question(id, "질문", "내용"))
       // then
-      intercept[JdbcSQLException] {
+      intercept[IllegalArgumentException] {
         // when
         QuestionsToTags.addAll(id, tags)
       }
