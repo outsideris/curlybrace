@@ -6,6 +6,7 @@ import org.scalatest.matchers.ShouldMatchers
 import scala.slick.driver.H2Driver.simple._
 
 import java.lang.IllegalArgumentException
+import models.users._
 
 /**
  * Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
@@ -32,7 +33,8 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     (
       Questions.ddl ++
       Tags.ddl ++
-      QuestionsToTags.ddl
+      QuestionsToTags.ddl ++
+      Users.ddl
     ).create
     Tags.insertAll(
       Tag("Java"),
@@ -134,6 +136,38 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       // then
       q.get.title should equal (questionFixture(id).title)
       QuestionsToTags.findByQuestionId(id).size should equal(2)
+    }
+  }
+
+  describe("findWithAllById") {
+    it("질문을 작성자 정보와 태그를 함께 조회한다") {
+      // given
+      val questionId = 1
+      val userId = 1
+      Questions.addWithTags(questionFixture(questionId), List("Java", "Scala"))
+      Users.add(User(userId, "Outsider"))
+      // when
+      val q = Questions.findWithAllById((questionId))
+      // then
+      q.size should equal(1)
+      q(0).question.id should equal(questionId)
+      q(0).user.id should equal(userId)
+      q(0).tags.size should equal(2)
+    }
+    it("작성자가 여럿인 경우에도 질문을 작성자 정보와 태그를 함께 조회한다") {
+      // given
+      val questionId = 1
+      val userId = 1
+      Questions.addWithTags(questionFixture(questionId), List("Java", "Scala"))
+      Users.add(User(2, "other"))
+      Users.add(User(userId, "Outsider"))
+      // when
+      val q = Questions.findWithAllById((questionId))
+      // then
+      q.size should equal(1)
+      q(0).question.id should equal(questionId)
+      q(0).user.id should equal(userId)
+      q(0).tags.size should equal(2)
     }
   }
 }

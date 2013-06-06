@@ -3,6 +3,7 @@ package models
 import org.joda.time._
 import helpers.DateTimeMapper._
 import slick.driver.PostgresDriver.simple._
+import models.users.{Users, User}
 
 /**
  * Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
@@ -51,9 +52,31 @@ object Questions extends Table[Question]("questions") {
     Query(Questions).filter(_.id === id).firstOption
   }
 
+  // fk 관계인 데이터를 함께 조회한다
+  def findWithAllById(id: Int)(implicit session:Session) = {
+    val rawList = (for {
+      question <- Questions
+      user <- Users
+      tags <- QuestionsToTags
+      if question.id === id
+      if question.userId === user.id
+      if question.id === tags.questionId
+    } yield (question, user, tags)).list
+
+    rawList.
+      groupBy { case (question, user, tag) => (question, user)}.
+      map { case ( (question, user), tags) => new QuestionInfo(question, user, tags.map(_._3.tagName)) }.toList
+  }
+
   def addWithTags(question: Question, tags: List[String])(implicit session: Session) = {
     val q = Questions.add(question)
     QuestionsToTags.addAll(q.id, tags)
   }
 }
+
+class QuestionInfo(
+  val question: Question,
+  val user: User,
+  val tags: List[String]
+)
 
