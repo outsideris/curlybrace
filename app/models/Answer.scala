@@ -24,7 +24,7 @@ case class Answer(
   createdAt: DateTime = DateTime.now
 )
 
-object Answers extends Table[Answer]("answer") {
+object Answers extends Table[Answer]("answers") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
   def questionId = column[Int]("question_id", O.NotNull)
   def contents = column[String]("contents", O.NotNull)
@@ -35,7 +35,7 @@ object Answers extends Table[Answer]("answer") {
   def createdAt = column[DateTime]("createdAt", O.NotNull)
   // FIXME: add user, voting
   def * = id ~ questionId ~ contents ~ userId ~ voteup ~ votedown ~ commentsCount ~ createdAt <> (Answer, Answer.unapply _)
-  def idx = index("idx_answer", (questionId))
+  def idx = index("idx_answers", (questionId))
 
   def add(answer: Answer)(implicit session: Session) = {
     // validation
