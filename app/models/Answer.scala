@@ -1,7 +1,7 @@
 package models
 
 import org.joda.time._
-import helpers.DateTimeMapper._
+import helpers.TypeMapper._
 import slick.driver.PostgresDriver.simple._
 
 /**

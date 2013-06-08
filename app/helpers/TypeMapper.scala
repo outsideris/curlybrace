@@ -3,7 +3,6 @@ package helpers
 import slick.lifted.MappedTypeMapper
 import java.sql.Timestamp
 import org.joda.time.DateTime
-import slick.lifted.TypeMapper.DateTypeMapper
 
 /**
  * Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
@@ -14,11 +13,20 @@ import slick.lifted.TypeMapper.DateTypeMapper
  * Date: 13. 5. 25.
  * Time: 오후 8:28
  */
-object DateTimeMapper {
+object TypeMapper {
 
   implicit def date2dateTime = MappedTypeMapper.base[DateTime, Timestamp] (
     dateTime => new Timestamp(dateTime.getMillis),
     date => new DateTime(date)
   )
 
+  implicit def voteTypeTypeMapper = MappedTypeMapper.base[VoteType.Value, String] (
+    vote => vote.toString,
+    name => VoteType.withName(name)
+  )
+
+  implicit def postTypeTypeMapper = MappedTypeMapper.base[PostType.Value, String] (
+    postType => postType.toString,
+    name => PostType.withName(name)
+  )
 }

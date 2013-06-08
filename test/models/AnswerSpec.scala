@@ -20,12 +20,9 @@ class AnswerSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
 
   implicit var session: Session = _
 
-  val answerFixture = Answer(
-    _: Int,
-    2,
-    "답변 내용",
-    1
-  )
+  val questionId = 2
+  val userId = 1
+  val answerFixture = Answer(_: Int, questionId, "답변 내용", userId)
 
   before {
     session = Database.forURL("jdbc:h2:mem:curlytest", driver = "org.h2.Driver").createSession()
