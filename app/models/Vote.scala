@@ -34,6 +34,12 @@ object Votes extends Table[Vote]("votes") {
 
   def add(vote: Vote)(implicit session: Session) = {
     Votes.insert(vote)
+    vote.targetType match {
+      case QuestionType if vote.voteType == UpVote => Questions.upVote(vote.targetId)
+      case QuestionType if vote.voteType == DownVote => Questions.downVote(vote.targetId)
+      case AnswerType if vote.voteType == UpVote => Answers.upVote(vote.targetId)
+      case AnswerType if vote.voteType == DownVote => Answers.downVote(vote.targetId)
+    }
     vote
   }
 

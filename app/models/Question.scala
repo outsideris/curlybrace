@@ -20,8 +20,8 @@ case class Question(
   contents: String,
   userId: Int,
   createdAt: DateTime = DateTime.now,
-  voteup: Int = 0,
-  votedown: Int = 0,
+  voteUp: Int = 0,
+  voteDown: Int = 0,
   answerCount: Int = 0,
   commentsCount: Int = 0
 )
@@ -32,12 +32,12 @@ object Questions extends Table[Question]("questions") {
   def contents = column[String]("contents", O.NotNull)
   def userId = column[Int]("user_id", O.NotNull)
   def createdAt = column[DateTime]("created_at", O.NotNull)
-  def voteup = column[Int]("vote_up")
-  def votedown = column[Int]("vote_down")
+  def voteUp = column[Int]("vote_up")
+  def voteDown = column[Int]("vote_down")
   def answerCount = column[Int]("answer_count")
   def commentsCount = column[Int]("comments_count")
   // FIXME: add user, voting
-  def * = id ~ title ~ contents ~ userId ~ createdAt ~ voteup ~ votedown ~ answerCount  ~ commentsCount  <> (Question, Question.unapply _)
+  def * = id ~ title ~ contents ~ userId ~ createdAt ~ voteUp ~ voteDown ~ answerCount  ~ commentsCount  <> (Question, Question.unapply _)
 
   def add(question: Question)(implicit session: Session) = {
     // validation
@@ -71,6 +71,22 @@ object Questions extends Table[Question]("questions") {
   def addWithTags(question: Question, tags: List[String])(implicit session: Session) = {
     val q = Questions.add(question)
     QuestionsToTags.addAll(q.id, tags)
+  }
+
+  protected[models] def upVote(id: Int)(implicit session: Session) = {
+    val q = for {
+      question <- Questions
+      if question.id === id
+    } yield question.voteUp
+    q.update(q.first + 1)
+  }
+
+  protected[models] def downVote(id: Int)(implicit session: Session) = {
+    val q = for {
+      question <- Questions
+      if question.id === id
+    } yield question.voteDown
+    q.update(q.first + 1)
   }
 }
 

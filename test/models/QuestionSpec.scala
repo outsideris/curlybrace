@@ -52,8 +52,8 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       // then
       q.get.title should equal (questionFixture(2).title)
       q.get.contents should equal (questionFixture(2).contents)
-      q.get.voteup should equal (0)
-      q.get.votedown should equal (0)
+      q.get.voteUp should equal (0)
+      q.get.voteDown should equal (0)
     }
     it("제목이 null 저장되지 않는다") {
       // given
@@ -164,6 +164,58 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       q(0).question.id should equal(questionId)
       q(0).user.id should equal(userId)
       q(0).tags.size should equal(2)
+    }
+  }
+
+  describe("upVote") {
+    it("기존의 질문에 upVote가 0일 때 증가시킨다") {
+      // given
+      val questionId = 1
+      Questions.add(questionFixture(questionId))
+      Questions.findById((questionId)).get.voteUp should equal(0)
+      // when
+      Questions.upVote(questionId)
+      // then
+      Questions.findById((questionId)).get.voteUp should equal(1)
+    }
+    it("기존의 질문에 upVote가 존재할 때 증가시킨다") {
+      // given
+      val questionId = 1
+      Questions.add(questionFixture(questionId))
+      Questions.findById((questionId)).get.voteUp should equal(0)
+      // when
+      Questions.upVote(questionId)
+      Questions.upVote(questionId)
+      Questions.upVote(questionId)
+      Questions.upVote(questionId)
+      // then
+      Questions.findById((questionId)).get.voteUp should equal(4)
+    }
+  }
+
+  describe("downVote") {
+    it("기존의 질문에 downVote가 0일 때 증가시킨다") {
+      // given
+      val questionId = 1
+      Questions.add(questionFixture(questionId))
+      Questions.findById((questionId)).get.voteDown should equal(0)
+      // when
+      Questions.downVote(questionId)
+      // then
+      Questions.findById((questionId)).get.voteDown should equal(1)
+    }
+    it("기존의 질문에 downVote가 존재할 때 증가시킨다") {
+      // given
+      val questionId = 1
+      Questions.add(questionFixture(questionId))
+      Questions.findById((questionId)).get.voteDown should equal(0)
+      // when
+      Questions.downVote(questionId)
+      Questions.downVote(questionId)
+      Questions.downVote(questionId)
+      Questions.downVote(questionId)
+      // then
+      Questions.findById((questionId)).get.voteDown should equal(4)
     }
   }
 }

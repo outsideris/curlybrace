@@ -25,12 +25,17 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
 
   val questionId = 2
   val userId = 1
+  val answerId = 3
   val questionFixture = Question(_: Int, "질문 제목", "질문 내용", userId)
   val answerFixture = Answer(_: Int, questionId, "답변 내용", userId)
 
   before {
     session = Database.forURL("jdbc:h2:mem:curlytest", driver = "org.h2.Driver").createSession()
-    Votes.ddl.create
+    (
+      Questions.ddl ++
+      Answers.ddl ++
+      Votes.ddl
+    ).create
   }
 
   after {
@@ -41,6 +46,7 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     it("질문의 추천을 저장한다") {
       // given
       val questionId = 2
+      Questions.add(questionFixture(questionId))
       // when
       Votes.add(Vote(questionId, QuestionType, userId, UpVote))
       // then
@@ -57,6 +63,7 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     it("질문의 비추천을 저장한다") {
       // given
       val questionId = 2
+      Questions.add(questionFixture(questionId))
       // when
       Votes.add(Vote(questionId, QuestionType, userId, DownVote))
       // then
@@ -73,6 +80,7 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     it("답변의 추천을 저장한다") {
       // given
       val answerId = 2
+      Answers.add(answerFixture(answerId))
       // when
       Votes.add(Vote(answerId, AnswerType, userId, UpVote))
       // then
@@ -89,6 +97,7 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     it("한 질문에 같은 사용자가 여러번 추천할 수 없다") {
       // given
       val questionId = 2
+      Questions.add(questionFixture(questionId))
       Votes.add(Vote(questionId, QuestionType, userId, UpVote))
       // then
       intercept[JdbcSQLException] {
@@ -100,6 +109,8 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       // given
       val questionId = 2
       val answerId = 2
+      Questions.add(questionFixture(questionId))
+      Answers.add(answerFixture(answerId))
       // when
       Votes.add(Vote(questionId, QuestionType, userId, UpVote))
       Votes.add(Vote(answerId, AnswerType, userId, UpVote))
@@ -118,6 +129,42 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       } yield vote).list
       answerVote.size should equal(1)
     }
+    it("질문에 upVote시 질문의 upVote수를 증가시킨다") {
+      // given
+      Questions.add(questionFixture(questionId))
+      (for {q <- Questions if q.id === questionId} yield q).firstOption.get.voteUp should equal(0)
+      // when
+      Votes.add( Vote(questionId, QuestionType, userId, UpVote) )
+      // then
+      (for {q <- Questions if q.id === questionId} yield q).firstOption.get.voteUp should equal(1)
+    }
+    it("질문에 downVote시 질문의 downVote수를 증가시킨다") {
+      // given
+      Questions.add(questionFixture(questionId))
+      (for {q <- Questions if q.id === questionId} yield q).firstOption.get.voteDown should equal(0)
+      // when
+      Votes.add( Vote(questionId, QuestionType, userId, DownVote) )
+      // then
+      (for {q <- Questions if q.id === questionId} yield q).firstOption.get.voteDown should equal(1)
+    }
+    it("답변에 upVote시 답변의 upVote수를 증가시킨다") {
+      // given
+      Answers.add(answerFixture(answerId))
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteUp should equal(0)
+      // when
+      Votes.add( Vote(answerId, AnswerType, userId, UpVote) )
+      // then
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteUp should equal(1)
+    }
+    it("답변에 downVote시 답변의 downVote수를 증가시킨다") {
+      // given
+      Answers.add(answerFixture(answerId))
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteDown should equal(0)
+      // when
+      Votes.add( Vote(answerId, AnswerType, userId, DownVote) )
+      // then
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteDown should equal(1)
+    }
   }
 
   describe("findByQuestionId") {
@@ -125,6 +172,8 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       // given
       val questionId = 2
       val size = 5
+      Questions.add(questionFixture(questionId))
+      Questions.add(questionFixture(3))
       for (
         uid <- 1 to size
       ) Votes.add(Vote(questionId, QuestionType, uid, UpVote))
@@ -141,6 +190,8 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       // given
       val answerId = 2
       val size = 5
+      Answers.add(answerFixture(answerId))
+      Answers.add(answerFixture(3))
       for (
         uid <- 1 to size
       ) Votes.add(Vote(answerId, AnswerType, uid, UpVote))
@@ -149,5 +200,6 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       val votes = Votes.findByAnswerId(answerId)
       // then
       votes.size should equal(size)
-    }  }
+    }
+  }
 }

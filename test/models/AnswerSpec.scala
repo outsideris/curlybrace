@@ -84,4 +84,56 @@ class AnswerSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       a.size should equal(3)
     }
   }
+
+  describe("upVote") {
+    it("기존의 답변에 upVote가 0일 때 증가시킨다") {
+      // given
+      val answerId = 1
+      Answers.add(answerFixture(answerId))
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteUp should equal(0)
+      // when
+      Answers.upVote(answerId)
+      // then
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteUp should equal(1)
+    }
+    it("기존의 답변에 upVote가 존재할 때 증가시킨다") {
+      // given
+      val answerId = 1
+      Answers.add(answerFixture(answerId))
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteUp should equal(0)
+      // when
+      Answers.upVote(answerId)
+      Answers.upVote(answerId)
+      Answers.upVote(answerId)
+      Answers.upVote(answerId)
+      // then
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteUp should equal(4)
+    }
+  }
+
+  describe("downVote") {
+    it("기존의 답변에 downVote가 0일 때 증가시킨다") {
+      // given
+      val answerId = 1
+      Answers.add(answerFixture(answerId))
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteDown should equal(0)
+      // when
+      Answers.downVote(answerId)
+      // then
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteDown should equal(1)
+    }
+    it("기존의 답변에 downVote가 존재할 때 증가시킨다") {
+      // given
+      val answerId = 1
+      Answers.add(answerFixture(answerId))
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteDown should equal(0)
+      // when
+      Answers.downVote(answerId)
+      Answers.downVote(answerId)
+      Answers.downVote(answerId)
+      Answers.downVote(answerId)
+      // then
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteDown should equal(4)
+    }
+  }
 }
