@@ -9,7 +9,7 @@ object ApplicationBuild extends Build {
 
   val appDependencies = Seq(
     // Select Play modules
-    //jdbc,      // The JDBC connection pool and the play.api.db API
+    jdbc,      // The JDBC connection pool and the play.api.db API
     //anorm,     // Scala RDBMS Library
     //javaJdbc,  // Java database API
     //javaEbean, // Java Ebean plugin
@@ -19,6 +19,9 @@ object ApplicationBuild extends Build {
 
     // Add your own project dependencies in the form:
     // "group" % "artifact" % "version"
+    "com.typesafe.slick" %% "slick" % "1.0.0",
+    "postgresql" % "postgresql" % "9.1-901-1.jdbc4",
+    "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
