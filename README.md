@@ -1,6 +1,7 @@
 Code name : Curlybrace
 =============================
 [![Build Status](https://secure.travis-ci.org/outsideris/curlybrace.png?branch=master)](http://travis-ci.org/outsideris/curlybrace)
+[![Coverage Status](https://coveralls.io/repos/outsideris/curlybrace/badge.png)](https://coveralls.io/r/outsideris/curlybrace)
 
 ## Description
 Not Yet....
@@ -17,5 +18,4 @@ Not Yet....
 * `conf/application.conf`의 데이터베이스 부분에 PostgreSQL 계정 설정해야함.
 
     $ bower install
-    $ sbt
-    > run
+    $ sbt run
