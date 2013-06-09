@@ -6,6 +6,7 @@ import org.scalatest.matchers.ShouldMatchers
 import scala.slick.driver.H2Driver.simple._
 import helpers.TypeMapper._
 import helpers.PostType._
+import scala.slick.jdbc.meta._
 
 /**
  * Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
@@ -28,11 +29,13 @@ class CommentSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
 
   before {
     session = Database.forURL("jdbc:h2:mem:curlytest", driver = "org.h2.Driver").createSession()
-    (
-      Questions.ddl ++
-      Answers.ddl ++
-      Comments.ddl
-    ).drop
+    if (MTable.getTables.list.size > 0)  {
+      (
+        Questions.ddl ++
+        Answers.ddl ++
+        Comments.ddl
+      ).drop
+    }
 
     (
       Questions.ddl ++

@@ -4,6 +4,7 @@ import org.scalatest.FunSpec
 import org.scalatest.BeforeAndAfter
 import org.scalatest.matchers.ShouldMatchers
 import scala.slick.driver.H2Driver.simple._
+import scala.slick.jdbc.meta._
 
 /**
  * Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
@@ -20,7 +21,7 @@ class TagSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
 
   before {
     session = Database.forURL("jdbc:h2:mem:curlytest", driver = "org.h2.Driver").createSession()
-    Tags.ddl.drop
+    if (!MTable.getTables("tags").list.isEmpty) Tags.ddl.drop
     Tags.ddl.create
     Tags.init
   }
