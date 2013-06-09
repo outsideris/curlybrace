@@ -29,15 +29,16 @@ class AnswerSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     (
       Questions.ddl ++
       Answers.ddl
+    ).drop
+
+    (
+      Questions.ddl ++
+      Answers.ddl
     ).create
     Questions.add( Question(questionId, "질문 제목", "질문 내용", userId) )
   }
 
   after {
-    (
-      Questions.ddl ++
-      Answers.ddl
-    ).drop
     session.close()
   }
 

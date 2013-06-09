@@ -35,15 +35,15 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       Questions.ddl ++
       Answers.ddl ++
       Votes.ddl
-    ).create
-  }
-
-  after {
+    ).drop
     (
       Questions.ddl ++
       Answers.ddl ++
       Votes.ddl
-    ).drop
+    ).create
+  }
+
+  after {
     session.close()
   }
 

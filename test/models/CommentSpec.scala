@@ -32,17 +32,18 @@ class CommentSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       Questions.ddl ++
       Answers.ddl ++
       Comments.ddl
+    ).drop
+
+    (
+      Questions.ddl ++
+      Answers.ddl ++
+      Comments.ddl
     ).create
     Questions.add(questionFixture(questionId))
     Answers.add(answerFixture(answerId))
   }
 
   after {
-    (
-      Questions.ddl ++
-      Answers.ddl ++
-      Comments.ddl
-    ).drop
     session.close()
   }
 

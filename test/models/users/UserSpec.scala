@@ -21,11 +21,11 @@ class UserSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
 
   before {
     session = Database.forURL("jdbc:h2:mem:curlytest", driver = "org.h2.Driver").createSession()
+    Users.ddl.drop
     Users.ddl.create
   }
 
   after {
-    Users.ddl.drop
     session.close()
   }
 

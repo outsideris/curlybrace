@@ -20,12 +20,12 @@ class TagSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
 
   before {
     session = Database.forURL("jdbc:h2:mem:curlytest", driver = "org.h2.Driver").createSession()
+    Tags.ddl.drop
     Tags.ddl.create
     Tags.init
   }
 
   after {
-    Tags.ddl.drop
     session.close()
   }
 
