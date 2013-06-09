@@ -38,6 +38,11 @@ class CommentSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
   }
 
   after {
+    (
+      Questions.ddl ++
+      Answers.ddl ++
+      Comments.ddl
+    ).drop
     session.close()
   }
 

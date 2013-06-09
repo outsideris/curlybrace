@@ -25,6 +25,7 @@ class SocialSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
   }
 
   after {
+    Socials.ddl.drop
     session.close()
   }
 

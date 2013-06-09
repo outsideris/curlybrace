@@ -25,6 +25,7 @@ class UserSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
   }
 
   after {
+    Users.ddl.drop
     session.close()
   }
 

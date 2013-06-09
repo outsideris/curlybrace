@@ -34,6 +34,10 @@ class AnswerSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
   }
 
   after {
+    (
+      Questions.ddl ++
+      Answers.ddl
+    ).drop
     session.close()
   }
 

@@ -40,6 +40,12 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
   }
 
   after {
+    (
+      Questions.ddl ++
+      Tags.ddl ++
+      QuestionsToTags.ddl ++
+      Users.ddl
+    ).drop
     session.close()
   }
 

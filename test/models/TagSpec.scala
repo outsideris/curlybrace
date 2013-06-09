@@ -25,6 +25,7 @@ class TagSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
   }
 
   after {
+    Tags.ddl.drop
     session.close()
   }
 

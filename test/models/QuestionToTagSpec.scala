@@ -24,7 +24,6 @@ class QuestionToTagSpec extends FunSpec with BeforeAndAfter with ShouldMatchers 
       Questions.ddl ++
       Tags.ddl ++
       QuestionsToTags.ddl
-
     ).create
     Tags.insertAll(
       Tag("Java"),
@@ -34,6 +33,11 @@ class QuestionToTagSpec extends FunSpec with BeforeAndAfter with ShouldMatchers 
   }
 
   after {
+    (
+      Questions.ddl ++
+      Tags.ddl ++
+      QuestionsToTags.ddl
+    ).drop
     session.close()
   }
 
