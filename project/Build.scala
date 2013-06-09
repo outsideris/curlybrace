@@ -29,6 +29,8 @@ object ApplicationBuild extends Build {
     // Add your own project settings here
   ).settings(
     ScctPlugin.instrumentSettings : _*
+  ).settings(
+    parallelExecution in ScctPlugin.ScctTest := false
   )
 
 }
