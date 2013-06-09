@@ -202,4 +202,51 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       votes.size should equal(size)
     }
   }
+
+  describe("remove") {
+    it("질문에 upVote취소시 질문의 upVote수를 감소시킨다") {
+      // given
+      Questions.add(questionFixture(questionId))
+      Votes.add( Vote(questionId, QuestionType, 1, UpVote) )
+      Votes.add( Vote(questionId, QuestionType, 2, UpVote) )
+      (for {q <- Questions if q.id === questionId} yield q).firstOption.get.voteUp should equal(2)
+      // when
+      Votes.remove( Vote(questionId, QuestionType, 1, UpVote) )
+      // then
+      (for {q <- Questions if q.id === questionId} yield q).firstOption.get.voteUp should equal(1)
+    }
+    it("질문에 downVote취소시 질문의 downVote수를 감소시킨다") {
+      // given
+      Questions.add(questionFixture(questionId))
+      Votes.add( Vote(questionId, QuestionType, 1, DownVote) )
+      Votes.add( Vote(questionId, QuestionType, 2, DownVote) )
+      (for {q <- Questions if q.id === questionId} yield q).firstOption.get.voteDown should equal(2)
+      // when
+      Votes.remove( Vote(questionId, QuestionType, 1, DownVote) )
+      // then
+      (for {q <- Questions if q.id === questionId} yield q).firstOption.get.voteDown should equal(1)
+    }
+    it("답변에 upVote취소시 답변의 upVote수를 감소시킨다") {
+      // given
+      Answers.add(answerFixture(answerId))
+      Votes.add( Vote(answerId, AnswerType, 1, UpVote) )
+      Votes.add( Vote(answerId, AnswerType, 2, UpVote) )
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteUp should equal(2)
+      // when
+      Votes.remove( Vote(answerId, AnswerType, 1, UpVote) )
+      // then
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteUp should equal(1)
+    }
+    it("답변에 downVote취소시 답변의 downVote수를 감소시킨다") {
+      // given
+      Answers.add(answerFixture(answerId))
+      Votes.add( Vote(answerId, AnswerType, 1, DownVote) )
+      Votes.add( Vote(answerId, AnswerType, 2, DownVote) )
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteDown should equal(2)
+      // when
+      Votes.remove( Vote(answerId, AnswerType, 2, DownVote) )
+      // then
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteDown should equal(1)
+    }
+  }
 }

@@ -73,20 +73,20 @@ object Questions extends Table[Question]("questions") {
     QuestionsToTags.addAll(q.id, tags)
   }
 
-  protected[models] def upVote(id: Int)(implicit session: Session) = {
+  protected[models] def upVote(id: Int, point: Int = 1)(implicit session: Session) = {
     val q = for {
       question <- Questions
       if question.id === id
     } yield question.voteUp
-    q.update(q.first + 1)
+    q.update(q.first + point)
   }
 
-  protected[models] def downVote(id: Int)(implicit session: Session) = {
+  protected[models] def downVote(id: Int, point: Int = 1)(implicit session: Session) = {
     val q = for {
       question <- Questions
       if question.id === id
     } yield question.voteDown
-    q.update(q.first + 1)
+    q.update(q.first + point)
   }
 }
 

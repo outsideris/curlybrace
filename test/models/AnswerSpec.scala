@@ -109,6 +109,18 @@ class AnswerSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       // then
       (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteUp should equal(4)
     }
+    it("답변에 upVote시 point를 지정하면 해당 point를 적용한다") {
+      // given
+      val answerId = 1
+      Answers.add(answerFixture(answerId))
+      Answers.upVote(answerId)
+      Answers.upVote(answerId)
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteUp should equal(2)
+      // when
+      Answers.upVote(answerId, -1)
+      // then
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteUp should equal(1)
+    }
   }
 
   describe("downVote") {
@@ -134,6 +146,18 @@ class AnswerSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       Answers.downVote(answerId)
       // then
       (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteDown should equal(4)
+    }
+    it("답변에 downVote시 point를 지정하면 해당 point를 적용한다") {
+      // given
+      val answerId = 1
+      Answers.add(answerFixture(answerId))
+      Answers.downVote(answerId)
+      Answers.downVote(answerId)
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteDown should equal(2)
+      // when
+      Answers.downVote(answerId, -1)
+      // then
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteDown should equal(1)
     }
   }
 }

@@ -52,20 +52,20 @@ object Answers extends Table[Answer]("answers") {
     } yield answer).list
   }
 
-  protected[models] def upVote(id: Int)(implicit session: Session) = {
+  protected[models] def upVote(id: Int, point: Int = 1)(implicit session: Session) = {
     val q = for {
       answer <- Answers
       if answer.id === id
     } yield answer.voteUp
-    q.update(q.first + 1)
+    q.update(q.first + point)
   }
 
-  protected[models] def downVote(id: Int)(implicit session: Session) = {
+  protected[models] def downVote(id: Int, point: Int = 1)(implicit session: Session) = {
     val q = for {
       answer <- Answers
       if answer.id === id
     } yield answer.voteDown
-    q.update(q.first + 1)
+    q.update(q.first + point)
   }
 }
 

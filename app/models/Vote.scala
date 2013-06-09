@@ -59,5 +59,23 @@ object Votes extends Table[Vote]("votes") {
     } yield vote).list
   }
 
+  def remove(vote: Vote)(implicit session: Session) = {
+    val removedRowCount = (for {
+        v <- Votes
+        if v.targetId === vote.targetId
+        if v.targetType === vote.targetType
+        if v.userId === vote.userId
+        if v.voteType === vote.voteType
+      } yield v).delete
+
+    if (removedRowCount > 0)
+      vote.targetType match {
+        case QuestionType if vote.voteType == UpVote => Questions.upVote(vote.targetId, -1)
+        case QuestionType if vote.voteType == DownVote => Questions.downVote(vote.targetId, -1)
+        case AnswerType if vote.voteType == UpVote => Answers.upVote(vote.targetId, -1)
+        case AnswerType if vote.voteType == DownVote => Answers.downVote(vote.targetId, -1)
+      }
+  }
+
 }
 
