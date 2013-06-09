@@ -5,7 +5,6 @@ import org.scalatest.BeforeAndAfter
 import org.scalatest.matchers.ShouldMatchers
 import scala.slick.driver.H2Driver.simple._
 import java.lang.IllegalArgumentException
-import scala.slick.jdbc.meta._
 
 /**
  * Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
@@ -26,13 +25,6 @@ class AnswerSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
 
   before {
     session = Database.forURL("jdbc:h2:mem:curlytest", driver = "org.h2.Driver").createSession()
-    if (MTable.getTables.list.size > 0)  {
-      (
-        Questions.ddl ++
-        Answers.ddl
-      ).drop
-    }
-
     (
       Questions.ddl ++
       Answers.ddl
