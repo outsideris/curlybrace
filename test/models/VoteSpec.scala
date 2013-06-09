@@ -45,7 +45,6 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
   describe("add") {
     it("질문의 추천을 저장한다") {
       // given
-      val questionId = 2
       Questions.add(questionFixture(questionId))
       // when
       Votes.add(Vote(questionId, QuestionType, userId, UpVote))
@@ -79,7 +78,7 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("답변의 추천을 저장한다") {
       // given
-      val answerId = 2
+      Questions.add(questionFixture(questionId))
       Answers.add(answerFixture(answerId))
       // when
       Votes.add(Vote(answerId, AnswerType, userId, UpVote))
@@ -96,7 +95,6 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("한 질문에 같은 사용자가 여러번 추천할 수 없다") {
       // given
-      val questionId = 2
       Questions.add(questionFixture(questionId))
       Votes.add(Vote(questionId, QuestionType, userId, UpVote))
       // then
@@ -107,8 +105,6 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("같은 아이디의 질문과 답변에 추천할 수 있다") {
       // given
-      val questionId = 2
-      val answerId = 2
       Questions.add(questionFixture(questionId))
       Answers.add(answerFixture(answerId))
       // when
@@ -149,6 +145,7 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("답변에 upVote시 답변의 upVote수를 증가시킨다") {
       // given
+      Questions.add(questionFixture(questionId))
       Answers.add(answerFixture(answerId))
       (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteUp should equal(0)
       // when
@@ -158,6 +155,7 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("답변에 downVote시 답변의 downVote수를 증가시킨다") {
       // given
+      Questions.add(questionFixture(questionId))
       Answers.add(answerFixture(answerId))
       (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteDown should equal(0)
       // when
@@ -170,7 +168,6 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
   describe("findByQuestionId") {
     it("질문의 추천내역을 가져온다") {
       // given
-      val questionId = 2
       val size = 5
       Questions.add(questionFixture(questionId))
       Questions.add(questionFixture(3))
@@ -190,6 +187,7 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       // given
       val answerId = 2
       val size = 5
+      Questions.add(questionFixture(questionId))
       Answers.add(answerFixture(answerId))
       Answers.add(answerFixture(3))
       for (
@@ -228,6 +226,7 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("답변에 upVote취소시 답변의 upVote수를 감소시킨다") {
       // given
+      Questions.add(questionFixture(questionId))
       Answers.add(answerFixture(answerId))
       Votes.add( Vote(answerId, AnswerType, 1, UpVote) )
       Votes.add( Vote(answerId, AnswerType, 2, UpVote) )
@@ -239,6 +238,7 @@ class VoteSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("답변에 downVote취소시 답변의 downVote수를 감소시킨다") {
       // given
+      Questions.add(questionFixture(questionId))
       Answers.add(answerFixture(answerId))
       Votes.add( Vote(answerId, AnswerType, 1, DownVote) )
       Votes.add( Vote(answerId, AnswerType, 2, DownVote) )

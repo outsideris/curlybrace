@@ -33,6 +33,8 @@ class CommentSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       Answers.ddl ++
       Comments.ddl
     ).create
+    Questions.add(questionFixture(questionId))
+    Answers.add(answerFixture(answerId))
   }
 
   after {
@@ -42,12 +44,9 @@ class CommentSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
   describe("add") {
     it("질문에 댓글을 저장한다") {
       // given
-      val questionId = 2
-      Questions.add(questionFixture(questionId))
       Answers.add(answerFixture(2))
       // when
       Comments.add( Comment(1, "댓글 내용", userId, questionId, QuestionType) )
-      Comments.add( Comment(2, "댓글 내용", userId, questionId, AnswerType) )
       // then
       val result = (for {
         c <- Comments
@@ -61,10 +60,8 @@ class CommentSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       // given
       val answerId = 2
       Answers.add(answerFixture(answerId))
-      Questions.add(questionFixture(2))
       // when
       Comments.add( Comment(1, "댓글 내용", userId, answerId, AnswerType) )
-      Comments.add( Comment(2, "댓글 내용", userId, answerId, QuestionType) )
       // then
       val result = (for {
         c <- Comments
@@ -76,8 +73,6 @@ class CommentSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
     }
     it("질문에 댓글을 저장할 때 질문의 댓글갯수를 증가시킨다") {
       // given
-      val questionId = 2
-      Questions.add(questionFixture(questionId))
       Questions.findById(questionId).get.commentsCount should equal(0)
       // when
       Comments.add( Comment(1, "댓글 내용", userId, questionId, QuestionType) )
@@ -101,8 +96,6 @@ class CommentSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
   describe("findByParent") {
     it("질문에 대한 댓글을 조회한다") {
       // given
-      val questionId = 2
-      Questions.add(questionFixture(questionId))
       Comments.add( Comment(1, "댓글 내용", userId, questionId, QuestionType) )
       Comments.add( Comment(2, "댓글 내용", userId, questionId, QuestionType) )
       Comments.add( Comment(3, "댓글 내용", userId, questionId, QuestionType) )
@@ -120,8 +113,8 @@ class CommentSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       Comments.add( Comment(1, "댓글 내용", userId, answerId, AnswerType) )
       Comments.add( Comment(2, "댓글 내용", userId, answerId, AnswerType) )
       Comments.add( Comment(3, "댓글 내용", userId, answerId, AnswerType) )
-      Answers.add(answerFixture(3))
-      Comments.add( Comment(4, "댓글 내용", userId, 3, AnswerType) )
+      Answers.add(answerFixture(4))
+      Comments.add( Comment(4, "댓글 내용", userId, 4, AnswerType) )
       // when
       val list = Comments.findByParent(answerId, AnswerType)
       // then

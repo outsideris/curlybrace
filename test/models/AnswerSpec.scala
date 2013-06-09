@@ -26,7 +26,11 @@ class AnswerSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
 
   before {
     session = Database.forURL("jdbc:h2:mem:curlytest", driver = "org.h2.Driver").createSession()
-    Answers.ddl.create
+    (
+      Questions.ddl ++
+      Answers.ddl
+    ).create
+    Questions.add( Question(questionId, "질문 제목", "질문 내용", userId) )
   }
 
   after {
@@ -69,6 +73,15 @@ class AnswerSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
         // when
         Answers.add(fixture)
       }
+    }
+    it("답변을 저장시 질문의 답변갯수를 증가시킨다") {
+      // given
+      val id = 2
+      Questions.findById((questionId)).get.answerCount should equal(0)
+      // when
+      Answers.add(answerFixture(id))
+      // then
+      Questions.findById((questionId)).get.answerCount should equal(1)
     }
   }
 

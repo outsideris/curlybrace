@@ -42,6 +42,7 @@ object Answers extends Table[Answer]("answers") {
     require(answer.contents != null && !answer.contents.trim.isEmpty, "contents")
 
     Answers.insert(answer)
+    Questions.updateAnswerCount(answer.questionId)
     answer
   }
 

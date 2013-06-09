@@ -36,7 +36,6 @@ object Questions extends Table[Question]("questions") {
   def voteDown = column[Int]("vote_down")
   def answerCount = column[Int]("answer_count")
   def commentsCount = column[Int]("comments_count")
-  // FIXME: add user, voting
   def * = id ~ title ~ contents ~ userId ~ createdAt ~ voteUp ~ voteDown ~ answerCount  ~ commentsCount  <> (Question, Question.unapply _)
 
   def add(question: Question)(implicit session: Session) = {
@@ -94,6 +93,14 @@ object Questions extends Table[Question]("questions") {
       q <- Questions
       if q.id === id
     } yield q.commentsCount
+    q.update(q.first + point)
+  }
+
+  protected[models] def updateAnswerCount(id: Int, point: Int = 1)(implicit session: Session) = {
+    val q = for {
+      q <- Questions
+      if q.id === id
+    } yield q.answerCount
     q.update(q.first + point)
   }
 }
