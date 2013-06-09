@@ -88,6 +88,14 @@ object Questions extends Table[Question]("questions") {
     } yield question.voteDown
     q.update(q.first + point)
   }
+
+  protected[models] def updateCommentsCount(id: Int, point: Int = 1)(implicit session: Session) = {
+    val q = for {
+      q <- Questions
+      if q.id === id
+    } yield q.commentsCount
+    q.update(q.first + point)
+  }
 }
 
 class QuestionInfo(

@@ -160,4 +160,33 @@ class AnswerSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       (for {a <- Answers if a.id === answerId} yield a).firstOption.get.voteDown should equal(1)
     }
   }
+
+  describe("updateCommentsCount") {
+    it("답변의 댓글 갯수를 증가시킨다") {
+      // given
+      val answerId = 1
+      Answers.add(answerFixture(answerId))
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.commentsCount should equal(0)
+      // when
+      Answers.updateCommentsCount(answerId)
+      Answers.updateCommentsCount(answerId)
+      Answers.updateCommentsCount(answerId)
+      // then
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.commentsCount should equal(3)
+    }
+    it("답변의 댓글 갯수를 감소시킨다") {
+      // given
+      val answerId = 1
+      Answers.add(answerFixture(answerId))
+      Answers.updateCommentsCount(answerId)
+      Answers.updateCommentsCount(answerId)
+      Answers.updateCommentsCount(answerId)
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.commentsCount should equal(3)
+      // when
+      Answers.updateCommentsCount(answerId, -1)
+      Answers.updateCommentsCount(answerId, -1)
+      // then
+      (for {a <- Answers if a.id === answerId} yield a).firstOption.get.commentsCount should equal(1)
+    }
+  }
 }

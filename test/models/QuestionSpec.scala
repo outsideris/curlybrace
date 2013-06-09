@@ -244,4 +244,33 @@ class QuestionSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
       Questions.findById((questionId)).get.voteDown should equal(2)
     }
   }
+
+  describe("updateCommentsCount") {
+    it("질문의 댓글 갯수를 증가시킨다") {
+      // given
+      val questionId = 1
+      Questions.add(questionFixture(questionId))
+      Questions.findById((questionId)).get.commentsCount should equal(0)
+      // when
+      Questions.updateCommentsCount(questionId)
+      Questions.updateCommentsCount(questionId)
+      Questions.updateCommentsCount(questionId)
+      // then
+      Questions.findById((questionId)).get.commentsCount should equal(3)
+    }
+    it("질문의 댓글 갯수를 감소시킨다") {
+      // given
+      val questionId = 1
+      Questions.add(questionFixture(questionId))
+      Questions.updateCommentsCount(questionId)
+      Questions.updateCommentsCount(questionId)
+      Questions.updateCommentsCount(questionId)
+      Questions.findById((questionId)).get.commentsCount should equal(3)
+      // when
+      Questions.updateCommentsCount(questionId, -1)
+      Questions.updateCommentsCount(questionId, -1)
+      // then
+      Questions.findById((questionId)).get.commentsCount should equal(1)
+    }
+  }
 }
