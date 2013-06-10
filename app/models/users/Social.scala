@@ -1,6 +1,7 @@
 package models.users
 
 import org.joda.time._
+import helpers.Constant._
 import helpers.TypeMapper._
 import slick.driver.PostgresDriver.simple._
 
@@ -26,7 +27,7 @@ case class Social(
   updatedAt: DateTime = DateTime.now
 )
 
-object Socials extends Table[Social]("socials") {
+object Socials extends Table[Social](TablePrefix + "_socials") {
   def id = column[String]("id")
   def origin = column[String]("origin")
   def userId = column[Int]("user_id")

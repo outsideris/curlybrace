@@ -1,6 +1,7 @@
 package models
 
 import org.joda.time._
+import helpers.Constant._
 import helpers.TypeMapper._
 import helpers.PostType._
 import slick.driver.PostgresDriver.simple._
@@ -23,7 +24,7 @@ case class Comment(
   createdAt: DateTime = DateTime.now
 )
 
-object Comments extends Table[Comment]("comments") {
+object Comments extends Table[Comment](TablePrefix + "_comments") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
   def contents = column[String]("contents", O.NotNull)
   def userId = column[Int]("user_id", O.NotNull)

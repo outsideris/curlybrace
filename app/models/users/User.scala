@@ -1,6 +1,7 @@
 package models.users
 
 import org.joda.time._
+import helpers.Constant._
 import helpers.TypeMapper._
 import slick.driver.PostgresDriver.simple._
 
@@ -24,7 +25,7 @@ case class User(
   loginCount: Int = 0
 )
 
-object Users extends Table[User]("users") {
+object Users extends Table[User](TablePrefix + "_users") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
   def name = column[String]("name", O.NotNull)
   def email = column[Option[String]]("email", O.Nullable)

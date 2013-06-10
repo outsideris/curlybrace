@@ -1,6 +1,7 @@
 package models
 
 import org.joda.time._
+import helpers.Constant._
 import helpers.TypeMapper._
 import slick.driver.PostgresDriver.simple._
 
@@ -24,7 +25,7 @@ case class Answer(
   createdAt: DateTime = DateTime.now
 )
 
-object Answers extends Table[Answer]("answers") {
+object Answers extends Table[Answer](TablePrefix + "_answers") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
   def questionId = column[Int]("question_id", O.NotNull)
   def contents = column[String]("contents", O.NotNull)

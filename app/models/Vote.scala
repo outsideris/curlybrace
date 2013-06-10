@@ -1,6 +1,7 @@
 package models
 
 import org.joda.time._
+import helpers.Constant._
 import helpers.TypeMapper._
 import helpers.VoteType._
 import helpers.PostType._
@@ -23,7 +24,7 @@ case class Vote(
   createdAt: DateTime = DateTime.now
 )
 
-object Votes extends Table[Vote]("votes") {
+object Votes extends Table[Vote](TablePrefix + "_votes") {
   def targetId = column[Int]("target_id", O.NotNull)
   def targetType = column[PostType]("target_type", O.NotNull)
   def userId = column[Int]("user_id", O.NotNull)

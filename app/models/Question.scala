@@ -1,6 +1,7 @@
 package models
 
 import org.joda.time._
+import helpers.Constant._
 import helpers.TypeMapper._
 import slick.driver.PostgresDriver.simple._
 import models.users.{Users, User}
@@ -26,7 +27,7 @@ case class Question(
   commentsCount: Int = 0
 )
 
-object Questions extends Table[Question]("questions") {
+object Questions extends Table[Question](TablePrefix + "_questions") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
   def title = column[String]("title", O.NotNull)
   def contents = column[String]("contents", O.NotNull)

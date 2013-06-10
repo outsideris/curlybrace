@@ -1,6 +1,7 @@
 package models
 
 import slick.driver.PostgresDriver.simple._
+import helpers.Constant._
 
 /**
  * Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
@@ -16,7 +17,7 @@ case class QuestionToTag(
   tagName: String
 )
 
-object QuestionsToTags extends Table[QuestionToTag]("question_to_tag") {
+object QuestionsToTags extends Table[QuestionToTag](TablePrefix + "_question_to_tag") {
   def questionId = column[Int]("question_id")
   def tagName = column[String]("tag_name")
   def * = questionId ~ tagName <> (QuestionToTag, QuestionToTag.unapply _)

@@ -1,6 +1,7 @@
 package models
 
 import slick.driver.PostgresDriver.simple._
+import helpers.Constant._
 
 /**
  * Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
@@ -16,7 +17,7 @@ case class Tag(
   aliasTo: Option[String] = None
 )
 
-object Tags extends Table[Tag]("tags") {
+object Tags extends Table[Tag](TablePrefix + "_tags") {
   def name = column[String]("name", O.PrimaryKey)
   def aliasTo = column[String]("alias_to", O.Nullable)
   def * = name ~ aliasTo.? <> (Tag, Tag.unapply _)
