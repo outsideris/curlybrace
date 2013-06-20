@@ -1,5 +1,7 @@
 package controllers
 
+import securesocial.core._
+
 /**
  * Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
  * Licensed under the MIT license.
@@ -12,9 +14,9 @@ package controllers
 
 import play.api.mvc.{Action, Controller}
 
-object QuestionController extends Controller {
+object QuestionController extends Controller with SecureSocial {
 
-  def addFrom = Action {
+  def addFrom = SecuredAction { implicit request =>
     Ok(views.html.questions.add())
   }
 }
