@@ -8,4 +8,4 @@ jdk:
 branches:
   only:
     - master
-script: "sbt coveralls test"
+script: "sbt coveralls"
