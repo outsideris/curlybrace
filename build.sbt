@@ -1,3 +1,1 @@
-import com.github.theon.coveralls.CoverallsPlugin.CoverallsKeys._
-
-encoding := "ISO-8859-1"
+seq(com.github.theon.coveralls.CoverallsPlugin.coverallsSettings: _*)
