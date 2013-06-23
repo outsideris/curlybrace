@@ -38,7 +38,8 @@ object Global extends GlobalSettings {
       if (!existTableNames.contains(Comments.tableName)) Comments.ddl.create
       if (!existTableNames.contains(Votes.tableName)) Votes.ddl.create
       if (!existTableNames.contains(Users.tableName)) Users.ddl.create
-      if (!existTableNames.contains(Socials.tableName)) Socials.ddl.create
+      if (!existTableNames.contains(SocialUsers.tableName)) SocialUsers.ddl.create
+      if (!existTableNames.contains(Tokens.tableName)) Tokens.ddl.create
     }
   }
 

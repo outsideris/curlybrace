@@ -1,9 +1,16 @@
 package services
 
 import play.api.{Logger, Application}
+import play.api.db.DB
+import play.api.Play.current
+import slick.driver.PostgresDriver.simple._
+import Database.threadLocalSession
+
 import securesocial.core._
 import securesocial.core.providers.Token
 import securesocial.core.UserId
+
+import models.users._
 
 /**
  * Copyright (c) 2013 JeongHoon Byun aka "Outsider", <http://blog.outsider.ne.kr/>
@@ -14,51 +21,68 @@ import securesocial.core.UserId
  * Date: 13. 6. 17.
  * Time: 오후 9:44
  */
-// FIXME: modify for slick
 class UserService(application: Application) extends UserServicePlugin(application) {
-  private var users = Map[String, Identity]()
-  private var tokens = Map[String, Token]()
+
+  lazy val database = Database.forDataSource(DB.getDataSource())
 
   def find(id: UserId): Option[Identity] = {
-    if ( Logger.isDebugEnabled ) {
-      Logger.debug("users = %s".format(users))
+    if ( Logger.isDebugEnabled ) Logger.debug(s"UserService.find: $id")
+    database withSession {
+      SocialUsers.findByUserId(id) map {
+        u => MyIdentity.fromSocialUser(u)
+      }
     }
-    users.get(id.id + id.providerId)
   }
 
   def findByEmailAndProvider(email: String, providerId: String): Option[Identity] = {
-    if ( Logger.isDebugEnabled ) {
-      Logger.debug("users = %s".format(users))
+    if ( Logger.isDebugEnabled ) Logger.debug(s"UserService.findByEmailAndProvider: $email and $providerId")
+    database withSession {
+      SocialUsers.findByEmailAndProvider(email, providerId) map {
+        u => MyIdentity.fromSocialUser(u)
+      }
     }
-    users.values.find( u => u.email.map( e => e == email && u.id.providerId == providerId).getOrElse(false))
   }
 
-  def save(user: Identity): Identity = {
-    users = users + (user.id.id + user.id.providerId -> user)
-    // this sample returns the same user object, but you could return an instance of your own class
-    // here as long as it implements the Identity trait. This will allow you to use your own class in the protected
-    // actions and event callbacks. The same goes for the find(id: UserId) method.
-    user
+  def save(identity: Identity): Identity = {
+    if ( Logger.isDebugEnabled ) Logger.debug(s"UserService.save: $identity")
+    database withSession {
+      val u = SocialUsers.fromIdentity(identity)
+      MyIdentity.fromSocialUser(SocialUsers.save(u))
+    }
   }
 
   def save(token: Token) {
-    tokens += (token.uuid -> token)
+    if ( Logger.isDebugEnabled ) Logger.debug(s"UserService.save(token): $token")
+    database withSession {
+      Tokens.save(token)
+    }
   }
 
   def findToken(token: String): Option[Token] = {
-    tokens.get(token)
+    if ( Logger.isDebugEnabled ) Logger.debug(s"UserService.findToken: $token")
+    database withSession {
+      Tokens.findByUUID(token)
+    }
   }
 
   def deleteToken(uuid: String) {
-    tokens -= uuid
+    if ( Logger.isDebugEnabled ) Logger.debug(s"UserService.deleteToken: $uuid")
+    database withSession {
+      Tokens.delete(uuid)
+    }
   }
 
   def deleteTokens() {
-    tokens = Map()
+    if ( Logger.isDebugEnabled ) Logger.debug(s"UserService.deleteTokens")
+    database withSession {
+      Tokens.deleteAll()
+    }
   }
 
   def deleteExpiredTokens() {
-    tokens = tokens.filter(!_._2.isExpired)
+    if ( Logger.isDebugEnabled ) Logger.debug(s"UserService.deleteExpiredTokens")
+    database withSession {
+      Tokens.deleteExpiredTokens()
+    }
   }
-
 }
