@@ -21,12 +21,14 @@ object ApplicationBuild extends Build {
     // "group" % "artifact" % "version"
     "com.typesafe.slick" %% "slick" % "1.0.0",
     "postgresql" % "postgresql" % "9.1-901-1.jdbc4",
-    "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test"
+    "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test",
+    "securesocial" %% "securesocial" % "master-SNAPSHOT"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
-    scalaVersion := "2.10.1"
+    scalaVersion := "2.10.1",
     // Add your own project settings here
+    resolvers += Resolver.url("sbt-plugin-snapshots", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-snapshots/"))(Resolver.ivyStylePatterns)
   ).settings(
     ScctPlugin.instrumentSettings : _*
   ).settings(
